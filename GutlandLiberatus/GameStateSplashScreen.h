@@ -2,6 +2,8 @@
 
 #include <Kengine/EventManager.h>
 #include <Kengine/BaseState.h>
+#include <Kengine/TextureManager.h>
+#include <Kengine/SpriteSheet.h>
 
 class GameStateSplashScreen : public Kengine::BaseState
 {
@@ -22,9 +24,12 @@ private:
 	sf::Texture m_texture;
 	sf::Sprite m_sprite;
 
+	Kengine::SpriteSheet *m_spriteSheet;
+
 	int m_opacity;
 	float m_elapsedTime;
 	float m_opacityChecker;
 	bool m_fading = false;
 	bool m_finished = false;
+	int m_splashScreenIndex = 0;
 };

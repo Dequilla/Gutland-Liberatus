@@ -7,7 +7,7 @@ namespace Kengine
 class TextureManager : public ResourceManager<TextureManager, sf::Texture>
 {
 public:
-	TextureManager() : ResourceManager("Textures.cfg") {}
+	TextureManager() : ResourceManager("media/Textures.cfg") {}
 
 	sf::Texture* Load(const std::string& path)
 	{

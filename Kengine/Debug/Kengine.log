@@ -1,8 +1,20 @@
-﻿  SpriteSheet.cpp
-w:\gutland-liberatus\kengine\spritesheet.cpp(38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  DirectionalAnimation.cpp
-  BaseAnimation.cpp
-w:\gutland-liberatus\kengine\baseanimation.cpp(133): warning C4018: '>=': signed/unsigned mismatch
-w:\gutland-liberatus\kengine\baseanimation.cpp(134): warning C4018: '<=': signed/unsigned mismatch
-  Generating Code...
-  Kengine.vcxproj -> W:\Gutland-Liberatus\Debug\Kengine.lib
+﻿Build started 2016-04-01 19:06:46.
+     1>Project "E:\Gutland Liberatus\gutland-liberatus\Kengine\Kengine.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         D:\Microsoft Visual Studio\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D SFML_STATIC /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\Kengine.pdb" /Gd /TP /analyze- /errorReport:prompt SpriteSheet.cpp
+         SpriteSheet.cpp
+     1>e:\gutland liberatus\gutland-liberatus\kengine\spritesheet.cpp(38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+       Lib:
+         D:\Microsoft Visual Studio\VC\bin\Lib.exe /OUT:"E:\Gutland Liberatus\gutland-liberatus\Debug\Kengine.lib" /NOLOGO Debug\BaseAnimation.obj
+         Debug\Button.obj
+         Debug\DirectionalAnimation.obj
+         Debug\EventManager.obj
+         Debug\SpriteSheet.obj
+         Debug\Textbox.obj
+         Debug\Window.obj
+         Kengine.vcxproj -> E:\Gutland Liberatus\gutland-liberatus\Debug\Kengine.lib
+     1>Done Building Project "E:\Gutland Liberatus\gutland-liberatus\Kengine\Kengine.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.92

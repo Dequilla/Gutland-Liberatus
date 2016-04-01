@@ -68,7 +68,7 @@ bool SpriteSheet::LoadSheet(const std::string& file)
 			{
 				if (m_texture != "")
 				{
-					std::cerr << "! Duplicate texture entires in: " 
+					std::cerr << "! Duplicate texture entries in: " 
 						<< file << std::endl;
 					continue;
 				}

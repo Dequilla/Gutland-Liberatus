@@ -7,7 +7,7 @@ Map::Map(SharedContext* context, Kengine::BaseState* currentState) :
 	m_loadNextMap(false), m_currentState(currentState)
 {
 	m_context->gameMap = this;
-	LoadTiles("tiles.cfg");
+	LoadTiles("media/Tiles.cfg");
 }
 
 Map::~Map()

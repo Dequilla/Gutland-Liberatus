@@ -209,7 +209,7 @@ namespace Kengine
         std::string delimiter = ":";
         
         std::ifstream bindings;
-        bindings.open("keys.cfg");
+        bindings.open("media/Keys.cfg");
         
         if (!bindings.is_open())
         {
