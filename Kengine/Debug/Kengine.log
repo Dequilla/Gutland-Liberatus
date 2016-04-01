@@ -1,8 +1,10 @@
-﻿  SpriteSheet.cpp
-w:\gutland-liberatus\kengine\spritesheet.cpp(38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  DirectionalAnimation.cpp
-  BaseAnimation.cpp
+﻿  BaseAnimation.cpp
 w:\gutland-liberatus\kengine\baseanimation.cpp(133): warning C4018: '>=': signed/unsigned mismatch
 w:\gutland-liberatus\kengine\baseanimation.cpp(134): warning C4018: '<=': signed/unsigned mismatch
+  Generating Code...
+  Compiling...
+  SpriteSheet.cpp
+w:\gutland-liberatus\kengine\spritesheet.cpp(38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  DirectionalAnimation.cpp
   Generating Code...
   Kengine.vcxproj -> W:\Gutland-Liberatus\Debug\Kengine.lib

@@ -50,6 +50,7 @@ public:
 
 	bool ReleaseResource(const std::string& id)
 	{
+		if (m_resources.size() == 0) { return false; }
 		auto res = Find(id);
 		if (!res) { return false; }
 		--res->second;

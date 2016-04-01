@@ -1,4 +1,7 @@
-﻿  StateManager.cpp
+﻿  Character.cpp
+  Generating Code...
+  Compiling...
+  StateManager.cpp
   Player.cpp
   Map.cpp
 w:\gutland-liberatus\gutlandliberatus\map.cpp(198): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
@@ -25,7 +28,6 @@ w:\gutland-liberatus\gutlandliberatus\entitybase.cpp(171): warning C4244: 'initi
 w:\gutland-liberatus\gutlandliberatus\entitybase.cpp(179): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
 w:\gutland-liberatus\gutlandliberatus\entitybase.cpp(208): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
   Enemy.cpp
-  Character.cpp
   Generating Code...
 sfml-graphics-s-d.lib(BlendMode.cpp.obj) : warning LNK4099: PDB 'vc140.pdb' was not found with 'sfml-graphics-s-d.lib(BlendMode.cpp.obj)' or at 'W:\Gutland-Liberatus\Debug\vc140.pdb'; linking object as if no debug info
 sfml-graphics-s-d.lib(Color.cpp.obj) : warning LNK4099: PDB 'vc140.pdb' was not found with 'sfml-graphics-s-d.lib(Color.cpp.obj)' or at 'W:\Gutland-Liberatus\Debug\vc140.pdb'; linking object as if no debug info
