@@ -2,9 +2,9 @@
 
 #include <Kengine/Window.h>
 #include <Kengine/EventManager.h>
-#include "TextureManager.h"
+#include <Kengine/TextureManager.h>
+#include <Kengine/DebugOverlay.h>
 #include "EntityManager.h"
-#include "DebugOverlay.h"
 
 class Map;
 
@@ -21,9 +21,9 @@ struct SharedContext
 
 	Kengine::Window* window;
 	Kengine::EventManager* eventManager;
-	TextureManager* textureManager;
+	Kengine::TextureManager* textureManager;
+	Kengine::DebugOverlay debugOverlay;
 	EntityManager* entityManager;
 	Map* gameMap;
-	DebugOverlay debugOverlay;
 
 };

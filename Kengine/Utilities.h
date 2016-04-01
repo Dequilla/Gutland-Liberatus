@@ -16,8 +16,6 @@ inline std::string GetWorkingDirectory()
 	if (hModule)
 	{
 		char path[256];
-		// Trying to cast our path into a LPWSTR to see
-		// if it get rids of our problems
 		GetModuleFileName(hModule, path, sizeof(path));
 		PathRemoveFileSpec(path);
 		strcat_s(path, "\\"); // new

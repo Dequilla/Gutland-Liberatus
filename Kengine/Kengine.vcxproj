@@ -141,16 +141,26 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseAnimation.h" />
     <ClInclude Include="BaseState.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="DebugOverlay.h" />
+    <ClInclude Include="Direction.h" />
+    <ClInclude Include="DirectionalAnimation.h" />
     <ClInclude Include="EventManager.h" />
+    <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="SpriteSheet.h" />
     <ClInclude Include="Textbox.h" />
+    <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BaseAnimation.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="DirectionalAnimation.cpp" />
     <ClCompile Include="EventManager.cpp" />
+    <ClCompile Include="SpriteSheet.cpp" />
     <ClCompile Include="Textbox.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>

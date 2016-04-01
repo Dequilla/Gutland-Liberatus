@@ -1,7 +1,9 @@
-﻿  StateManager.cpp
-  SpriteSheet.cpp
-w:\gutland-liberatus\examplegame\spritesheet.cpp(37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Player.cpp
+﻿  Player.cpp
+  Enemy.cpp
+  Character.cpp
+  Generating Code...
+  Compiling...
+  StateManager.cpp
   Map.cpp
 w:\gutland-liberatus\examplegame\map.cpp(198): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
 w:\gutland-liberatus\examplegame\map.cpp(200): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
@@ -26,12 +28,6 @@ w:\gutland-liberatus\examplegame\entitybase.cpp(170): warning C4244: 'initializi
 w:\gutland-liberatus\examplegame\entitybase.cpp(171): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
 w:\gutland-liberatus\examplegame\entitybase.cpp(179): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
 w:\gutland-liberatus\examplegame\entitybase.cpp(208): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-  Enemy.cpp
-  DirectionalAnimation.cpp
-  Character.cpp
-  BaseAnimation.cpp
-w:\gutland-liberatus\examplegame\baseanimation.cpp(131): warning C4018: '>=': signed/unsigned mismatch
-w:\gutland-liberatus\examplegame\baseanimation.cpp(132): warning C4018: '<=': signed/unsigned mismatch
   Generating Code...
 sfml-graphics-s-d.lib(BlendMode.cpp.obj) : warning LNK4099: PDB 'vc140.pdb' was not found with 'sfml-graphics-s-d.lib(BlendMode.cpp.obj)' or at 'W:\Gutland-Liberatus\Debug\vc140.pdb'; linking object as if no debug info
 sfml-graphics-s-d.lib(Color.cpp.obj) : warning LNK4099: PDB 'vc140.pdb' was not found with 'sfml-graphics-s-d.lib(Color.cpp.obj)' or at 'W:\Gutland-Liberatus\Debug\vc140.pdb'; linking object as if no debug info

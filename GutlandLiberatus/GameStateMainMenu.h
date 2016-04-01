@@ -1,9 +1,9 @@
 #pragma once
 
 #include <Kengine/EventManager.h>
+#include <Kengine/BaseState.h>
 #include <Kengine/Button.h>
 
-#include <Kengine/BaseState.h>
 
 class GameStateMainMenu : public Kengine::BaseState
 {

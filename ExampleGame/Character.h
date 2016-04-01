@@ -1,7 +1,7 @@
 #pragma once
 
 #include "EntityBase.h"
-#include "SpriteSheet.h"
+#include <Kengine/SpriteSheet.h>
 
 class Character : public EntityBase
 {
@@ -10,7 +10,7 @@ public:
 	Character(EntityManager* entityManager);
 	virtual ~Character();
 
-	void Move(const Direction& dir);
+	void Move(const Kengine::Direction& dir);
 	void Jump();
 	void Attack();
 	void GetHurt(const int& damage);
@@ -21,7 +21,7 @@ public:
 	void Draw(sf::RenderWindow* window);
 
 protected:
-	SpriteSheet m_spriteSheet;
+	Kengine::SpriteSheet m_spriteSheet;
 	float m_jumpVelocity;
 	int m_hitpoints;
 	sf::FloatRect m_attackAABB;

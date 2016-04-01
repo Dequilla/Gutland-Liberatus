@@ -13,11 +13,11 @@ Character::~Character()
 {
 }
 
-void Character::Move(const Direction& dir)
+void Character::Move(const Kengine::Direction& dir)
 {
 	if (GetState() == EntityState::Dying) { return; }
 	m_spriteSheet.SetDirection(dir);
-	if (dir == Direction::Left) { Accelerate(-m_speed.x, 0); }
+	if (dir == Kengine::Direction::Left) { Accelerate(-m_speed.x, 0); }
 	else { Accelerate(m_speed.x, 0); }
 	if (GetState() == EntityState::Idle) { SetState(EntityState::Walking); }
 
@@ -177,7 +177,7 @@ void Character::Draw(sf::RenderWindow* window)
 void Character::UpdateAttackAABB()
 {
 	m_attackAABB.left =
-		(m_spriteSheet.GetDirection() == Direction::Left ?
+		(m_spriteSheet.GetDirection() == Kengine::Direction::Left ?
 		 (m_AABB.left - m_attackAABB.width) - m_attackAABBoffset.x
 		 : (m_AABB.left + m_AABB.width) + m_attackAABBoffset.x);
 	m_attackAABB.top = m_AABB.top + m_attackAABBoffset.y;

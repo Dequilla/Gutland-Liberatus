@@ -2,9 +2,9 @@
 
 #include <Kengine/Window.h>
 #include <Kengine/EventManager.h>
+#include <Kengine/TextureManager.h>
 
 #include "StateManager.h"
-#include "TextureManager.h"
 #include "EntityManager.h"
 
 #include <iostream>
@@ -32,7 +32,7 @@ public:
 	EntityManager m_entityManager;
     StateManager m_stateManager;
     SharedContext m_context;
-	TextureManager m_textureManager;
+	Kengine::TextureManager m_textureManager;
 
 	void RestartClock() { m_elapsed = m_clock.restart(); }
 };

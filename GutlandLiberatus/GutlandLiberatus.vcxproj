@@ -19,9 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BaseAnimation.cpp" />
     <ClCompile Include="Character.cpp" />
-    <ClCompile Include="DirectionalAnimation.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EntityBase.cpp" />
     <ClCompile Include="EntityManager.cpp" />
@@ -34,15 +32,10 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="SpriteSheet.cpp" />
     <ClCompile Include="StateManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BaseAnimation.h" />
     <ClInclude Include="Character.h" />
-    <ClInclude Include="DebugOverlay.h" />
-    <ClInclude Include="Direction.h" />
-    <ClInclude Include="DirectionalAnimation.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EntityBase.h" />
     <ClInclude Include="EntityManager.h" />
@@ -54,11 +47,8 @@
     <ClInclude Include="GameStateSplashScreen.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SharedContext.h" />
-    <ClInclude Include="SpriteSheet.h" />
     <ClInclude Include="StateManager.h" />
-    <ClInclude Include="TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="keys.cfg" />

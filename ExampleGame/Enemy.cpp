@@ -21,12 +21,12 @@ void Enemy::OnEntityCollision(EntityBase* collider, bool attack)
 	if (m_position.x > player->GetPosition().x)
 	{
 		player->AddVelocity(-m_speed.x, 0);
-		m_spriteSheet.SetDirection(Direction::Left);
+		m_spriteSheet.SetDirection(Kengine::Direction::Left);
 	}
 	else
 	{
 		player->AddVelocity(m_speed.y, 0);
-		m_spriteSheet.SetDirection(Direction::Right);
+		m_spriteSheet.SetDirection(Kengine::Direction::Right);
 	}
 }
 
@@ -44,11 +44,11 @@ void Enemy::Update(float dt)
 
 		if (m_destination.x - m_position.x > 0)
 		{
-			Move(Direction::Right);
+			Move(Kengine::Direction::Right);
 		}
 		else
 		{
-			Move(Direction::Left);
+			Move(Kengine::Direction::Left);
 		}
 
 		if (m_collidingOnX) { m_hasDestination = false; }

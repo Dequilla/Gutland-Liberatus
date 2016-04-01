@@ -64,11 +64,11 @@ void Player::React(Kengine::EventDetails* details)
 	//std::cout << details->m_name << std::endl;
 	if (details->m_name == "Player_MoveLeft")
 	{
-		Character::Move(Direction::Left);
+		Character::Move(Kengine::Direction::Left);
 	}
 	else if (details->m_name == "Player_MoveRight")
 	{
-		Character::Move(Direction::Right);
+		Character::Move(Kengine::Direction::Right);
 	}
 	else if (details->m_name == "Player_Jump")
 	{

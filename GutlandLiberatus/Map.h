@@ -18,7 +18,7 @@ struct TileInfo
 	TileInfo(SharedContext* context, const std::string& texture = "", TileID id = 0) :
 		m_context(context), m_id(0), m_deadly(false)
 	{
-		TextureManager* tMgr = context->textureManager;
+		Kengine::TextureManager* tMgr = context->textureManager;
 		if (texture == "") { m_id = id; return; }
 		if (!tMgr->RequireResource(texture)) { return; }
 
