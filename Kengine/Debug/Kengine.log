@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿Build started 2016-04-01 19:06:46.
      1>Project "E:\Gutland Liberatus\gutland-liberatus\Kengine\Kengine.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
@@ -18,3 +19,15 @@
 Build succeeded.
 
 Time Elapsed 00:00:02.92
+=======
+﻿  BaseAnimation.cpp
+w:\gutland-liberatus\kengine\baseanimation.cpp(133): warning C4018: '>=': signed/unsigned mismatch
+w:\gutland-liberatus\kengine\baseanimation.cpp(134): warning C4018: '<=': signed/unsigned mismatch
+  Generating Code...
+  Compiling...
+  SpriteSheet.cpp
+w:\gutland-liberatus\kengine\spritesheet.cpp(38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  DirectionalAnimation.cpp
+  Generating Code...
+  Kengine.vcxproj -> W:\Gutland-Liberatus\Debug\Kengine.lib
+>>>>>>> 0802e71b5585c7621aba506e6b18a1765a83ce81
