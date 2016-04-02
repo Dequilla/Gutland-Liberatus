@@ -5,6 +5,7 @@
 GameStateSplashScreen::~GameStateSplashScreen()
 {
 	//delete m_spriteSheet;
+	OnDestroy();
 }
 
 void GameStateSplashScreen::OnCreate()
@@ -15,14 +16,18 @@ void GameStateSplashScreen::OnCreate()
 	m_fading = false;
 	m_finished = false;
 
+	sf::Vector2u windowSize = m_stateMgr->GetContext()->
+		window->GetRenderWindow()->getSize();
+
 	m_spriteSheet = new Kengine::SpriteSheet(this->GetStateManager()->GetContext()->textureManager);
 	if (!m_spriteSheet->LoadSheet("media/SpriteSheets/LLISplash.sheet"))
 	{
 		std::cout << "Loading LLISPLASH failed" << std::endl;
 	}
 
-	sf::Vector2u windowSize = m_stateMgr->GetContext()->
-		window->GetRenderWindow()->getSize();
+	m_spriteSheet->SetSpritePosition(sf::Vector2f(windowSize.x / 2.0f, windowSize.y / 1.5f));
+	m_spriteSheet->SetAnimation("Idle", false, false);
+	m_spriteSheet->GetCurrentAnimation()->Reset();
 
 	if (!m_texture.loadFromFile("media/Textures/splashscreen.png"))
 	{
@@ -44,6 +49,7 @@ void GameStateSplashScreen::OnDestroy()
 {
 	Kengine::EventManager* evMgr = m_stateMgr->GetContext()->eventManager;
 	evMgr->RemoveCallback(StateType::SplashScreen, "Intro_Continue");
+	m_spriteSheet->ReleaseSheet();
 }
 
 void GameStateSplashScreen::Activate()
@@ -83,14 +89,10 @@ void GameStateSplashScreen::Update(const sf::Time & time)
 			}
 			else if ((m_opacity == 0) && (m_elapsedTime > 6.0f))
 			{
-				m_splashScreenIndex += 1;
-				m_elapsedTime = 0.0f;
 				//Start animation for next splash
 				m_spriteSheet->SetAnimation("Idle", true, true);
-				auto temp = sf::Vector2f(m_stateMgr->GetContext()->window->GetRenderWindow()->getSize().x,
-										 m_stateMgr->GetContext()->window->GetRenderWindow()->getSize().y);
-				//apperently the origin is wierd in SpriteSheets
-				m_spriteSheet->SetSpritePosition(sf::Vector2f(temp.x/2, temp.y/2 + 200));
+				m_splashScreenIndex += 1;
+				m_elapsedTime = 0.0f;
 			}
 		}
 	}
@@ -127,8 +129,7 @@ void GameStateSplashScreen::Update(const sf::Time & time)
 
 	if (m_finished)
 	{
-		m_stateMgr->SwitchTo(StateType::Intro);
-		m_stateMgr->Remove(StateType::SplashScreen);
+		Continue(0);
 	}
 	m_elapsedTime += time.asSeconds();
 }
@@ -136,8 +137,15 @@ void GameStateSplashScreen::Update(const sf::Time & time)
 void GameStateSplashScreen::Draw()
 {
 	sf::RenderWindow* window = m_stateMgr->GetContext()->window->GetRenderWindow();
-	window->draw(m_sprite);
-	m_spriteSheet->Draw(window);
+	if (m_splashScreenIndex == 0)
+	{
+		window->draw(m_sprite);
+	}
+	if (m_splashScreenIndex != 0)
+	{
+		m_spriteSheet->Draw(window);
+	}
+
 }
 
 void GameStateSplashScreen::Continue(Kengine::EventDetails * details)
