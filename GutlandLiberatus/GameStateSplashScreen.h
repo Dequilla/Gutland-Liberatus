@@ -31,5 +31,6 @@ private:
 	float m_opacityChecker;
 	bool m_fading = false;
 	bool m_finished = false;
+	bool m_secondSplashCheck = false;
 	int m_splashScreenIndex = 0;
 };

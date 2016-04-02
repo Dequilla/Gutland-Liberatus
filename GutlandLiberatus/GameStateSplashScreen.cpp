@@ -84,18 +84,41 @@ void GameStateSplashScreen::Update(const sf::Time & time)
 			else if ((m_opacity == 0) && (m_elapsedTime > 6.0f))
 			{
 				m_splashScreenIndex += 1;
+				m_elapsedTime = 0.0f;
+				//Start animation for next splash
 				m_spriteSheet->SetAnimation("Idle", true, true);
-				m_spriteSheet->SetSpritePosition(sf::Vector2f(400.0f, 640.0f));
+				auto temp = sf::Vector2f(m_stateMgr->GetContext()->window->GetRenderWindow()->getSize().x,
+										 m_stateMgr->GetContext()->window->GetRenderWindow()->getSize().y);
+				//apperently the origin is wierd in SpriteSheets
+				m_spriteSheet->SetSpritePosition(sf::Vector2f(temp.x/2, temp.y/2 + 200));
 			}
 		}
 	}
 	//If splash screen index is 1 do Lonely Lamb Interactive splash
 	else if (m_splashScreenIndex == 1)
 	{
-		//m_splashScreenIndex += 1;
-		//Todo add code for LLI splash
 		m_spriteSheet->Update(time.asSeconds());
-		
+
+		if (m_secondSplashCheck && m_elapsedTime > 7.0f)
+		{
+				///if it has run continue for 5 sec continue
+				this->m_splashScreenIndex += 1;
+				std::cout << "Changing index";
+		}
+
+		//Check everytime the animations stop
+		if (!m_spriteSheet->GetCurrentAnimation()->IsPlaying())
+		{
+			
+			std::cout << m_elapsedTime << std::endl;
+			
+			if (!m_secondSplashCheck)
+			{
+				//If it hasent run yet run it
+				m_spriteSheet->SetAnimation("Walk", true, false);
+				m_secondSplashCheck = true;
+			}
+		}
 	}
 	else
 	{
