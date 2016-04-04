@@ -1,6 +1,0 @@
-Texture LLISheet
-Size 640 400
-Scale 1.0 1.0
-|Type|Name|StartFrame|EndFrame|Row|FrameTime|FrameActionStart|FrameActionEnd|
-AnimationType Directional
-Animation Idle 0 21 0 0.1 -1 -1

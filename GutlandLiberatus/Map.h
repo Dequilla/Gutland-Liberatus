@@ -36,6 +36,7 @@ struct TileInfo
 
 		m_texture = texture;
 		m_id = id;
+
 		m_sprite.setTexture(*tMgr->GetResource(m_texture));
 
 		sf::IntRect tileBoundaries(m_id % (sheetWidth / tileWidth) * tileWidth,
