@@ -7,7 +7,7 @@ Map::Map(SharedContext* context, Kengine::BaseState* currentState) :
 	m_loadNextMap(false), m_currentState(currentState)
 {
 	m_context->gameMap = this;
-	LoadTiles("media/Tiles.cfg");
+//	LoadTiles("media/Tiles.cfg");
 }
 
 Map::~Map()
@@ -50,113 +50,32 @@ const sf::Vector2f& Map::GetPlayerStart() const
 
 void Map::LoadMap(const std::string& path)
 {
-	std::ifstream mapFile;
-	mapFile.open(path);
-	if (!mapFile.is_open()) { std::cout << "! Failed loading map file: " << path << std::endl; return; }
-	EntityManager* entityMgr = m_context->entityManager;
-	std::string line;
 	std::cout << "--- Loading a map: " << path << std::endl;
 
-	int playerId = -1;
-	while (std::getline(mapFile, line))
+	TiXmlDocument mapDocument;
+	mapDocument.LoadFile(path);
+
+	TiXmlElement* root = mapDocument.RootElement();
+
+	root->Attribute("tilewidth", &m_tileSize);
+	root->Attribute("width", &m_mapWidth);
+	root->Attribute("height", &m_mapHeight);
+
+	for (TiXmlElement* e = root->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
-		if (line[0] == '|') { continue; }
-		std::stringstream keystream(line);
-		std::string type;
-		keystream >> type;
-		if (type == "TILE")
+		if (e->Value() == std::string("tileset"))
 		{
-			int tileId = 0;
-			keystream >> tileId;
-			if (tileId < 0) { std::cout << "! Bad tile id: " << tileId << std::endl; continue; }
-			auto itr = m_tileSet.find(tileId);
-			if (itr == m_tileSet.end()) { std::cout << "! Tile id(" << tileId << ") was not found in tileset." << std::endl; continue; }
-			sf::Vector2u tileCoords; // Vector2i
-			keystream >> tileCoords.x >> tileCoords.y;
-			if (tileCoords.x > m_maxMapSize.x || tileCoords.y > m_maxMapSize.y)
-			{
-				std::cout << "! Tile is out of range: " << tileCoords.x << " " << tileCoords.y << std::endl;
-				continue;
-			}
-			Tile* tile = new Tile();
-			// Bind properties of a tile from a set.
-			tile->properties = itr->second;
-			if (!m_tileMap.emplace(ConvertCoords(tileCoords.x, tileCoords.y), tile).second)
-			{
-				// Duplicate tile detected!
-				std::cout << "! Duplicate tile! : " << tileCoords.x
-					<< "" << tileCoords.y << std::endl;
-				delete tile;
-				tile = nullptr;
-				continue;
-			}
-			std::string warp;
-			keystream >> warp;
-			tile->warp = false;
-			if (warp == "WARP") { tile->warp = true; }
-		}
-		else if (type == "BACKGROUND")
-		{
-			if (m_backgroundTexture != "") { continue; }
-			keystream >> m_backgroundTexture;
-			if (!m_context->textureManager->RequireResource(m_backgroundTexture))
-			{
-				m_backgroundTexture = "";
-				continue;
-			}
-			sf::Texture* texture = m_context->textureManager->GetResource(m_backgroundTexture);
-			m_background.setTexture(*texture);
-			sf::Vector2f viewSize = m_currentState->GetView().getSize();
-			sf::Vector2u textureSize = texture->getSize();
-			sf::Vector2f scaleFactors;
-			scaleFactors.x = viewSize.x / textureSize.x;
-			scaleFactors.y = viewSize.y / textureSize.y;
-			m_background.setScale(scaleFactors);
-		}
-		else if (type == "SIZE")
-		{
-			keystream >> m_maxMapSize.x >> m_maxMapSize.y;
-		}
-		else if (type == "GRAVITY")
-		{
-			keystream >> m_mapGravity;
-		}
-		else if (type == "DEFAULT_FRICTION")
-		{
-			keystream >> m_defaultTile.m_friction.x >> m_defaultTile.m_friction.y;
-		}
-		else if (type == "NEXTMAP")
-		{
-			keystream >> m_nextMap;
-		}
-		else if (type == "PLAYER")
-		{
-			if (playerId != -1) { continue; }
-			// Set up the player position here.
-			playerId = entityMgr->Add(EntityType::Player);
-			if (playerId < 0) { continue; }
-			float playerX = 0; float playerY = 0;
-			keystream >> playerX >> playerY;
-			entityMgr->Find(playerId)->SetPosition(playerX, playerY);
-			m_playerStart = sf::Vector2f(playerX, playerY);
-		}
-		else if (type == "ENEMY")
-		{
-			std::string enemyName;
-			keystream >> enemyName;
-			int enemyId = entityMgr->Add(EntityType::Enemy, enemyName);
-			if (enemyId < 0) { continue; }
-			float enemyX = 0; float enemyY = 0;
-			keystream >> enemyX >> enemyY;
-			entityMgr->Find(enemyId)->SetPosition(enemyX, enemyY);
-		}
-		else
-		{
-			// Something else.
-			std::cout << "! Unknown type \"" << type << "\"." << std::endl;
+			LoadTiles(e);
 		}
 	}
-	mapFile.close();
+
+	for (TiXmlElement* e = root->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
+	{
+		if (e->Value() == std::string("layer"))
+		{
+			ParseTileLayer(e);
+		}
+	}
 	std::cout << "--- Map Loaded! ---" << std::endl;
 }
 
@@ -258,17 +177,109 @@ void Map::LoadTiles(const std::string& path)
 		int tileId;
 		keystream >> tileId;
 		if (tileId < 0) { continue; }
-		TileInfo* tile = new TileInfo(m_context, "TileSheet", tileId);
-		keystream >> tile->m_name >> tile->m_friction.x >> tile->m_friction.y >> tile->m_deadly;
+		TileInfo* tile = new TileInfo(m_context);
+		tile->CreateTile("TileSheet", tileId);
+		keystream >> tile->name >> tile->m_friction.x >> tile->m_friction.y >> tile->m_deadly;
 
 		if (!m_tileSet.emplace(tileId, tile).second)
 		{
 			// Duplicate tile detected!
-			std::cout << "Duplicate tile type: " << tile->m_name << std::endl;
+			std::cout << "Duplicate tile type: " << tile->name << std::endl;
 			delete tile;
 		}
 	}
 	file.close();
+}
+
+void Map::LoadTiles(TiXmlElement* tilesetRoot)
+{
+	std::cout << "Loading tiles" << std::endl;
+
+	TileInfo tile = TileInfo(m_context);
+
+	tilesetRoot->Attribute("tilecount", &m_tileCount);
+
+	for (int i = 0; i < m_tileCount; i++)
+	{
+		TileInfo* tileinfo = new TileInfo(m_context);
+
+		tilesetRoot->Attribute("firstgid", &tileinfo->firstGridID);
+		tilesetRoot->Attribute("tilewidth", &tileinfo->tileWidth);
+		tilesetRoot->Attribute("tileheight", &tileinfo->tileHeight);
+		tilesetRoot->Attribute("spacing", &tileinfo->spacing);
+		tilesetRoot->Attribute("margin", &tileinfo->margin);
+		tilesetRoot->Attribute("columns", &tileinfo->numColumns);
+		tilesetRoot->FirstChildElement()->Attribute("width", &tileinfo->sheetWidth);
+		tilesetRoot->FirstChildElement()->Attribute("height", &tileinfo->sheetHeight);
+		tileinfo->name = tilesetRoot->Attribute("name");
+
+		if (tileinfo->margin < 0) { tileinfo->margin = 0; }
+		if (tileinfo->spacing < 0) { tileinfo->spacing = 0; }
+
+		tileinfo->CreateTile(tileinfo->name, i);
+
+		if (!m_tileSet.emplace(i, tileinfo).second)
+		{
+			std::cout << "Duplicate tile type: " << i << std::endl;
+		}
+	}
+}
+
+void Map::ParseTileLayer(TiXmlElement* tileElement)
+{
+	// TODO(Richard) - Extend this function in order for
+	// us to parse multiple tile layers
+
+	// Search for the node we need
+	for (TiXmlElement* e = tileElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
+	{
+		if (e->Value() == std::string("data"))
+		{
+			ParseTilePositions(e);
+
+		}
+	}
+}
+
+void Map::ParseTilePositions(TiXmlElement * tileData)
+{
+	int x = 0, y = 0;
+
+	for (TiXmlElement* e = tileData->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
+	{
+		if (x >= m_mapWidth)
+		{
+			x = 0;
+			++y;
+		}
+		if (e->Value() == std::string("tile"))
+		{
+
+			int tileID = 0;
+			e->Attribute("gid", &tileID);
+
+			tileID--;
+
+			if (tileID < 0) { ++x; continue; }
+
+			auto itr = m_tileSet.find(tileID);
+
+			Tile* tile = new Tile();
+
+			tile->properties = itr->second;
+
+			if (!m_tileMap.emplace(ConvertCoords(x, y), tile).second)
+			{
+				// Duplicate tile detected!
+				std::cout << "! Duplicate tile! : " << x
+					<< "" << y << std::endl;
+				delete tile;
+				tile = nullptr;
+				continue;
+			}
+			++x;
+		}
+	}
 }
 
 void Map::PurgeMap()

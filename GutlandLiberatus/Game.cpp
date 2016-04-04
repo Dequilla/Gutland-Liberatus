@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game::Game() : m_window("AGE - Tilemap and Spritesheet test", sf::Vector2u(1280, 720)),
+Game::Game() : m_window("Gutland Liberatus", sf::Vector2u(1280, 720)),
 m_stateManager(&m_context), m_entityManager(&m_context, 100)
 {
 	m_clock.restart();

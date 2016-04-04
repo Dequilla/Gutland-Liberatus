@@ -7,6 +7,7 @@
 
 GameStateIntro::~GameStateIntro()
 {
+	OnDestroy();
 }
 
 void GameStateIntro::OnCreate()

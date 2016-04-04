@@ -6,6 +6,7 @@ GameStateGame::GameStateGame(StateManager* stateManager) : Kengine::BaseState(st
 
 GameStateGame::~GameStateGame()
 {
+	OnDestroy();
 }
 
 void GameStateGame::OnCreate()
@@ -26,7 +27,7 @@ void GameStateGame::OnCreate()
 	m_stateMgr->GetContext()->window->GetRenderWindow()->setView(m_view);
 
 	m_gameMap = new Map(m_stateMgr->GetContext(), this);
-	m_gameMap->LoadMap("media/Maps/map1.map");
+	m_gameMap->LoadMap("media/Maps/test.tmx");
 }
 
 void GameStateGame::OnDestroy()

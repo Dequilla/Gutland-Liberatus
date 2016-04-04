@@ -1,1 +1,12 @@
-﻿  Kengine.vcxproj -> W:\Testprojects\Gutland-Liberatus\Debug\Kengine.lib
+﻿  Window.cpp
+  Textbox.cpp
+  SpriteSheet.cpp
+w:\gutland-liberatus\kengine\spritesheet.cpp(38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  EventManager.cpp
+  DirectionalAnimation.cpp
+  Button.cpp
+  BaseAnimation.cpp
+w:\gutland-liberatus\kengine\baseanimation.cpp(133): warning C4018: '>=': signed/unsigned mismatch
+w:\gutland-liberatus\kengine\baseanimation.cpp(134): warning C4018: '<=': signed/unsigned mismatch
+  Generating Code...
+  Kengine.vcxproj -> W:\Gutland-Liberatus\Debug\Kengine.lib

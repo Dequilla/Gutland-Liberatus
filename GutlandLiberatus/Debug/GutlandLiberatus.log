@@ -1,3 +1,20 @@
-﻿  GameStateSplashScreen.cpp
-  GutlandLiberatus.vcxproj -> W:\Testprojects\Gutland-Liberatus\Debug\GutlandLiberatus.exe
-  GutlandLiberatus.vcxproj -> W:\Testprojects\Gutland-Liberatus\Debug\GutlandLiberatus.pdb (Partial PDB)
+﻿  Map.cpp
+w:\gutland-liberatus\gutlandliberatus\map.cpp(117): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+w:\gutland-liberatus\gutlandliberatus\map.cpp(119): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+w:\gutland-liberatus\gutlandliberatus\map.cpp(130): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+w:\gutland-liberatus\gutlandliberatus\map.cpp(141): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  StateManager.cpp
+  Player.cpp
+  Main.cpp
+  GameStateSplashScreen.cpp
+  GameStatePaused.cpp
+  GameStateMainMenu.cpp
+  GameStateIntro.cpp
+  GameStateGame.cpp
+  Game.cpp
+  EntityBase.cpp
+  Character.cpp
+  GutlandLiberatus.vcxproj -> W:\Gutland-Liberatus\Debug\GutlandLiberatus.exe
+  GutlandLiberatus.vcxproj -> W:\Gutland-Liberatus\Debug\GutlandLiberatus.pdb (Partial PDB)

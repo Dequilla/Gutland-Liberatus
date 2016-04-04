@@ -3,6 +3,7 @@
 
 GameStatePaused::~GameStatePaused()
 {
+	OnDestroy();
 }
 
 void GameStatePaused::OnCreate()

@@ -3,6 +3,7 @@
 
 GameStateMainMenu::~GameStateMainMenu()
 {
+	OnDestroy();
 }
 
 void GameStateMainMenu::OnCreate()
