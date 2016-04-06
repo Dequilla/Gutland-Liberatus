@@ -1,5 +1,6 @@
 #include "Map.h"
 #include "StateManager.h"
+#include "TileLayer.h"
 
 Map::Map(SharedContext* context, Kengine::BaseState* currentState) :
 	m_context(context), m_defaultTile(context), m_maxMapSize(32, 32),
@@ -18,7 +19,8 @@ Map::~Map()
 }
 
 Tile* Map::GetTile(unsigned int x, unsigned int y)
-{
+{	
+	// Needs to search in the layer tilemap
 	auto itr = m_tileMap.find(ConvertCoords(x, y));
 	return(itr != m_tileMap.end() ? itr->second : nullptr);
 }
@@ -61,6 +63,9 @@ void Map::LoadMap(const std::string& path)
 	root->Attribute("width", &m_mapWidth);
 	root->Attribute("height", &m_mapHeight);
 
+	m_maxMapSize.x = m_mapWidth;
+	m_maxMapSize.y = m_mapHeight;
+
 	for (TiXmlElement* e = root->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
 		if (e->Value() == std::string("tileset"))
@@ -73,6 +78,7 @@ void Map::LoadMap(const std::string& path)
 	{
 		if (e->Value() == std::string("layer"))
 		{
+			m_layerName = e->Attribute("name");
 			ParseTileLayer(e);
 		}
 	}
@@ -102,11 +108,21 @@ void Map::Update(float dt)
 	}
 	sf::FloatRect viewSpace = m_context->window->GetViewSpace();
 	m_background.setPosition(viewSpace.left, viewSpace.top);
+
+	for (int i = 0; i < m_layers.size(); ++i)
+	{
+		m_layers[i]->Update();
+	}
 }
 
 void Map::Draw()
 {
-	sf::RenderWindow* window = m_context->window->GetRenderWindow();
+	for (int i = 0; i < m_layers.size(); ++i)
+	{
+		m_layers[i]->Draw();
+	}
+
+/*	sf::RenderWindow* window = m_context->window->GetRenderWindow();
 	window->draw(m_background);
 
 	// These 3 lines of code makes sure that anything
@@ -152,7 +168,7 @@ void Map::Draw()
 			}
 			// End debug.
 		}
-	}
+	}*/
 }
 
 unsigned int Map::ConvertCoords(unsigned int x, unsigned int y)
@@ -230,18 +246,21 @@ void Map::ParseTileLayer(TiXmlElement* tileElement)
 	// TODO(Richard) - Extend this function in order for
 	// us to parse multiple tile layers
 
+	TileLayer* layer = new TileLayer(m_context, &m_tileSet, m_layerName);
+
 	// Search for the node we need
 	for (TiXmlElement* e = tileElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
 		if (e->Value() == std::string("data"))
 		{
-			ParseTilePositions(e);
-
+//			ParseTilePositions(e);
+			layer->CreateLayer(e, m_mapWidth);
 		}
 	}
+	m_layers.push_back(layer);
 }
 
-void Map::ParseTilePositions(TiXmlElement * tileData)
+void Map::ParseTilePositions(TiXmlElement* tileData)
 {
 	int x = 0, y = 0;
 

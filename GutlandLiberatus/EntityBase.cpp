@@ -1,6 +1,7 @@
 #include "EntityBase.h"
 #include "EntityManager.h"
 #include "SharedContext.h"
+#include "Layer.h"
 #include "Map.h"
 
 bool SortCollisions(const CollisionElement& first, const CollisionElement& second)
@@ -164,28 +165,36 @@ void EntityBase::UpdateAABB()
 void EntityBase::CheckCollisions()
 {
 	Map* gameMap = m_entityManager->GetContext()->gameMap;
+	std::vector<Layer*>* mapLayer = m_entityManager->GetContext()->gameMap->GetLayers();
 	unsigned int tileSize = gameMap->GetTileSize();
 	int fromX = floor(m_AABB.left / tileSize);
 	int toX = floor((m_AABB.left + m_AABB.width) / tileSize);
 	int fromY = floor(m_AABB.top / tileSize);
 	int toY = floor((m_AABB.top + m_AABB.height) / tileSize);
 
-	for (int x = fromX; x <= toX; ++x)
+	for (auto itr = mapLayer->begin(); itr != mapLayer->end(); ++itr)
 	{
-		for (int y = fromY; y <= toY; ++y)
+		std::string layerName = (*itr)->GetLayerName();
+		if (layerName == std::string("collision"))
 		{
-			Tile* tile = gameMap->GetTile(x, y);
-			if (!tile) { continue; }
-			sf::FloatRect tileBounds(x * tileSize, y * tileSize, tileSize, tileSize);
-			sf::FloatRect intersection;
-			m_AABB.intersects(tileBounds, intersection);
-			float area = intersection.width * intersection.height;
-
-			CollisionElement e(area, tile->properties, tileBounds);
-			m_collisions.emplace_back(e);
-			if (tile->warp && m_type == EntityType::Player)
+			for (int x = fromX; x <= toX; ++x)
 			{
-				gameMap->LoadNext();
+				for (int y = fromY; y <= toY; ++y)
+				{
+					Tile* tile = (*itr)->GetTile(x, y);
+					if (!tile) { continue; }
+					sf::FloatRect tileBounds(x * tileSize, y * tileSize, tileSize, tileSize);
+					sf::FloatRect intersection;
+					m_AABB.intersects(tileBounds, intersection);
+					float area = intersection.width * intersection.height;
+
+					CollisionElement e(area, tile->properties, tileBounds);
+					m_collisions.emplace_back(e);
+					if (tile->warp && m_type == EntityType::Player)
+					{
+						gameMap->LoadNext();
+					}
+				}
 			}
 		}
 	}

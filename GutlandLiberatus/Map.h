@@ -10,6 +10,8 @@
 #include "SharedContext.h"
 #include "tinyxml.h"
 
+class Layer;
+
 enum Sheet{ Tile_Size = 32, Sheet_Width = 256, Sheet_Height = 256 };
 
 using TileID = unsigned int;
@@ -88,6 +90,7 @@ public:
 	Tile* GetTile(unsigned int x, unsigned int y);
 	TileInfo* GetDefaultTile();
 	float GetGravity() const;
+	std::vector<Layer*>* GetLayers() { return &m_layers; }
 	unsigned int GetTileSize() const;
 	const sf::Vector2u& GetMapSize() const;
 	const sf::Vector2f& GetPlayerStart() const;
@@ -98,28 +101,35 @@ public:
 	void Update(float dt);
 	void Draw();
 
+	// Method for converting 2D coordinates to 1D ints.
+	unsigned int ConvertCoords(unsigned int x, unsigned int y);
+
 private:
 	TileSet m_tileSet;
 	TileMap m_tileMap;
+	TileInfo m_defaultTile; 
+
 	sf::Sprite m_background;
-	TileInfo m_defaultTile; // Should this be a pointer or not?
 	sf::Vector2u m_maxMapSize;
 	sf::Vector2f m_playerStart;
-	int m_tileCount;
-	unsigned int m_tileSetCount;
-	float m_mapGravity;
+	
 	std::string m_nextMap;
-	bool m_loadNextMap;
 	std::string m_backgroundTexture;
+	std::string m_layerName;
+
+	std::vector<Layer*> m_layers;
+
+	bool m_loadNextMap;
 	Kengine::BaseState* m_currentState;
 	SharedContext* m_context;
 
+	int m_tileCount;
 	int m_tileSize;
 	int m_mapWidth;
 	int m_mapHeight;
+	float m_mapGravity;
+	unsigned int m_tileSetCount;
 
-	// Method for converting 2D coordinates to 1D ints.
-	unsigned int ConvertCoords(unsigned int x, unsigned int y);
 	void LoadTiles(const std::string& path);
 	void LoadTiles(TiXmlElement* tilesetRoot);
 	void ParseTileLayer(TiXmlElement* tileElement);

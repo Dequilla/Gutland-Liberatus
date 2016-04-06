@@ -33,6 +33,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="StateManager.cpp" />
+    <ClCompile Include="TileLayer.cpp" />
     <ClCompile Include="tinystr.cpp" />
     <ClCompile Include="tinyxml.cpp" />
     <ClCompile Include="tinyxmlerror.cpp" />
@@ -49,10 +50,12 @@
     <ClInclude Include="GameStateMainMenu.h" />
     <ClInclude Include="GameStatePaused.h" />
     <ClInclude Include="GameStateSplashScreen.h" />
+    <ClInclude Include="Layer.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SharedContext.h" />
     <ClInclude Include="StateManager.h" />
+    <ClInclude Include="TileLayer.h" />
     <ClInclude Include="tinystr.h" />
     <ClInclude Include="tinyxml.h" />
   </ItemGroup>
