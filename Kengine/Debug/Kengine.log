@@ -1,8 +1,0 @@
-﻿  BaseAnimation.cpp
-w:\gutland-liberatus\kengine\baseanimation.cpp(133): warning C4018: '>=': signed/unsigned mismatch
-w:\gutland-liberatus\kengine\baseanimation.cpp(134): warning C4018: '<=': signed/unsigned mismatch
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  SpriteSheet.cpp
-  DirectionalAnimation.cpp
-  Kengine.vcxproj -> W:\Gutland-Liberatus\Debug\Kengine.lib
