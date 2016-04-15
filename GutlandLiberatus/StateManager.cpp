@@ -8,6 +8,7 @@ m_shared(shared)
     RegisterState<GameStateMainMenu>(StateType::MainMenu);
 	RegisterState<GameStateGame>(StateType::Game);
     RegisterState<GameStatePaused>(StateType::Paused);
+	RegisterState<GameStateOptionsMenu>(StateType::Options);
 }
 
 StateManager::~StateManager()

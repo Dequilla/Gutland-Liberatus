@@ -4,6 +4,8 @@
 #include <Kengine/EventManager.h>
 #include <Kengine/TextureManager.h>
 
+#include <Kengine/Kopter.h>
+
 #include "StateManager.h"
 #include "EntityManager.h"
 
@@ -29,6 +31,8 @@ public:
     sf::Clock m_clock;
     sf::Time m_elapsed;
     
+	Kengine::Kopter m_options;
+
 	EntityManager m_entityManager;
     StateManager m_stateManager;
     SharedContext m_context;

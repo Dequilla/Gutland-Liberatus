@@ -3,12 +3,14 @@
 #include <Kengine/EventManager.h>
 #include <Kengine/BaseState.h>
 #include <Kengine/Button.h>
+#include <Kengine/ButtonContainer.h>
 
 
 class GameStateMainMenu : public Kengine::BaseState
 {
 public:
 	using BaseState::BaseState;
+	GameStateMainMenu(StateManager* stateManager);
 	~GameStateMainMenu();
 
 	void OnCreate();
@@ -22,23 +24,18 @@ public:
 	void KeyUp(Kengine::EventDetails* details);
 	void KeyDown(Kengine::EventDetails* details);
 	void KeyEnter(Kengine::EventDetails* details);
+
+	void checkButtons();
+
 private:
 	sf::Text m_text;
 	sf::Font m_font;
 	sf::Texture m_textureBackground;
 	sf::Sprite m_spriteBackground;
 
-	Kengine::Button m_buttonStartGame;
-	Kengine::Button m_buttonCredits;
-	Kengine::Button m_buttonExitGame;
-	Kengine::Button m_buttons[3] = { m_buttonStartGame, m_buttonCredits, m_buttonExitGame };
-
-	int m_currentChoice = 0;
+	Kengine::ButtonContainer m_buttons;
 
 	sf::Vector2f m_buttonSize;
 	sf::Vector2f m_buttonPos;
-	unsigned int m_buttonPadding;
-
-	sf::RectangleShape m_rects[3];
-	sf::Text m_labels[3];
+	unsigned int m_buttonPadding;   
 };

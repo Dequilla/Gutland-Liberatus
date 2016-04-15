@@ -5,6 +5,7 @@
 #include <Kengine/TextureManager.h>
 #include <Kengine/DebugOverlay.h>
 #include "EntityManager.h"
+#include <Kengine/Kopter.h>
 
 class Map;
 
@@ -15,7 +16,8 @@ struct SharedContext
 		eventManager(nullptr),
 		textureManager(nullptr),
 		entityManager(nullptr),
-		gameMap(nullptr)
+		gameMap(nullptr),
+		optionsManager(nullptr)
 	{
 	}
 
@@ -25,5 +27,6 @@ struct SharedContext
 	Kengine::DebugOverlay debugOverlay;
 	EntityManager* entityManager;
 	Map* gameMap;
+	Kengine::Kopter* optionsManager;
 
 };

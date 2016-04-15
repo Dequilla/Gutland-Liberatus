@@ -24,6 +24,7 @@ public:
 	void SetSpriteSize(const sf::Vector2i& size);
 	void SetSpritePosition(const sf::Vector2f& pos);
 	void SetDirection(const Direction& dir);
+	void SetSpriteFrame(const int& frame);
 
 	bool LoadSheet(const std::string& file);
 	void ReleaseSheet();

@@ -50,6 +50,11 @@ void SpriteSheet::SetDirection(const Direction& dir)
 	m_animationCurrent->CropSprite();
 }
 
+void SpriteSheet::SetSpriteFrame(const int& frame)
+{
+	CropSprite(sf::IntRect(m_spriteSize.x * frame, 0, m_spriteSize.x, m_spriteSize.y));
+}
+
 bool SpriteSheet::LoadSheet(const std::string& file)
 {
 	std::ifstream sheet;

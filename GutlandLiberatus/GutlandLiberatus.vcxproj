@@ -27,6 +27,7 @@
     <ClCompile Include="GameStateGame.cpp" />
     <ClCompile Include="GameStateIntro.cpp" />
     <ClCompile Include="GameStateMainMenu.cpp" />
+    <ClCompile Include="GameStateOptionsMenu.cpp" />
     <ClCompile Include="GameStatePaused.cpp" />
     <ClCompile Include="GameStateSplashScreen.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -48,6 +49,7 @@
     <ClInclude Include="GameStateGame.h" />
     <ClInclude Include="GameStateIntro.h" />
     <ClInclude Include="GameStateMainMenu.h" />
+    <ClInclude Include="GameStateOptionsMenu.h" />
     <ClInclude Include="GameStatePaused.h" />
     <ClInclude Include="GameStateSplashScreen.h" />
     <ClInclude Include="Layer.h" />

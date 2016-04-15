@@ -56,7 +56,7 @@ namespace Kengine
                 EventType sfmlEvent = (EventType)event.type;
                 if (e_itr.first != sfmlEvent) { continue; }
                 if (sfmlEvent == EventType::KeyDown ||
-                        sfmlEvent == EventType::KeyUp)
+                    sfmlEvent == EventType::KeyUp)
                 {
                     if (e_itr.second.m_code == event.key.code)
                     {
