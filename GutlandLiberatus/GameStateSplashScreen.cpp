@@ -133,7 +133,7 @@ void GameStateSplashScreen::Update(const sf::Time & time)
 
 	if (m_finished)
 	{
-		Continue();
+		//Continue();
 	}
 	m_elapsedTime += time.asSeconds();
 }

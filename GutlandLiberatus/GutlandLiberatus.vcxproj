@@ -24,6 +24,7 @@
     <ClCompile Include="EntityBase.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameStateCombat.cpp" />
     <ClCompile Include="GameStateGame.cpp" />
     <ClCompile Include="GameStateIntro.cpp" />
     <ClCompile Include="GameStateMainMenu.cpp" />
@@ -46,6 +47,7 @@
     <ClInclude Include="EntityBase.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameStateCombat.h" />
     <ClInclude Include="GameStateGame.h" />
     <ClInclude Include="GameStateIntro.h" />
     <ClInclude Include="GameStateMainMenu.h" />

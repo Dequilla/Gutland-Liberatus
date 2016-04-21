@@ -39,13 +39,14 @@ void GameStateMainMenu::OnCreate()
 	m_buttonPos = sf::Vector2f(windowSize.x / 2.4f, 200.0f);
 	m_buttonPadding = 4;
 
-	std::string str[4];
+	std::string str[5];
 	str[0] = "PLAY";
 	str[1] = "CREDITS";
 	str[2] = "OPTIONS";
 	str[3] = "EXIT";
+	str[4] = "COMBAT TEST";
 
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < 5; ++i)
 	{
 		sf::Vector2f buttonPosition(m_buttonPos.x, m_buttonPos.y + (i * (m_buttonSize.y + m_buttonPadding)));	
 		m_buttons.addButton(str[i], buttonPosition, m_buttonSize, sf::Color(0, 0, 0, 255), sf::Color(148, 58, 13, 255), sf::Color(173, 89, 47, 255));
@@ -140,5 +141,9 @@ void GameStateMainMenu::checkButtons()
 	else if (active == "EXIT")
 	{
 		m_stateMgr->GetContext()->window->Close();
+	}
+	else if (active == "COMBAT TEST")
+	{
+		m_stateMgr->SwitchTo(StateType::Combat);
 	}
 }

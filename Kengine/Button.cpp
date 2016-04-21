@@ -175,6 +175,6 @@ namespace Kengine
 	{
 		states.transform *= getTransform();
 		target.draw(m_body, states);
-  		target.draw(m_text, states);
-	}
-}
+      		target.draw(m_text, states);
+	} 
+}    
