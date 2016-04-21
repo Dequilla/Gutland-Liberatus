@@ -4,6 +4,8 @@
 #include <Kengine/BaseState.h>
 #include <Kengine/ButtonContainer.h>
 
+#include "CombatEnemy.h"
+
 #include "Map.h"
 
 class GameStateCombat : public Kengine::BaseState
@@ -32,11 +34,20 @@ private:
 	sf::Texture m_portraitTexture;
 	sf::Sprite m_portrait;
 
-	sf::Sprite m_portraitFrame;
-	sf::Sprite m_bottomFrame;
 	sf::Texture m_portraitFrameTexture;
+	sf::Sprite m_portraitFrame;
+
 	sf::Texture m_bottomFrameTexture;
+	sf::Sprite m_bottomFrame;
 
 	sf::Texture m_backgroundTexture;
 	sf::Sprite m_background;
+
+	sf::Font m_steamwreckFont;
+	sf::Text m_healthText;
+	sf::Text m_meleeHitChanceText;
+	sf::Text m_rangeHitChanceText;
+	sf::Text m_evasionText;
+
+	CombatEnemy m_enemyOne;
 };

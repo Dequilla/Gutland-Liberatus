@@ -33,8 +33,8 @@ void GameStateCombat::OnCreate()
 	//Portrait is static for now
 	m_portraitTexture.loadFromFile("media/Textures/placeholderport.png");
 	m_portrait.setTexture(m_portraitTexture);
-	m_portrait.setPosition(sf::Vector2f(510.f, 540.f));
-	m_portrait.setScale(sf::Vector2f(4.6f, 4.6f));   
+	m_portrait.setPosition(sf::Vector2f(520.f, 540.f));
+	m_portrait.setScale(sf::Vector2f(5.1f, 5.1f));   
 	
 	//Portraitframe is static dont move
 	m_portraitFrameTexture.loadFromFile("media/Textures/portraitFrame.png");
@@ -48,13 +48,40 @@ void GameStateCombat::OnCreate()
 	m_bottomFrame.setPosition(sf::Vector2f(0.f, 520.f));
 	m_bottomFrame.setScale(sf::Vector2f(18.3f, 3.0f));
 
+	//Health text and font
+	m_steamwreckFont.loadFromFile("media/Fonts/Steamwreck.otf");
+	m_healthText.setFont(m_steamwreckFont);
+	m_healthText.setPosition(sf::Vector2f(50.f, 560.f));
+	m_healthText.setString(sf::String("HEALTH: 1337"));
+	m_healthText.setCharacterSize(38);
+	m_healthText.setColor(sf::Color(20, 20, 20, 255));
+
+	//Hitchance text
+	m_meleeHitChanceText.setFont(m_steamwreckFont);
+	m_rangeHitChanceText.setFont(m_steamwreckFont);
+	m_meleeHitChanceText.setPosition(sf::Vector2f(50.f, 590.f));
+	m_rangeHitChanceText.setPosition(sf::Vector2f(50.f, 620.f));
+	m_meleeHitChanceText.setString(sf::String("ME. HIT: 0%"));
+	m_rangeHitChanceText.setString(sf::String("RA. HIT: 100%"));
+	m_meleeHitChanceText.setCharacterSize(38);
+	m_rangeHitChanceText.setCharacterSize(38);
+	m_meleeHitChanceText.setColor(sf::Color(20, 20, 20, 255));
+	m_rangeHitChanceText.setColor(sf::Color(20, 20, 20, 255));
+
+	//Evasion text
+	m_evasionText.setFont(m_steamwreckFont);
+	m_evasionText.setPosition(sf::Vector2f(50.f, 650.f));
+	m_evasionText.setCharacterSize(38);
+	m_evasionText.setString("EVASION: 50%");
+	m_evasionText.setColor(sf::Color(20, 20, 20, 255));
+	
 	std::string buttonString[3];
 	buttonString[0] = "FIGHT";
 	buttonString[1] = "ACTION";
 	buttonString[2] = "ESCAPE";
 	for (int i = 0; i < 3; i++)
 	{
-		m_buttons.addButton(buttonString[i], sf::Vector2f(700.f, 542.f + (58.f * i)), sf::Vector2f(200.f, 55.f), sf::Color(255, 255, 255, 255), sf::Color(50, 50, 50, 255), sf::Color(20, 20, 20, 255));
+		m_buttons.addButton(buttonString[i], sf::Vector2f(700.f, 542.f + (58.f * i)), sf::Vector2f(200.f, 55.f), sf::Color(20, 20, 20, 255), sf::Color(50, 50, 50, 255), sf::Color(70, 70, 70, 255));
 	}
 }
 
@@ -90,13 +117,20 @@ void GameStateCombat::Draw()
 
 	window->draw(m_background);
 
-	m_stateMgr->GetContext()->entityManager->Draw();
-	//m_frame.Draw(window);
+	window->draw(m_enemyOne.getHightlightSprite());
+	window->draw(m_enemyOne.getSprite());
+
 	window->draw(m_bottomFrame);
 
 	m_buttons.draw();
 	window->draw(m_portraitFrame);
 	window->draw(m_portrait);
+	window->draw(m_healthText);
+	window->draw(m_meleeHitChanceText);
+	window->draw(m_rangeHitChanceText);
+	window->draw(m_evasionText);
+
+	
 	
 }
 
