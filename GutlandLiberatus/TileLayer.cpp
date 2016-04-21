@@ -9,7 +9,17 @@ TileLayer::TileLayer(SharedContext* context, TileSet* tileset,
 
 TileLayer::~TileLayer()
 {
+	for (auto &itr : m_tileMap)
+	{
+		delete itr.second;
+		itr.second = nullptr;
+	}
+	m_tileMap.clear();
 
+	m_tileSet = nullptr;
+
+	m_context->entityManager->Purge();
+	m_context = nullptr;
 }
 
 void TileLayer::Update()
@@ -30,7 +40,6 @@ std::string TileLayer::GetLayerName()
 void TileLayer::Draw()
 {
 	sf::RenderWindow* window = m_context->window->GetRenderWindow();
-//	window->draw(m_background);
 
 	// These 3 lines of code makes sure that anything
 	// that is not currently within the viewspace of
@@ -50,7 +59,7 @@ void TileLayer::Draw()
 			Tile* tile = GetTile(x, y);
 			if (!tile) { continue; }
 			sf::Sprite& sprite = tile->properties->m_sprite;
-			sprite.setPosition(x * Sheet::Tile_Size, y * Sheet::Tile_Size);
+			sprite.setPosition(x * tile->properties->tileWidth, y * tile->properties->tileHeight);
 			window->draw(sprite);
 			++count;
 
@@ -114,6 +123,12 @@ void TileLayer::CreateLayer(TiXmlElement* tileData, int mapWidth)
 				tile = nullptr;
 				continue;
 			}
+
+			if (tile->properties->warpName == "warp")
+			{
+				tile->warp = true;
+			}
+
 			++x;
 		}
 	}

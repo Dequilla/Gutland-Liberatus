@@ -11,6 +11,7 @@ Character::Character(EntityManager* entityManager) :
 
 Character::~Character()
 {
+	m_spriteSheet.ReleaseSheet();
 }
 
 void Character::Move(const Kengine::Direction& dir)
@@ -18,7 +19,9 @@ void Character::Move(const Kengine::Direction& dir)
 	if (GetState() == EntityState::Dying) { return; }
 	m_spriteSheet.SetDirection(dir);
 	if (dir == Kengine::Direction::Left) { Accelerate(-m_speed.x, 0); }
-	else { Accelerate(m_speed.x, 0); }
+	else if (dir == Kengine::Direction::Right) { Accelerate(m_speed.x, 0); }
+	else if (dir == Kengine::Direction::Up) { Accelerate(0, -m_speed.y); }
+	else if (dir == Kengine::Direction::Down) { Accelerate(0, m_speed.y); }
 	if (GetState() == EntityState::Idle) { SetState(EntityState::Walking); }
 
 }
@@ -130,14 +133,20 @@ void Character::Update(float dt)
 										  (m_state == EntityState::Attacking && m_spriteSheet.GetCurrentAnimation()->IsInAction()
 										   ? 200 : 100)));
 			m_entityManager->GetContext()->debugOverlay.Add(arect);
+
+			sf::RectangleShape* boundingRect = new sf::RectangleShape(sf::Vector2f(GetAABB().width, GetAABB().height));
+			boundingRect->setPosition(GetAABB().left, GetAABB().top);
+			boundingRect->setFillColor(sf::Color(255, 255, 255, 200));
+			m_entityManager->GetContext()->debugOverlay.Add(boundingRect);
+
 		}
 		// End debug.
 	}
 	if (GetState() != EntityState::Dying && GetState() != EntityState::Attacking && GetState() != EntityState::Hurt)
 	{
-		if (abs(m_velocity.y) >= 0.001f)
+		if (abs(m_velocity.y) >= 0.01f)
 		{
-			SetState(EntityState::Jumping);
+			SetState(EntityState::Walking);
 		}
 		else if (abs(m_velocity.x) >= 0.1f)
 		{
@@ -176,11 +185,21 @@ void Character::Draw(sf::RenderWindow* window)
 
 void Character::UpdateAttackAABB()
 {
-	m_attackAABB.left =
-		(m_spriteSheet.GetDirection() == Kengine::Direction::Left ?
-		 (m_AABB.left - m_attackAABB.width) - m_attackAABBoffset.x
-		 : (m_AABB.left + m_AABB.width) + m_attackAABBoffset.x);
-	m_attackAABB.top = m_AABB.top + m_attackAABBoffset.y;
+	if (m_spriteSheet.GetDirection() != Kengine::Direction::Up &&
+		m_spriteSheet.GetDirection() != Kengine::Direction::Down)
+	{
+		m_attackAABB.left = (m_spriteSheet.GetDirection() == Kengine::Direction::Left ?
+							 (m_AABB.left - m_attackAABB.width) - m_attackAABBoffset.x : 
+							 (m_AABB.left + m_AABB.width) + m_attackAABBoffset.x);
+		m_attackAABB.top = m_AABB.top + m_attackAABBoffset.y;
+	}
+	else
+	{
+		m_attackAABB.top = (m_spriteSheet.GetDirection() == Kengine::Direction::Up ?
+							(m_AABB.top - m_attackAABB.height) - m_attackAABBoffset.y :
+							(m_AABB.top + m_attackAABB.height) + m_attackAABBoffset.y);
+		m_attackAABB.left = m_AABB.left + m_attackAABBoffset.x;
+	}
 }
 
 void Character::Animate()
@@ -215,6 +234,13 @@ void Character::Animate()
 	else if (state == EntityState::Idle && m_spriteSheet.
 			 GetCurrentAnimation()->GetName() != "Idle")
 	{
-		m_spriteSheet.SetAnimation("Idle", true, true);
+		if (m_spriteSheet.GetDirection() == Kengine::Direction::Up)
+		{
+			m_spriteSheet.SetAnimation("Idle", false, false);
+		}
+		else
+		{
+			m_spriteSheet.SetAnimation("Idle", false, false);
+		}
 	}
 }

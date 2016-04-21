@@ -15,6 +15,7 @@ m_stateManager(&m_context), m_entityManager(&m_context, 100), m_options("media/O
     m_context.eventManager = m_window.GetEventManager();
 	m_context.textureManager = &m_textureManager;
 	m_context.entityManager = &m_entityManager;
+
 	m_context.optionsManager = &m_options;
 	
     m_stateManager.SwitchTo(StateType::SplashScreen);
@@ -22,6 +23,8 @@ m_stateManager(&m_context), m_entityManager(&m_context, 100), m_options("media/O
 
 Game::~Game()
 {
+	m_context.entityManager->Purge();
+	m_context.textureManager->PurgeResources();
 }
 
 void Game::Update()

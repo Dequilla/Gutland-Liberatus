@@ -10,7 +10,7 @@ void GameStatePaused::OnCreate()
 {
 	SetTransparent(true);
 
-	if (!m_font.loadFromFile("fonts/liberation-mono.ttf"))
+	if (!m_font.loadFromFile("media/Fonts/liberation-mono.ttf"))
 	{
 		std::cout << "Could not load fonts/liberation-mono.ttf!" << std::endl;
 	}

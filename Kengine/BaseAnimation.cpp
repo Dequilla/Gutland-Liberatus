@@ -11,6 +11,7 @@ m_frameActionStart(-1), m_frameActionEnd(-1), m_loop(false), m_playing(false)
 
 BaseAnimation::~BaseAnimation()
 {
+
 }
 
 void BaseAnimation::SetSpriteSheet(SpriteSheet* sheet)

@@ -4,6 +4,7 @@
 class Layer
 {
 public:
+	virtual ~Layer() {}
 
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
@@ -12,7 +13,6 @@ public:
 	virtual std::string GetLayerName() = 0;
 
 protected:
-	virtual ~Layer() {}
 
 	std::string m_layerName;
 

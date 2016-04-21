@@ -1,0 +1,8 @@
+Name Link
+Spritesheet Link.sheet
+Hitpoints 5
+BoundingBox 20 12
+DamageBox -5 0 26 26
+Speed 1024 1024
+JumpVelocity 250
+MaxVelocity 200 200

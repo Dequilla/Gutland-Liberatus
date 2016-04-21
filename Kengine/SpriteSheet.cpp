@@ -132,7 +132,7 @@ bool SpriteSheet::LoadSheet(const std::string& file)
 
 				if (m_animationCurrent) { continue; }
 				m_animationCurrent = animation;
-				m_animationCurrent->Play();
+//				m_animationCurrent->Play();
 			}
 		}
 		sheet.close();
@@ -153,6 +153,7 @@ void SpriteSheet::ReleaseSheet()
 		delete m_animations.begin()->second;
 		m_animations.erase(m_animations.begin());
 	}
+	m_animations.clear();
 }
 
 BaseAnimation* SpriteSheet::GetCurrentAnimation()

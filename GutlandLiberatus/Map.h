@@ -19,7 +19,7 @@ using TileID = unsigned int;
 struct TileInfo
 {
 	TileInfo(SharedContext* context, const std::string& texture = "", TileID id = 0) :
-		m_context(context), m_id(0), m_deadly(false), m_friction(sf::Vector2f(0.8f, 0.0f))
+		m_context(context), m_id(0), m_deadly(false), m_friction(sf::Vector2f(0.8f, 0.8f))
 	{
 
 	}
@@ -41,8 +41,12 @@ struct TileInfo
 
 		m_sprite.setTexture(*tMgr->GetResource(m_texture));
 
+		// For some reason the map gets buggy if we use margin when compiling for release
+/*		sf::IntRect tileBoundaries(margin + (m_id % (sheetWidth / tileWidth) * (tileWidth + spacing)),
+								   margin + (m_id / (sheetWidth / tileHeight) * (tileHeight + spacing)),
+								   tileWidth, tileHeight);*/
 		sf::IntRect tileBoundaries(m_id % (sheetWidth / tileWidth) * tileWidth,
-								   m_id / (sheetHeight / tileHeight) * tileHeight,
+								   m_id / (sheetWidth / tileHeight) * tileHeight,
 								   tileWidth, tileHeight);
 
 		m_sprite.setTextureRect(tileBoundaries);
@@ -52,6 +56,8 @@ struct TileInfo
 
 	TileID m_id;
 	std::string name;
+	std::string warpName;
+	std::string warpValue;
 	sf::Vector2f m_friction;
 	bool m_deadly;
 
@@ -78,6 +84,14 @@ struct Tile
 	// Other flags unique to each tile.
 };
 
+struct Warp
+{
+	bool warp;
+	std::string mapName;
+	sf::Vector2f position;
+	sf::Vector2f size;
+};
+
 using TileMap = std::unordered_map<TileID, Tile*>;
 using TileSet = std::unordered_map<TileID, TileInfo*>;
 
@@ -94,20 +108,22 @@ public:
 	unsigned int GetTileSize() const;
 	const sf::Vector2u& GetMapSize() const;
 	const sf::Vector2f& GetPlayerStart() const;
+	Warp GetWarp() { return m_warp; }
 
 	void LoadMap(const std::string& path);
-	void LoadNext();
+	void LoadNext(const std::string& nextMap);
 
 	void Update(float dt);
 	void Draw();
 
 	// Method for converting 2D coordinates to 1D ints.
-	unsigned int ConvertCoords(unsigned int x, unsigned int y);
+	unsigned int ConvertCoords(const unsigned int &x, const unsigned int &y);
 
 private:
 	TileSet m_tileSet;
 	TileMap m_tileMap;
 	TileInfo m_defaultTile; 
+	Warp m_warp;
 
 	sf::Sprite m_background;
 	sf::Vector2u m_maxMapSize;
@@ -127,13 +143,14 @@ private:
 	int m_tileSize;
 	int m_mapWidth;
 	int m_mapHeight;
+	int m_playerId = -1;
 	float m_mapGravity;
 	unsigned int m_tileSetCount;
 
 	void LoadTiles(const std::string& path);
 	void LoadTiles(TiXmlElement* tilesetRoot);
 	void ParseTileLayer(TiXmlElement* tileElement);
-	void ParseTilePositions(TiXmlElement* tileData);
+	void ParseObjectLayer(TiXmlElement* objectElement);
 	void PurgeMap();
 	void PurgeTileSet();
 };

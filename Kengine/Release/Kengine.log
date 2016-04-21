@@ -1,21 +1,13 @@
-﻿Build started 2016-04-15 10:58:59.
-     1>Project "E:\Gutland Liberatus\Gutland-Liberatus\Kengine\Kengine.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         D:\Microsoft Visual Studio\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _LIB /D SFML_STATIC /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\Kengine.pdb" /Gd /TP /analyze- /errorReport:prompt Window.cpp
-         Window.cpp
-       Lib:
-         D:\Microsoft Visual Studio\VC\bin\Lib.exe /OUT:"E:\Gutland Liberatus\Gutland-Liberatus\Release\Kengine.lib" /NOLOGO /LTCG Release\BaseAnimation.obj
-         Release\Button.obj
-         Release\ButtonContainer.obj
-         Release\DirectionalAnimation.obj
-         Release\EventManager.obj
-         Release\Kopter.obj
-         Release\SpriteSheet.obj
-         Release\Textbox.obj
-         Release\Window.obj
-         Kengine.vcxproj -> E:\Gutland Liberatus\Gutland-Liberatus\Release\Kengine.lib
-     1>Done Building Project "E:\Gutland Liberatus\Gutland-Liberatus\Kengine\Kengine.vcxproj" (Build target(s)).
-
-Build succeeded.
-
-Time Elapsed 00:00:02.06
+﻿  BaseAnimation.cpp
+BaseAnimation.cpp(134): warning C4018: '>=': signed/unsigned mismatch
+BaseAnimation.cpp(135): warning C4018: '<=': signed/unsigned mismatch
+  Button.cpp
+  ButtonContainer.cpp
+  DirectionalAnimation.cpp
+  EventManager.cpp
+  Kopter.cpp
+  SpriteSheet.cpp
+SpriteSheet.cpp(38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Textbox.cpp
+  Window.cpp
+  Kengine.vcxproj -> W:\Testprojects\testCollision\Gutland-Liberatus\Release\Kengine.lib

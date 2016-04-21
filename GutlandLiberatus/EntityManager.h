@@ -7,7 +7,6 @@
 
 using EntityContainer = std::unordered_map<unsigned int, EntityBase*>;
 using EntityFactory = std::unordered_map<EntityType, std::function<EntityBase*(void) >> ;
-//using EntityFactory = std::unordered_map<EntityType, std::function<EntityBase*(void)>>;
 using EnemyTypes = std::unordered_map<std::string, std::string>;
 
 struct SharedContext;
@@ -16,7 +15,7 @@ class EntityManager
 {
 public:
 	EntityManager(SharedContext* context, unsigned int maxEntities);
-	EntityManager();
+	~EntityManager();
 
 	int Add(const EntityType& type, const std::string& name = "");
 	EntityBase* Find(unsigned int id);

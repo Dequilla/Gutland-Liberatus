@@ -27,7 +27,7 @@ void GameStateGame::OnCreate()
 	m_stateMgr->GetContext()->window->GetRenderWindow()->setView(m_view);
 
 	m_gameMap = new Map(m_stateMgr->GetContext(), this);
-	m_gameMap->LoadMap("media/Maps/test.tmx");
+	m_gameMap->LoadMap("media/Maps/default.tmx");
 }
 
 void GameStateGame::OnDestroy()
@@ -38,7 +38,7 @@ void GameStateGame::OnDestroy()
 	evMgr->RemoveCallback(StateType::Game, "Key_P");
 	evMgr->RemoveCallback(StateType::Game, "Key_O");
 
-	delete m_gameMap;
+//	delete m_gameMap;
 	m_gameMap = nullptr;
 }
 
@@ -75,12 +75,26 @@ void GameStateGame::Update(const sf::Time& time)
 		m_view.setCenter(viewSpace.width / 2.0f, m_view.getCenter().y);
 		context->window->GetRenderWindow()->setView(m_view);
 	}
-	else if (viewSpace.left + viewSpace.width > 
-			 (m_gameMap->GetMapSize().x + 1) * Sheet::Tile_Size)
+	else if (viewSpace.left + viewSpace.width >
+			 (m_gameMap->GetMapSize().x) * Sheet::Tile_Size)
 	{
-		m_view.setCenter(((m_gameMap->GetMapSize().x + 1) *
+		m_view.setCenter(((m_gameMap->GetMapSize().x) *
 						  Sheet::Tile_Size) - (viewSpace.width / 2.0f),
 						 m_view.getCenter().y);
+		context->window->GetRenderWindow()->setView(m_view);
+	}
+
+	if (viewSpace.top <= 0)
+	{
+		m_view.setCenter(m_view.getCenter().x, viewSpace.height / 2.0f);
+		context->window->GetRenderWindow()->setView(m_view);
+	}
+	else if (viewSpace.top + viewSpace.height >
+			 (m_gameMap->GetMapSize().y) * Sheet::Tile_Size)
+	{
+		m_view.setCenter(m_view.getCenter().x,
+						 ((m_gameMap->GetMapSize().y) *
+						  Sheet::Tile_Size) - (viewSpace.height / 2.0f));
 		context->window->GetRenderWindow()->setView(m_view);
 	}
 
@@ -91,7 +105,7 @@ void GameStateGame::Update(const sf::Time& time)
 void GameStateGame::Draw()
 {
 	m_gameMap->Draw();
-	m_stateMgr->GetContext()->entityManager->Draw();
+//	m_stateMgr->GetContext()->entityManager->Draw();
 }
 
 void GameStateGame::MainMenu(Kengine::EventDetails* details)
