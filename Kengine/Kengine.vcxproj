@@ -144,10 +144,12 @@
     <ClInclude Include="BaseAnimation.h" />
     <ClInclude Include="BaseState.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="ButtonContainer.h" />
     <ClInclude Include="DebugOverlay.h" />
     <ClInclude Include="Direction.h" />
     <ClInclude Include="DirectionalAnimation.h" />
     <ClInclude Include="EventManager.h" />
+    <ClInclude Include="Kopter.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SpriteSheet.h" />
     <ClInclude Include="Textbox.h" />
@@ -158,8 +160,10 @@
   <ItemGroup>
     <ClCompile Include="BaseAnimation.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="ButtonContainer.cpp" />
     <ClCompile Include="DirectionalAnimation.cpp" />
     <ClCompile Include="EventManager.cpp" />
+    <ClCompile Include="Kopter.cpp" />
     <ClCompile Include="SpriteSheet.cpp" />
     <ClCompile Include="Textbox.cpp" />
     <ClCompile Include="Window.cpp" />

@@ -8,7 +8,7 @@
 class GameStateSplashScreen : public Kengine::BaseState
 {
 public:
-	using BaseState::BaseState;
+	GameStateSplashScreen(StateManager* statemanager);
 	~GameStateSplashScreen();
 
 	void OnCreate();
@@ -18,7 +18,7 @@ public:
 	void Update(const sf::Time& time);
 	void Draw();
 
-	void Continue(Kengine::EventDetails* details);
+	void Continue(Kengine::EventDetails* details = nullptr);
 
 private:
 	sf::Texture m_texture;
