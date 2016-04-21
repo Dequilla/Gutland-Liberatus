@@ -2,6 +2,10 @@
 #include "StateManager.h"
 #include <iostream>
 
+GameStateSplashScreen::GameStateSplashScreen(StateManager * statemanager) : BaseState(statemanager)
+{
+}
+
 GameStateSplashScreen::~GameStateSplashScreen()
 {
 	//delete m_spriteSheet;
@@ -129,7 +133,7 @@ void GameStateSplashScreen::Update(const sf::Time & time)
 
 	if (m_finished)
 	{
-		Continue(0);
+		//Continue();
 	}
 	m_elapsedTime += time.asSeconds();
 }
@@ -150,6 +154,6 @@ void GameStateSplashScreen::Draw()
 
 void GameStateSplashScreen::Continue(Kengine::EventDetails * details)
 {
-	m_stateMgr->SwitchTo(StateType::Intro);
+	m_stateMgr->SwitchTo(StateType::MainMenu);
 	m_stateMgr->Remove(StateType::SplashScreen);
 }

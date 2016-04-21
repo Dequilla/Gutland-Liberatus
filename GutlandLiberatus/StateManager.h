@@ -7,12 +7,14 @@
 #include "GameStateMainMenu.h"
 #include "GameStateGame.h"
 #include "GameStatePaused.h"
+#include "GameStateOptionsMenu.h"
+#include "GameStateCombat.h"
 #include "SharedContext.h"
 
 
 enum class StateType
 {
-    Intro = 1, MainMenu, Game, Paused, GameOver, Credits, SplashScreen
+    Intro = 1, MainMenu, Game, Paused, GameOver, Credits, SplashScreen, Options, Combat
 };
 
 using StateContainer = std::vector<std::pair<StateType, Kengine::BaseState*>>;
