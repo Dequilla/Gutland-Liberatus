@@ -14,6 +14,6 @@ int main(int argc, void** argv[])
         game.Render();
         game.LateUpdate();
     }
-	_CrtDumpMemoryLeaks();
     return 0;
+	_CrtDumpMemoryLeaks();
 }

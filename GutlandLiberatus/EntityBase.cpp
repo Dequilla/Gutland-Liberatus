@@ -19,6 +19,13 @@ EntityBase::EntityBase(EntityManager* entityManager) :
 
 EntityBase::~EntityBase()
 {
+	for (auto &itr : m_collisions)
+	{
+		delete &itr;
+	}
+	m_collisions.clear();
+
+	m_entityManager = nullptr;
 }
 
 void EntityBase::SetPosition(const float& x, const float& y)
@@ -54,19 +61,18 @@ void EntityBase::Move(float x, float y)
 	{
 		m_position.x = 0;
 	}
-	else if (m_position.x >(mapSize.x + 1) * Sheet::Tile_Size)
+	else if (m_position.x >(mapSize.x) * Sheet::Tile_Size)
 	{
-		m_position.x = (mapSize.x + 1) * Sheet::Tile_Size;
+		m_position.x = (mapSize.x) * Sheet::Tile_Size;
 	}
 
-	if (m_position.y < 0)
+	if (m_position.y < 26)
 	{
-		m_position.y = 0;
+		m_position.y = 26;
 	}
-	else if (m_position.y >(mapSize.y + 1) * Sheet::Tile_Size)
+	else if (m_position.y > (mapSize.y) * Sheet::Tile_Size)
 	{
-		m_position.y = (mapSize.y + 1) * Sheet::Tile_Size;
-		SetState(EntityState::Dying);
+		m_position.y = (mapSize.y) * Sheet::Tile_Size;
 	}
 
 	UpdateAABB();
@@ -174,8 +180,7 @@ void EntityBase::CheckCollisions()
 
 	for (auto itr = mapLayer->begin(); itr != mapLayer->end(); ++itr)
 	{
-		std::string layerName = (*itr)->GetLayerName();
-		if (layerName == std::string("collision"))
+		if ((*itr)->GetLayerName() == std::string("collision"))
 		{
 			for (int x = fromX; x <= toX; ++x)
 			{
@@ -192,7 +197,7 @@ void EntityBase::CheckCollisions()
 					m_collisions.emplace_back(e);
 					if (tile->warp && m_type == EntityType::Player)
 					{
-						gameMap->LoadNext();
+						gameMap->LoadNext(tile->properties->warpValue);
 					}
 				}
 			}
@@ -259,3 +264,7 @@ void EntityBase::ResolveCollisions()
 	if (!m_collidingOnY) { m_referenceTile = nullptr; }
 }
 
+CollisionElement::~CollisionElement()
+{
+	m_tile = nullptr;
+}

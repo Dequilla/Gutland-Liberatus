@@ -25,6 +25,7 @@ protected:
 	float m_jumpVelocity;
 	int m_hitpoints;
 	sf::FloatRect m_attackAABB;
+	sf::FloatRect m_boundingBox;
 	sf::Vector2f m_attackAABBoffset;
 
 	void UpdateAttackAABB();

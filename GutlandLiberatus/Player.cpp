@@ -14,9 +14,9 @@ Player::Player(EntityManager* entityManager) :
 								&Player::React, this);
 	events->AddCallback<Player>(StateType::Game, "Player_MoveRight",
 								&Player::React, this);
-	events->AddCallback<Player>(StateType::Game, "Player_Jump",
+	events->AddCallback<Player>(StateType::Game, "Player_MoveUp",
 								&Player::React, this);
-	events->AddCallback<Player>(StateType::Game, "Player_Attack",
+	events->AddCallback<Player>(StateType::Game, "Player_MoveDown",
 								&Player::React, this);
 }
 
@@ -26,8 +26,8 @@ Player::~Player()
 
 	events->RemoveCallback(StateType::Game, "Player_MoveLeft");
 	events->RemoveCallback(StateType::Game, "Player_MoveRight");
-	events->RemoveCallback(StateType::Game, "Player_Jump");
-	events->RemoveCallback(StateType::Game, "Player_Attack");
+	events->RemoveCallback(StateType::Game, "Player_MoveUp");
+	events->RemoveCallback(StateType::Game, "Player_MoveDown");
 }
 
 void Player::OnEntityCollision(EntityBase* collider, bool attack)
@@ -61,7 +61,6 @@ void Player::OnEntityCollision(EntityBase* collider, bool attack)
 
 void Player::React(Kengine::EventDetails* details)
 {
-	//std::cout << details->m_name << std::endl;
 	if (details->m_name == "Player_MoveLeft")
 	{
 		Character::Move(Kengine::Direction::Left);
@@ -69,6 +68,14 @@ void Player::React(Kengine::EventDetails* details)
 	else if (details->m_name == "Player_MoveRight")
 	{
 		Character::Move(Kengine::Direction::Right);
+	}
+	else if (details->m_name == "Player_MoveUp")
+	{
+		Character::Move(Kengine::Direction::Up);
+	}
+	else if (details->m_name == "Player_MoveDown")
+	{
+		Character::Move(Kengine::Direction::Down);
 	}
 	else if (details->m_name == "Player_Jump")
 	{

@@ -22,6 +22,9 @@ struct CollisionElement
 		m_tile(info), m_tileBounds(bounds)
 	{
 	}
+
+	~CollisionElement();
+
 	float m_area;
 	TileInfo* m_tile;
 	sf::FloatRect m_tileBounds;
@@ -49,6 +52,7 @@ public:
 	EntityType GetType() { return m_type; }
 	EntityState GetState() { return m_state; }
 	sf::Vector2f GetPosition() { return m_position; }
+	sf::FloatRect GetAABB() { return m_AABB; }
 
 	void Move(float x, float y);
 	void AddVelocity(float x, float y);
@@ -75,8 +79,9 @@ protected:
 	TileInfo* m_referenceTile; // Tile underneath entity.
 	sf::Vector2f m_size; // Size of the collision box.
 	sf::FloatRect m_AABB; // The bounding box for collisions.
-	EntityState m_state; // Current entity state.
-						 // Flags for remembering axis collisions.
+	EntityState m_state; // Current entity state
+	
+	// Flags for remembering axis collisions.
 	bool m_collidingOnX;
 	bool m_collidingOnY;
 	Collisions m_collisions;

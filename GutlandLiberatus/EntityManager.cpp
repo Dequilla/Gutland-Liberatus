@@ -9,9 +9,11 @@ EntityManager::EntityManager(SharedContext* context, unsigned int maxEntities) :
 	RegisterEntity<Enemy>(EntityType::Enemy);
 }
 
-EntityManager::EntityManager()
+EntityManager::~EntityManager()
 {
 	Purge();
+	m_entityFactory.clear();
+	m_context = nullptr;
 }
 
 int EntityManager::Add(const EntityType& type, const std::string& name)
@@ -93,6 +95,7 @@ void EntityManager::Purge()
 		delete itr.second;
 	}
 	m_entities.clear();
+
 	m_idCounter = 0;
 }
 

@@ -98,7 +98,8 @@ void Window::Create()
 {
 	auto style = (m_isFullscreen ? sf::Style::Fullscreen : sf::Style::Default);
 	m_window.create({ m_windowSize.x, m_windowSize.y, 32 }, m_windowTitle, style);
-	m_window.setFramerateLimit(60);
+//	m_window.setFramerateLimit(60);
+	m_window.setVerticalSyncEnabled(true);
 }
 
 void Window::Destroy()

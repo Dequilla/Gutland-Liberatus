@@ -2,6 +2,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <utility>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -50,7 +51,7 @@ public:
 
 	bool ReleaseResource(const std::string& id)
 	{
-		if (m_resources.size() == 0) { return false; }
+//		if (m_resources.size() == 0) { return false; }
 		auto res = Find(id);
 		if (!res) { return false; }
 		--res->second;
@@ -87,6 +88,7 @@ private:
 
 	std::pair<T*, unsigned int>* Find(const std::string& id)
 	{
+		if (m_resources.size() == 0) { return nullptr; }
 		auto itr = m_resources.find(id);
 		return (itr != m_resources.end() ? &itr->second : nullptr);
 	}
