@@ -18,6 +18,7 @@ Player::Player(EntityManager* entityManager) :
                                 &Player::React, this);
     events->AddCallback<Player>(StateType::Game, "Player_MoveDown",
                                 &Player::React, this);
+    this->Move(Kengine::Direction::Down);
 }
 
 Player::~Player()

@@ -93,12 +93,13 @@ struct TileInfo
 
 /*
    ===========================================================
+   Holds properties from TileInfo and specific tile flags.
    ===========================================================
  */
 struct Tile
 {
-    TileInfo* properties;
-    bool    warp;             // Is the tile a warp.
+    TileInfo *properties;
+    bool     warp;            // Is the tile a warp.
     // Other flags unique to each tile.
 };
 
@@ -107,7 +108,7 @@ using TileSet = std::unordered_map < TileID, TileInfo* >;
 
 /*
    ===========================================================
-   class Map handles loading of maps.
+   class Map handles loading of maps/levels and everything it contains.
    ===========================================================
  */
 class Map
@@ -119,10 +120,7 @@ public:
     Tile*                   GetTile(unsigned int x, unsigned int y);
     TileInfo*               GetDefaultTile();
     float                   GetGravity() const;
-    std::vector < Layer * > *GetLayers()
-    {
-        return &m_layers;
-    }
+    std::vector < Layer * > *GetLayers();
     unsigned int            GetTileSize() const;
     const sf::Vector2u&     GetMapSize() const;
     const sf::Vector2f&     GetPlayerStart() const;

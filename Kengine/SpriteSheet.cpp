@@ -141,7 +141,7 @@ bool SpriteSheet::LoadSheet(const std::string& file)
                     continue;
                 }
                 m_animationCurrent = animation;
-//				m_animationCurrent->Play();
+                m_animationCurrent->Play();
             }
         }
         sheet.close();

@@ -8,7 +8,6 @@ Map::Map(SharedContext* context, Kengine::BaseState* currentState) :
     m_loadNextMap(false), m_currentState(currentState)
 {
     m_context->gameMap = this;
-//	LoadTiles("media/Tiles.cfg");
 }
 
 Map::~Map()
@@ -33,6 +32,11 @@ TileInfo* Map::GetDefaultTile()
 float Map::GetGravity() const
 {
     return m_mapGravity;
+}
+
+std::vector < Layer * >* Map::GetLayers()
+{
+    return &m_layers;
 }
 
 unsigned int Map::GetTileSize() const

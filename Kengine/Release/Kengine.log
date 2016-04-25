@@ -1,12 +1,2 @@
-﻿  BaseAnimation.cpp
-BaseAnimation.cpp(133): warning C4018: '>=': signed/unsigned mismatch
-BaseAnimation.cpp(134): warning C4018: '<=': signed/unsigned mismatch
-  Button.cpp
-  ButtonContainer.cpp
-  DirectionalAnimation.cpp
-  EventManager.cpp
-  SpriteSheet.cpp
-SpriteSheet.cpp(38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Textbox.cpp
-  Window.cpp
+﻿  Window.cpp
   Kengine.vcxproj -> W:\school\Gutland-Liberatus\Release\Kengine.lib
