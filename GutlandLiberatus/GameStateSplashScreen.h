@@ -8,17 +8,17 @@
 class GameStateSplashScreen: public Kengine::BaseState
 {
 public:
-    GameStateSplashScreen(StateManager * statemanager);
-    ~GameStateSplashScreen();
+            GameStateSplashScreen(StateManager * statemanager);
+            ~GameStateSplashScreen();
 
-    void OnCreate();
-    void OnDestroy();
-    void Activate();
-    void Deactivate();
-    void Update(const sf::Time& time);
-    void Draw();
+    void    OnCreate();
+    void    OnDestroy();
+    void    Activate();
+    void    Deactivate();
+    void    Update(const sf::Time& time);
+    void    Draw();
 
-    void Continue(Kengine::EventDetails* details = nullptr);
+    void    Continue(Kengine::EventDetails* details = nullptr);
 
 private:
     sf::Texture          m_texture;

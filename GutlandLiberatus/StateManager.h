@@ -35,8 +35,8 @@ using StateFactory = std::unordered_map < StateType, std::function < Kengine::Ba
 class StateManager
 {
 public:
-    StateManager(SharedContext * shared);
-    ~StateManager();
+                    StateManager(SharedContext * shared);
+                    ~StateManager();
 
     void            Update(const sf::Time& time);
     void            Draw();
