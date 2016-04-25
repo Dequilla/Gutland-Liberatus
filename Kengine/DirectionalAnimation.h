@@ -4,11 +4,11 @@
 
 namespace Kengine
 {
-class DirectionalAnimation : public BaseAnimation
-{
+    class DirectionalAnimation: public BaseAnimation
+    {
 protected:
-	void FrameStep();
-	void CropSprite();
-	void ReadIn(std::stringstream& stream);
-};
+        void FrameStep();
+        void CropSprite();
+        void ReadIn(std::stringstream& stream);
+    };
 }

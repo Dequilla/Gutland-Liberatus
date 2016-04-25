@@ -2,16 +2,16 @@
 
 #include "Character.h"
 
-class Enemy : public Character
+class Enemy: public Character
 {
 public:
-	Enemy(EntityManager* entityManager);
-	~Enemy();
+    Enemy(EntityManager * entityManager);
+    ~Enemy();
 
-	void OnEntityCollision(EntityBase* collider, bool attack);
-	void Update(float dt);
+    void OnEntityCollision(EntityBase* collider, bool attack);
+    void Update(float dt);
 
 private:
-	sf::Vector2f m_destination;
-	bool m_hasDestination;
+    sf::Vector2f m_destination;
+    bool         m_hasDestination;
 };

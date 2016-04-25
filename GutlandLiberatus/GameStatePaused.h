@@ -3,24 +3,24 @@
 #include <Kengine/EventManager.h>
 #include <Kengine/BaseState.h>
 
-class GameStatePaused : public Kengine::BaseState
+class GameStatePaused: public Kengine::BaseState
 {
 public:
-	using BaseState::BaseState;
-	~GameStatePaused();
+    using BaseState::BaseState;
+    ~GameStatePaused();
 
-	void OnCreate();
-	void OnDestroy();
-	void Activate();
-	void Deactivate();
-	void Update(const sf::Time& time);
-	void Draw();
+    void OnCreate();
+    void OnDestroy();
+    void Activate();
+    void Deactivate();
+    void Update(const sf::Time& time);
+    void Draw();
 
-	void Unpause(Kengine::EventDetails* details);
+    void Unpause(Kengine::EventDetails* details);
 
 private:
-	sf::Text m_text;
-	sf::RectangleShape m_rect;
+    sf::Text           m_text;
+    sf::RectangleShape m_rect;
 
-	sf::Font m_font;
+    sf::Font           m_font;
 };

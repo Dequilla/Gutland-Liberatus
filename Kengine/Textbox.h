@@ -5,29 +5,28 @@
 
 #include <SFML/Graphics.hpp>
 
-namespace Kengine 
+namespace Kengine
 {
+    using MessageContainer = std::vector < std::string >;
 
-using MessageContainer = std::vector<std::string>;
+    struct Textbox
+    {
+        Textbox();
+        Textbox(int visible, int charSize, int width, sf::Vector2f screenPos);
+        ~Textbox();
 
-struct Textbox
-{
-	Textbox();
-	Textbox(int visible, int charSize, int width, sf::Vector2f screenPos);
-	~Textbox();
+        void               Setup(int visible, int charSize, int width, sf::Vector2f screenPos);
+        void               Add(std::string message);
+        void               Clear();
 
-	void Setup(int visible, int charSize, int width, sf::Vector2f screenPos);
-	void Add(std::string message);
-	void Clear();
-
-	void Render(sf::RenderWindow& window);
+        void               Render(sf::RenderWindow& window);
 
 private:
-	MessageContainer m_messages;
-	int m_numVisible;
+        MessageContainer   m_messages;
+        int                m_numVisible;
 
-	sf::RectangleShape m_backdrop;
-	sf::Font m_font;
-	sf::Text m_content;
-};
+        sf::RectangleShape m_backdrop;
+        sf::Font           m_font;
+        sf::Text           m_content;
+    };
 }
