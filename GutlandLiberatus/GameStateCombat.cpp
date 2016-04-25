@@ -23,7 +23,7 @@ void GameStateCombat::OnCreate()
 		&GameStateCombat::ToggleOverlay, this);
 
 	sf::Vector2u size = m_stateMgr->GetContext()->window->GetWindowSize();
-	
+
 	//Selection and creation of fighting background
 	//For now a static background
 	m_backgroundTexture.loadFromFile("media/Textures/cityBackground.png");
@@ -34,8 +34,8 @@ void GameStateCombat::OnCreate()
 	m_portraitTexture.loadFromFile("media/Textures/placeholderport.png");
 	m_portrait.setTexture(m_portraitTexture);
 	m_portrait.setPosition(sf::Vector2f(510.f, 540.f));
-	m_portrait.setScale(sf::Vector2f(4.6f, 4.6f));   
-	
+	m_portrait.setScale(sf::Vector2f(4.6f, 4.6f));
+
 	//Portraitframe is static dont move
 	m_portraitFrameTexture.loadFromFile("media/Textures/portraitFrame.png");
 	m_portraitFrame.setTexture(m_portraitFrameTexture);
@@ -78,7 +78,7 @@ void GameStateCombat::Deactivate()
 void GameStateCombat::Update(const sf::Time& time)
 {
 	SharedContext* context = m_stateMgr->GetContext();
-	
+
 	m_buttons.update(m_stateMgr->GetContext()->eventManager->GetMousePos(m_stateMgr->GetContext()->window->GetRenderWindow()), m_stateMgr->GetContext()->window->GetRenderWindow());
 	//m_frame.Update(time.asSeconds());
 	m_stateMgr->GetContext()->entityManager->Update(time.asSeconds());
@@ -97,7 +97,7 @@ void GameStateCombat::Draw()
 	m_buttons.draw();
 	window->draw(m_portraitFrame);
 	window->draw(m_portrait);
-	
+
 }
 
 void GameStateCombat::MainMenu(Kengine::EventDetails* details)

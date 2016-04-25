@@ -39,6 +39,16 @@ void Game::LateUpdate()
     RestartClock();
 }
 
+Kengine::Window* Game::GetWindow()
+{
+    return &m_window;
+}
+
+sf::Time Game::GetElapsed()
+{
+    return m_elapsed;
+}
+
 void Game::Render()
 {
     m_window.BeginDraw(); // Clear the window
@@ -52,16 +62,6 @@ void Game::Render()
     // End debug.
 
     m_window.EndDraw();
-}
-
-Kengine::Window* Game::GetWindow()
-{
-    return &m_window;
-}
-
-sf::Time Game::GetElapsed()
-{
-    return m_elapsed;
 }
 
 void Game::RestartClock()
