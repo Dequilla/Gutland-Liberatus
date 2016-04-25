@@ -9,6 +9,12 @@
 
 class Map;
 
+/*
+   ===========================================================
+   SharedContext holds all types of context that can be shared
+   within the game.
+   ===========================================================
+ */
 struct SharedContext
 {
     SharedContext() :

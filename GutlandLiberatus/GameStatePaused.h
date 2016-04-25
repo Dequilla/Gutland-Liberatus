@@ -7,16 +7,15 @@ class GameStatePaused: public Kengine::BaseState
 {
 public:
     using BaseState::BaseState;
-    ~GameStatePaused();
+            ~GameStatePaused();
 
-    void OnCreate();
-    void OnDestroy();
-    void Activate();
-    void Deactivate();
-    void Update(const sf::Time& time);
-    void Draw();
-
-    void Unpause(Kengine::EventDetails* details);
+    void    OnCreate();
+    void    OnDestroy();
+    void    Activate();
+    void    Deactivate();
+    void    Update(const sf::Time& time);
+    void    Draw();
+    void    Unpause(Kengine::EventDetails* details);
 
 private:
     sf::Text           m_text;

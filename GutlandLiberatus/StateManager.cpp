@@ -120,6 +120,11 @@ void StateManager::ProcessRequests()
     }
 }
 
+SharedContext* StateManager::GetContext()
+{
+    return m_shared;
+}
+
 void StateManager::SwitchTo(const StateType& type)
 {
     m_shared->eventManager->SetCurrentState(type);

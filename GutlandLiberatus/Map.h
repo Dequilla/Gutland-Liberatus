@@ -19,7 +19,7 @@ using TileID = unsigned int;
 /*
    ===========================================================
    struct TileInfo holds information about specific tiles such
-   as friction, position, texture, or other custom properties
+   as friction, position, texture, or other custom properties.
    ===========================================================
  */
 struct TileInfo
@@ -114,25 +114,25 @@ using TileSet = std::unordered_map < TileID, TileInfo* >;
 class Map
 {
 public:
-    Map(SharedContext * context, Kengine::BaseState * currentState);
-    ~Map();
+                                Map(SharedContext * context, Kengine::BaseState * currentState);
+                                ~Map();
 
-    Tile*                   GetTile(unsigned int x, unsigned int y);
-    TileInfo*               GetDefaultTile();
-    float                   GetGravity() const;
-    std::vector < Layer * > *GetLayers();
-    unsigned int            GetTileSize() const;
-    const sf::Vector2u&     GetMapSize() const;
-    const sf::Vector2f&     GetPlayerStart() const;
+    Tile*                       GetTile(unsigned int x, unsigned int y);
+    TileInfo*                   GetDefaultTile();
+    float                       GetGravity() const;
+    std::vector < Layer * >*    GetLayers();
+    unsigned int                GetTileSize() const;
+    const sf::Vector2u&         GetMapSize() const;
+    const sf::Vector2f&         GetPlayerStart() const;
 
-    void                    LoadMap(const std::string& path);
-    void                    LoadNext(const std::string& nextMap);
+    void                        LoadMap(const std::string& path);
+    void                        LoadNext(const std::string& nextMap);
 
-    void                    Update(float dt);
-    void                    Draw();
+    void                        Update(float dt);
+    void                        Draw();
 
     // Method for converting 2D coordinates to 1D ints.
-    unsigned int            ConvertCoords(const unsigned int &x, const unsigned int &y);
+    unsigned int                ConvertCoords(const unsigned int &x, const unsigned int &y);
 
 private:
     TileSet            m_tileSet;

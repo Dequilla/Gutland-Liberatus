@@ -11,24 +11,29 @@ using EnemyTypes      = std::unordered_map < std::string, std::string >;
 
 struct SharedContext;
 
+/*
+   ===========================================================
+   Handles all types of entities in the game.
+   ===========================================================
+ */
 class EntityManager
 {
 public:
-    EntityManager(SharedContext * context, unsigned int maxEntities);
-    ~EntityManager();
+                    EntityManager(SharedContext * context, unsigned int maxEntities);
+                    ~EntityManager();
 
-    int Add(const EntityType& type, const std::string& name = "");
-    EntityBase* Find(unsigned int id);
-    EntityBase* Find(const std::string& name);
+    int             Add(const EntityType& type, const std::string& name = "");
+    EntityBase*     Find(unsigned int id);
+    EntityBase*     Find(const std::string& name);
 
-    void Remove(unsigned int id);
+    void            Remove(unsigned int id);
 
-    void Update(float dt);
-    void Draw();
+    void            Update(float dt);
+    void            Draw();
 
-    void Purge();
+    void            Purge();
 
-    SharedContext* GetContext();
+    SharedContext*  GetContext();
 
 private:
     EntityContainer m_entities;

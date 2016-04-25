@@ -55,6 +55,32 @@ void EntityBase::SetState(const EntityState& state)
     m_state = state;
 }
 
+std::string EntityBase::GetName()
+{
+    return m_name;
+}
+
+unsigned int EntityBase::GetId()
+{
+    return m_id;
+}
+EntityType EntityBase::GetType()
+{
+    return m_type;
+}
+EntityState EntityBase::GetState()
+{
+    return m_state;
+}
+sf::Vector2f EntityBase::GetPosition()
+{
+    return m_position;
+}
+sf::FloatRect EntityBase::GetAABB()
+{
+    return m_AABB;
+}
+
 void EntityBase::Move(float x, float y)
 {
     m_positionOld = m_position;

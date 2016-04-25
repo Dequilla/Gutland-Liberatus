@@ -2,7 +2,12 @@
 
 #include "EntityBase.h"
 #include <Kengine/SpriteSheet.h>
-
+/*
+   ===========================================================
+   class Character is the parent class for all types of
+   characters, such as Player, NPC, Monster, etc.
+   ===========================================================
+ */
 class Character: public EntityBase
 {
     friend class EntityManager;

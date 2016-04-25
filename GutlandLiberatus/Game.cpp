@@ -53,3 +53,18 @@ void Game::Render()
 
     m_window.EndDraw();
 }
+
+Kengine::Window* Game::GetWindow()
+{
+    return &m_window;
+}
+
+sf::Time Game::GetElapsed()
+{
+    return m_elapsed;
+}
+
+void Game::RestartClock()
+{
+    m_elapsed = m_clock.restart();
+}
