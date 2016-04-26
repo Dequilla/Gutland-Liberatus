@@ -4,7 +4,7 @@
 #include <Kengine/BaseState.h>
 #include <Kengine/ButtonContainer.h>
 
-#include "CombatEnemy.h"
+#include "EnemyController.h"
 
 #include "Map.h"
 
@@ -49,5 +49,5 @@ private:
 	sf::Text m_rangeHitChanceText;
 	sf::Text m_evasionText;
 
-	CombatEnemy m_enemyOne;
+	EnemyController m_enemyController;
 };

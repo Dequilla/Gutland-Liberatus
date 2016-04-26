@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 class CombatEnemy {
 
@@ -8,13 +9,20 @@ public:
 	CombatEnemy::CombatEnemy();
 	CombatEnemy::~CombatEnemy();
 
-	sf::Sprite getSprite();
-	sf::Sprite getHightlightSprite();
+	void create(std::string pathToBodySprite, std::string pathToHighlightSprite, unsigned int health,
+				sf::Vector2f position, unsigned int range);
+
+	void draw(sf::RenderWindow* window);
 
 private:
-	sf::Texture m_bodyTexture;
-	sf::Sprite m_bodySprite;
+	sf::Texture* m_bodyTexture = new sf::Texture;
+	sf::Sprite* m_bodySprite = new sf::Sprite;
 
-	sf::Texture m_hightlightTexture;
-	sf::Sprite m_hightlightSprite;
+	sf::Texture* m_highlightTexture = new sf::Texture;
+	sf::Sprite* m_highlightSprite = new sf::Sprite;
+
+	unsigned int m_currentHealth = 0;
+	unsigned int m_maxhealth = 0;
+
+	bool m_active = false;
 };

@@ -2,30 +2,38 @@
 
 CombatEnemy::CombatEnemy()
 {
-	m_bodyTexture.loadFromFile("media/Textures/NPCDrunkard.png");
-	m_bodySprite.setTexture(m_bodyTexture);
-	m_bodySprite.setPosition(sf::Vector2f(500.f, 200.f));
-	m_bodySprite.setScale(sf::Vector2f(15.f, 15.f));
-	m_bodySprite.setOrigin(m_bodySprite.getLocalBounds().width / 2, m_bodySprite.getLocalBounds().height / 2);
 
-	m_hightlightTexture.loadFromFile("media/Textures/NPCDrunkardHighlight.png");
-	m_hightlightSprite.setTexture(m_hightlightTexture);
-	m_hightlightSprite.setPosition(500.f, 200.f);
-	m_hightlightSprite.setScale(sf::Vector2f(15.f, 15.f));
-
-	m_hightlightSprite.setOrigin(m_hightlightSprite.getLocalBounds().width / 2, m_hightlightSprite.getLocalBounds().height / 2);
 }
 
 CombatEnemy::~CombatEnemy()
 {
+	//delete m_bodySprite;
+	//delete m_highlightSprite;
 }
 
-sf::Sprite CombatEnemy::getSprite()
+void CombatEnemy::create(std::string pathToBodySprite, std::string pathToHighlightSprite, unsigned int health, sf::Vector2f position, unsigned int range = 1)
 {
-	return m_bodySprite;
+	m_bodyTexture->loadFromFile(pathToBodySprite);
+	m_bodySprite->setTexture(*m_bodyTexture);
+	m_bodySprite->setPosition(position);
+	m_bodySprite->setOrigin(m_bodySprite->getLocalBounds().width / 2, m_bodySprite->getLocalBounds().height / 2);
+	m_bodySprite->setScale(sf::Vector2f(10.f, 10.f));
+
+	m_highlightTexture->loadFromFile(pathToHighlightSprite);
+	m_highlightSprite->setTexture(*m_highlightTexture);
+	m_highlightSprite->setPosition(position);
+	m_highlightSprite->setOrigin(m_highlightSprite->getLocalBounds().width / 2, m_highlightSprite->getLocalBounds().height / 2);
+	m_highlightSprite->setScale(sf::Vector2f(10.f, 10.f));
+
+	m_currentHealth = health;
+	m_maxhealth = health;
 }
 
-sf::Sprite CombatEnemy::getHightlightSprite()
+void CombatEnemy::draw(sf::RenderWindow * window)
 {
-	return m_hightlightSprite;
+	window->draw(*m_bodySprite);
+	if (m_active)
+	{
+		window->draw(*m_highlightSprite);
+	}
 }
