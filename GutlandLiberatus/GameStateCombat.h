@@ -5,6 +5,7 @@
 #include <Kengine/ButtonContainer.h>
 
 #include "EnemyController.h"
+#include "CharacterContext.h"
 
 #include "Map.h"
 
@@ -28,26 +29,33 @@ public:
 	void ToggleOverlay(Kengine::EventDetails* details);
 	void MouseClick(Kengine::EventDetails* details);
 
+	static inline std::string int2Str(int x)
+	{
+		std::stringstream type;
+		type << x;
+		return type.str();
+	}
 private:
-	Kengine::ButtonContainer m_buttons;
+	Kengine::ButtonContainer	m_buttons;
 
-	sf::Texture m_portraitTexture;
-	sf::Sprite m_portrait;
+	sf::Texture					m_portraitTexture;
+	sf::Sprite					m_portrait;
 
-	sf::Texture m_portraitFrameTexture;
-	sf::Sprite m_portraitFrame;
+	sf::Texture					m_portraitFrameTexture;
+	sf::Sprite					m_portraitFrame;
 
-	sf::Texture m_bottomFrameTexture;
-	sf::Sprite m_bottomFrame;
+	sf::Texture					m_bottomFrameTexture;
+	sf::Sprite					m_bottomFrame;
 
-	sf::Texture m_backgroundTexture;
-	sf::Sprite m_background;
+	sf::Texture					m_backgroundTexture;
+	sf::Sprite					m_background;
 
-	sf::Font m_steamwreckFont;
-	sf::Text m_healthText;
-	sf::Text m_meleeHitChanceText;
-	sf::Text m_rangeHitChanceText;
-	sf::Text m_evasionText;
+	sf::Font					m_steamwreckFont;
+	sf::Text					m_healthText;
+	sf::Text					m_meleeHitChanceText;
+	sf::Text					m_rangeHitChanceText;
+	sf::Text					m_evasionText;
 
-	EnemyController m_enemyController;
+	EnemyController				m_enemyController;
+	CharacterContext			m_characterContext;
 };

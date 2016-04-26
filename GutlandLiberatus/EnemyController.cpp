@@ -7,7 +7,7 @@ EnemyController::EnemyController()
 
 EnemyController::~EnemyController()
 {
-
+	
 }
 
 void EnemyController::draw(sf::RenderWindow* window)
@@ -23,6 +23,8 @@ void EnemyController::generateNewRandomEnemies()
 	//Code that generates 1-3 new randomly selected enemies
 	unsigned int enemyAmount = rand() % 3 + 1;
 
+	unsigned int amountOfAllowedEnemies = (sizeof(m_enemiesAllowedToBeGenerated) / sizeof(*m_enemiesAllowedToBeGenerated));
+
 	std::string enemies[3];
 	if (enemyAmount > 3)
 	{
@@ -31,18 +33,46 @@ void EnemyController::generateNewRandomEnemies()
 	}
 	if (enemyAmount > 0)
 	{ 
-		enemies[0] = m_enemiesAllowedToBeGenerated[rand() % 2];
+		enemies[0] = m_enemiesAllowedToBeGenerated[ rand() % amountOfAllowedEnemies ];
 	}
 	if (enemyAmount > 1)
 	{
-		enemies[1] = m_enemiesAllowedToBeGenerated[rand() % 2];
+		enemies[1] = m_enemiesAllowedToBeGenerated[rand() % amountOfAllowedEnemies ];
 	}
 	if (enemyAmount > 2) 
 	{
-		enemies[2] = m_enemiesAllowedToBeGenerated[rand() % 2];
+		enemies[2] = m_enemiesAllowedToBeGenerated[ rand() % amountOfAllowedEnemies ];
 	}
 
 	createEnemies(enemies);
+}
+
+void EnemyController::update(sf::Vector2i mousePos, sf::RenderWindow * window)
+{
+	m_window = window;
+	m_mousePos = mousePos;
+
+	//Check buttons
+	for (auto &itr : m_enemyContainer)
+	{
+		if (itr.second.contains(m_mousePos)) itr.second.setActive(true);
+		else itr.second.setActive(false);
+	}
+}
+
+void EnemyController::changeSelected()
+{
+	for (auto &itr : m_enemyContainer)
+	{
+		if (itr.second.isActive())
+		{
+			itr.second.setSelected(true);
+		}
+		else
+		{
+			itr.second.setSelected(false);
+		}
+	}
 }
 
 void EnemyController::createEnemies(std::string enemies[3])
@@ -69,4 +99,9 @@ void EnemyController::createEnemies(std::string enemies[3])
 			m_enemyContainer.emplace(i, temp);
 		}
 	}
+}
+
+void EnemyController::resetCombat()
+{
+	m_enemyContainer.clear();
 }

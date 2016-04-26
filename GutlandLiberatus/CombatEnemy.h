@@ -13,16 +13,23 @@ public:
 				sf::Vector2f position, unsigned int range);
 
 	void draw(sf::RenderWindow* window);
+	void setActive(bool tof);
+	bool isActive();
+	void setSelected(bool tof);
+	bool contains(sf::Vector2i point);
 
 private:
-	sf::Texture* m_bodyTexture = new sf::Texture;
-	sf::Sprite* m_bodySprite = new sf::Sprite;
+	sf::Texture*		m_bodyTexture = new sf::Texture;
+	sf::Sprite*			m_bodySprite = new sf::Sprite;
 
-	sf::Texture* m_highlightTexture = new sf::Texture;
-	sf::Sprite* m_highlightSprite = new sf::Sprite;
+	sf::Texture*		m_highlightTexture = new sf::Texture;
+	sf::Sprite*			m_highlightSprite = new sf::Sprite;
 
-	unsigned int m_currentHealth = 0;
-	unsigned int m_maxhealth = 0;
+	sf::Sprite*			m_selectedSprite = new sf::Sprite;
 
-	bool m_active = false;
+	unsigned int		m_currentHealth = 0;
+	unsigned int		m_maxhealth = 0;
+
+	bool				m_active = false;
+	bool				m_selected = false;
 };

@@ -28,14 +28,14 @@ public:
 	void checkButtons();
 
 private:
-	sf::Text m_text;
-	sf::Font m_font;
-	sf::Texture m_textureBackground;
-	sf::Sprite m_spriteBackground;
+	sf::Text					m_text;
+	sf::Font					m_font;
+	sf::Texture					m_textureBackground;
+	sf::Sprite					m_spriteBackground;
 
-	Kengine::ButtonContainer m_buttons;
+	Kengine::ButtonContainer	m_buttons;
 
-	sf::Vector2f m_buttonSize;
-	sf::Vector2f m_buttonPos;
-	unsigned int m_buttonPadding;   
+	sf::Vector2f				m_buttonSize;
+	sf::Vector2f				m_buttonPos;
+	unsigned int				m_buttonPadding;   
 };

@@ -83,8 +83,6 @@ void GameStateCombat::OnCreate()
 	{
 		m_buttons.addButton(buttonString[i], sf::Vector2f(700.f, 542.f + (58.f * i)), sf::Vector2f(200.f, 55.f), sf::Color(20, 20, 20, 255), sf::Color(50, 50, 50, 255), sf::Color(70, 70, 70, 255));
 	}
-
-	m_enemyController.generateNewRandomEnemies();
 }
 
 void GameStateCombat::OnDestroy()
@@ -107,8 +105,19 @@ void GameStateCombat::Deactivate()
 void GameStateCombat::Update(const sf::Time& time)
 {
 	SharedContext* context = m_stateMgr->GetContext();
-	
-	m_buttons.update(m_stateMgr->GetContext()->eventManager->GetMousePos(m_stateMgr->GetContext()->window->GetRenderWindow()), m_stateMgr->GetContext()->window->GetRenderWindow());
+	//TODO Create a class to handle textobjects with addText() just like button
+	//ERRORINCUDE ++ dick #mature
+
+	m_healthText.setString("HEALTH:       " + sf::String(int2Str(m_characterContext.getCurrentHealth())));
+	m_meleeHitChanceText.setString(sf::String("M.HITCHANCE:  " + int2Str((m_characterContext.getMeleeHitChance() + m_characterContext.getRangeHitChanceModifier()))));
+	m_rangeHitChanceText.setString(sf::String("R.HITCHANCE:  " + int2Str((m_characterContext.getRangeHitChance() + m_characterContext.getRangeHitChanceModifier()))));
+	m_evasionText.setString(sf::String("EVASION:      " + int2Str((m_characterContext.getEvasion() + m_characterContext.getEvasionModifier()))));
+
+	sf::Vector2i mousePos = m_stateMgr->GetContext()->eventManager->GetMousePos(m_stateMgr->GetContext()->window->GetRenderWindow());
+	sf::RenderWindow* window = m_stateMgr->GetContext()->window->GetRenderWindow();
+
+	m_enemyController.update(mousePos, window);
+	m_buttons.update(mousePos, window);
 	//m_frame.Update(time.asSeconds());
 	m_stateMgr->GetContext()->entityManager->Update(time.asSeconds());
 }
@@ -153,6 +162,7 @@ void GameStateCombat::ToggleOverlay(Kengine::EventDetails* details)
 
 void GameStateCombat::MouseClick(Kengine::EventDetails * details)
 {
+	//Button logic
 	std::string active = m_buttons.getActiveButton();
 	if (active == "FIGHT")
 	{
@@ -160,10 +170,15 @@ void GameStateCombat::MouseClick(Kengine::EventDetails * details)
 	}else if (active == "ACTION")
 	{
 		std::cout << "ACTION" << std::endl;
+		m_enemyController.generateNewRandomEnemies();
 	}
 	else if (active == "ESCAPE")
 	{
 		std::cout << "ESCAPE" << std::endl;
+		m_enemyController.resetCombat();
 	}
+
+	//Enemy logic
+	m_enemyController.changeSelected();
 
 }
