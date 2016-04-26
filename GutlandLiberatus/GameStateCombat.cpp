@@ -26,7 +26,7 @@ void GameStateCombat::OnCreate()
 	
 	//Selection and creation of fighting background
 	//For now a static background
-	m_backgroundTexture.loadFromFile("media/Textures/cityBackground.png");
+	m_backgroundTexture.loadFromFile("media/Textures/TempBackground.png");
 	m_background.setTexture(m_backgroundTexture);
 	m_background.setPosition(sf::Vector2f(0.f, 0.f));
 
@@ -83,6 +83,8 @@ void GameStateCombat::OnCreate()
 	{
 		m_buttons.addButton(buttonString[i], sf::Vector2f(700.f, 542.f + (58.f * i)), sf::Vector2f(200.f, 55.f), sf::Color(20, 20, 20, 255), sf::Color(50, 50, 50, 255), sf::Color(70, 70, 70, 255));
 	}
+
+	m_enemyController.generateNewRandomEnemies();
 }
 
 void GameStateCombat::OnDestroy()
@@ -117,8 +119,7 @@ void GameStateCombat::Draw()
 
 	window->draw(m_background);
 
-	window->draw(m_enemyOne.getHightlightSprite());
-	window->draw(m_enemyOne.getSprite());
+	m_enemyController.draw(window);
 
 	window->draw(m_bottomFrame);
 
