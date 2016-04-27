@@ -68,6 +68,7 @@
     <ClInclude Include="TileLayer.h" />
     <ClInclude Include="tinystr.h" />
     <ClInclude Include="tinyxml.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="keys.cfg" />

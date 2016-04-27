@@ -1,4 +1,5 @@
 #pragma once
+#include "Weapon.h"
 
 class CharacterContext
 {
@@ -32,6 +33,9 @@ public:
 	unsigned int getEvasion() { return m_evasion; }
 	unsigned int getEvasionModifier() { return m_evasionModifier; }
 
+	void setWeapon(Weapon weapon) { m_weapon = weapon; }
+	Weapon getWeapon() { return m_weapon; }
+
 private:
 	unsigned int m_maxHealth = 100;
 	unsigned int m_maxHealthModifier = 0;
@@ -45,5 +49,7 @@ private:
 
 	unsigned int m_evasion = 10;
 	unsigned int m_evasionModifier = 0;
+
+	Weapon m_weapon;
 
 };

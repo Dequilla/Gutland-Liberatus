@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "CharacterContext.h"
 
 class CombatEnemy {
 
@@ -13,9 +14,12 @@ public:
 				sf::Vector2f position, unsigned int range);
 
 	void draw(sf::RenderWindow* window);
+	void update(float dt);
+
 	void setActive(bool tof);
 	bool isActive();
 	void setSelected(bool tof);
+	bool isSelected();
 	bool contains(sf::Vector2i point);
 
 private:
@@ -27,8 +31,9 @@ private:
 
 	sf::Sprite*			m_selectedSprite = new sf::Sprite;
 
-	unsigned int		m_currentHealth = 0;
-	unsigned int		m_maxhealth = 0;
+	CharacterContext	m_details;
+
+	unsigned int		m_range = 1;
 
 	bool				m_active = false;
 	bool				m_selected = false;
