@@ -1,6 +1,8 @@
 #pragma once
 
 #include <unordered_map>
+#include <iostream>
+#include <utility>
 
 #include "Attack.h"
 
@@ -10,8 +12,10 @@ public:
 	AttackContainer::AttackContainer() {};
 	AttackContainer::~AttackContainer() {};
 
-	void addAttack(std::string name, Attack attack);
-	Attack getAttack(std::string name);
+	void addAttack(std::string name, unsigned int evasionModifier,
+					unsigned int meleeHitModifier, unsigned int rangeHitModifier,
+					unsigned int criticalchanceModifier);
+	Attack getAttack(std::string name) const;
 
 private:
 	std::unordered_map<std::string, Attack>		m_container;

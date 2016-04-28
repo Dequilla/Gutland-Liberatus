@@ -6,6 +6,8 @@
 
 #include "EnemyController.h"
 #include "CharacterContext.h"
+#include "AttackContainer.h"
+#include "WeaponController.h"
 
 #include "Map.h"
 
@@ -37,6 +39,7 @@ public:
 	}
 private:
 	Kengine::ButtonContainer	m_buttons;
+	Kengine::ButtonContainer	m_extraButtons;
 
 	sf::Texture					m_portraitTexture;
 	sf::Sprite					m_portrait;
@@ -58,4 +61,10 @@ private:
 
 	EnemyController				m_enemyController;
 	CharacterContext			m_characterContext;
+	AttackContainer				m_attacks;
+	WeaponController			m_weapons;
+
+	std::string					m_buttonMode = "";
+	bool						m_playersTurn = true;
+	bool						m_showExtraButtons = false;
 };

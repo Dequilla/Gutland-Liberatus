@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AttackContainer.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CharacterContext.cpp" />
     <ClCompile Include="CombatEnemy.cpp" />
@@ -43,8 +44,11 @@
     <ClCompile Include="tinyxml.cpp" />
     <ClCompile Include="tinyxmlerror.cpp" />
     <ClCompile Include="tinyxmlparser.cpp" />
+    <ClCompile Include="WeaponController.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Attack.h" />
+    <ClInclude Include="AttackContainer.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharacterContext.h" />
     <ClInclude Include="CombatEnemy.h" />
@@ -69,6 +73,7 @@
     <ClInclude Include="tinystr.h" />
     <ClInclude Include="tinyxml.h" />
     <ClInclude Include="Weapon.h" />
+    <ClInclude Include="WeaponController.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="keys.cfg" />

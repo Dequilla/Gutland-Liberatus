@@ -2,6 +2,11 @@
 #include <vector>
 
 struct Weapon {
+	enum class Type {
+		Melee = 0,
+		Range
+	};
+
 	Weapon::Weapon(){};
 	Weapon::~Weapon(){};
 
@@ -12,6 +17,7 @@ struct Weapon {
 	unsigned int minimumDamage = 0;
 
 	std::string					name;
-	std::vector<std::string>	attacks;
+	Type						weaponType;
+	std::string					attacks[4];
 
 };
