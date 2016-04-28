@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <unordered_map>
 #include <map>
 #include <array>
@@ -134,33 +135,35 @@ public:
     // Method for converting 2D coordinates to 1D ints.
     unsigned int                ConvertCoords(const unsigned int &x, const unsigned int &y);
 
+	sf::Music					music;
 private:
-    TileSet            m_tileSet;
-    TileMap            m_tileMap;
-    TileInfo           m_defaultTile;
-    sf::Sprite         m_background;
-    sf::Vector2u       m_maxMapSize;
-    sf::Vector2f       m_playerStart;
-    std::string        m_nextMap;
-    std::string        m_backgroundTexture;
-    std::string        m_layerName;
-    bool               m_loadNextMap;
-    SharedContext      *m_context;
-    int                m_tileCount;
-    int                m_tileSize;
-    int                m_mapWidth;
-    int                m_mapHeight;
-    int                m_playerId = -1;
-    float              m_mapGravity;
-    unsigned int       m_tileSetCount;
-    Kengine::BaseState *m_currentState;
+    TileSet				m_tileSet;
+    TileMap				m_tileMap;
+    TileInfo			m_defaultTile;
+    sf::Sprite			m_background;
+    sf::Vector2u		m_maxMapSize;
+    sf::Vector2f		m_playerStart;
+	std::string			m_musicName;
+    std::string			m_nextMap;
+    std::string			m_backgroundTexture;
+    std::string			m_layerName;
+    bool				m_loadNextMap;
+    SharedContext		*m_context;
+    int					m_tileCount;
+    int					m_tileSize;
+    int					m_mapWidth;
+    int					m_mapHeight;
+    int					m_playerId = -1;
+    float				m_mapGravity;
+    unsigned int		m_tileSetCount;
+    Kengine::BaseState	*m_currentState;
 
     std::vector < Layer * > m_layers;
 
-    void               LoadTiles(const std::string& path);
-    void               LoadTiles(TiXmlElement* tilesetRoot);
-    void               ParseTileLayer(TiXmlElement* tileElement);
-    void               ParseObjectLayer(TiXmlElement* objectElement);
-    void               PurgeMap();
-    void               PurgeTileSet();
+    void				LoadTiles(const std::string& path);
+    void				LoadTiles(TiXmlElement* tilesetRoot);
+    void				ParseTileLayer(TiXmlElement* tileElement);
+    void				ParseObjectLayer(TiXmlElement* objectElement);
+    void				PurgeMap();
+    void				PurgeTileSet();
 };

@@ -178,7 +178,7 @@ void Character::Update(float dt)
     }
     if (GetState() != EntityState::Dying && GetState() != EntityState::Attacking && GetState() != EntityState::Hurt)
     {
-        if (abs(m_velocity.y) >= 0.01f)
+        if (abs(m_velocity.y) >= 0.1f)
         {
             SetState(EntityState::Walking);
         }

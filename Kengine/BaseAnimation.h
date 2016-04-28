@@ -12,8 +12,8 @@ class BaseAnimation
 {
     friend class SpriteSheet;
 public:
-    BaseAnimation();
-    virtual ~BaseAnimation();
+                    BaseAnimation();
+    virtual         ~BaseAnimation();
 
     // Setters
     void            SetSpriteSheet(SpriteSheet* sheet);

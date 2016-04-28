@@ -1,16 +1,13 @@
 #pragma once
 
+#include <iostream>
 #include <Kengine/Window.h>
 #include <Kengine/EventManager.h>
 #include <Kengine/TextureManager.h>
-
 #include <Kengine/Kopter.h>
 
 #include "StateManager.h"
 #include "EntityManager.h"
-
-#include <iostream>
-
 /*
    ===========================================================
    This is the core of the game.

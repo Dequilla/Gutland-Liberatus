@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="32" tileheight="32" nextobjectid="4">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="32" tileheight="32" nextobjectid="7">
  <tileset firstgid="1" name="TileSet" tilewidth="32" tileheight="32" tilecount="529" columns="23">
   <image source="../Textures/tileset3.png" width="736" height="736"/>
   <tile id="2">
@@ -4826,5 +4826,8 @@
  </layer>
  <objectgroup name="Object Layer 1">
   <object id="1" name="PlayerStart" type="Player" x="608" y="352" width="32" height="32"/>
+  <object id="5" name="Dram - Skebergslaten.ogg" type="Music" x="320" y="96">
+   <polygon points="0,0 32,32 0,64 0,0"/>
+  </object>
  </objectgroup>
 </map>

@@ -136,7 +136,7 @@ bool BaseAnimation::IsInAction()
 
 std::string BaseAnimation::GetName()
 {
-    return std::string();
+    return m_name;
 }
 
 void BaseAnimation::Play()

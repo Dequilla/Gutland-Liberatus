@@ -97,6 +97,14 @@ void Map::LoadMap(const std::string& path)
 
     std::cout << "--- Map Loaded! ---" << std::endl;
 
+	if (!music.openFromFile("media/Sound/Music/" + m_musicName))
+	{
+		std::cout << "Could not open music file: " << m_musicName << std::endl;
+	}
+
+	music.setLoop(true);
+	music.play();
+
     root->Clear();
     root = nullptr;
 }
@@ -264,7 +272,7 @@ void Map::ParseObjectLayer(TiXmlElement* objectElement)
             {
                 std::string enemyName;
                 enemyName = e->Attribute("name");
-                int         enemyId = entityMgr->Add(EntityType::Enemy, enemyName);
+                int enemyId = entityMgr->Add(EntityType::Enemy, enemyName);
                 if (enemyId < 0)
                 {
                     continue;
@@ -275,6 +283,10 @@ void Map::ParseObjectLayer(TiXmlElement* objectElement)
                 e->Attribute("y", &enemyY);
                 entityMgr->Find(enemyId)->SetPosition(enemyX, enemyY);
             }
+			else if (e->Attribute("type") == std::string("Music"))
+			{
+				m_musicName = e->Attribute("name");
+			}
         }
     }
 }
