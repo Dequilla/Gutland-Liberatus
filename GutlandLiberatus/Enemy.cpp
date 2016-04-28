@@ -25,8 +25,6 @@ void Enemy::OnEntityCollision(EntityBase* collider, bool attack)
         return;
     }
     Character* player = (Character *) collider;
-    SetState(EntityState::Attacking);
-    player->GetHurt(1);
     if (m_position.x > player->GetPosition().x)
     {
         player->AddVelocity(-m_speed.x, 0);
@@ -34,7 +32,7 @@ void Enemy::OnEntityCollision(EntityBase* collider, bool attack)
     }
     else
     {
-        player->AddVelocity(m_speed.y, 0);
+        player->AddVelocity(m_speed.x, 0);
         m_spriteSheet.SetDirection(Kengine::Direction::Right);
     }
 }
@@ -66,8 +64,8 @@ void Enemy::Update(float dt)
         }
         return;
     }
-    int random = rand() % 1000 + 1;
-    if (random != 1000)
+    int random = rand() % 100 + 1;
+    if (random != 100)
     {
         return;
     }

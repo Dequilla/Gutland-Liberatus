@@ -251,19 +251,19 @@ void Character::Animate()
         m_spriteSheet.SetAnimation("Jump", true, false);
     }
     else if (state == EntityState::Attacking && m_spriteSheet.
-             GetCurrentAnimation()->GetName() != "Attack")
+             GetCurrentAnimation()->GetName() != "Idle")
     {
-        m_spriteSheet.SetAnimation("Attack", true, false);
+        m_spriteSheet.SetAnimation("Idle", false, false);
     }
     else if (state == EntityState::Hurt && m_spriteSheet.
-             GetCurrentAnimation()->GetName() != "Hurt")
+             GetCurrentAnimation()->GetName() != "Idle")
     {
-        m_spriteSheet.SetAnimation("Hurt", true, false);
+        m_spriteSheet.SetAnimation("Idle", false, false);
     }
     else if (state == EntityState::Dying && m_spriteSheet.
-             GetCurrentAnimation()->GetName() != "Death")
+             GetCurrentAnimation()->GetName() != "Idle")
     {
-        m_spriteSheet.SetAnimation("Death", true, false);
+        m_spriteSheet.SetAnimation("Idle", false, false);
     }
     else if (state == EntityState::Idle && m_spriteSheet.
              GetCurrentAnimation()->GetName() != "Idle")
