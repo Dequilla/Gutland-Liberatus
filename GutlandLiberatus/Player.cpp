@@ -22,7 +22,7 @@ Player::Player(EntityManager* entityManager) :
 
 	if (!m_stepSoundBuffer.loadFromFile("media/Sound/Effects/Steps/leaves01.ogg"))
 	{
-		std::cout << "Could not load gravel.ogg" << std::endl;
+		std::cout << "Could not load leaves01.ogg" << std::endl;
 	}
 
 	m_stepSound.setBuffer(m_stepSoundBuffer);
@@ -104,7 +104,7 @@ void Player::React(Kengine::EventDetails* details)
         Character::Attack();
     }
 
-	if (m_stepSound.getStatus() == m_stepSound.Stopped && 
+	if (m_stepSound.getStatus() == m_stepSound.Stopped &&
 		m_spriteSheet.GetCurrentAnimation()->GetName() == "Walk")
 	{
 		m_stepSound.play();
