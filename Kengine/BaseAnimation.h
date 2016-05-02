@@ -12,8 +12,8 @@ class BaseAnimation
 {
     friend class SpriteSheet;
 public:
-    BaseAnimation();
-    virtual ~BaseAnimation();
+                    BaseAnimation();
+    virtual         ~BaseAnimation();
 
     // Setters
     void            SetSpriteSheet(SpriteSheet* sheet);
@@ -42,10 +42,10 @@ public:
     bool            IsInAction();
     std::string     GetName();
 
-    void Play();
-    void Pause();
-    void Stop();
-    void Reset();
+    void            Play();
+    void            Pause();
+    void            Stop();
+    void            Reset();
 
     virtual void Update(const float& dt);
 

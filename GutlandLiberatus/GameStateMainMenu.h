@@ -7,6 +7,7 @@
 
 /*
    ===========================================================
+   class GameStateMainMenu: public Kengine::BaseState
    A main menu where you can start/resume a game, change game
    settings, check out credits or/and exit the game.
    ===========================================================

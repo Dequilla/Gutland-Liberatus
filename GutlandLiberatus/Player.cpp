@@ -19,6 +19,14 @@ Player::Player(EntityManager* entityManager) :
     events->AddCallback<Player>(StateType::Game, "Player_MoveDown",
                                 &Player::React, this);
     this->Move(Kengine::Direction::Down);
+
+	if (!m_stepSoundBuffer.loadFromFile("media/Sound/Effects/Steps/leaves01.ogg"))
+	{
+		std::cout << "Could not load leaves01.ogg" << std::endl;
+	}
+
+	m_stepSound.setBuffer(m_stepSoundBuffer);
+	m_stepSound.setLoop(false);
 }
 
 Player::~Player()
@@ -95,4 +103,10 @@ void Player::React(Kengine::EventDetails* details)
     {
         Character::Attack();
     }
+
+	if (m_stepSound.getStatus() == m_stepSound.Stopped &&
+		m_spriteSheet.GetCurrentAnimation()->GetName() == "Walk")
+	{
+		m_stepSound.play();
+	}
 }

@@ -29,6 +29,15 @@ void GameStateGame::OnCreate()
 
     m_gameMap = new Map(m_stateMgr->GetContext(), this);
     m_gameMap->LoadMap("media/Maps/default.tmx");
+
+/*	if (!m_music.openFromFile("media/Sound/Music/little town - orchestral.ogg"))
+	{
+		std::cout << "Could not load music: little town - orchestral.ogg!" << std::endl;
+	}
+
+	m_music.setLoop(true);
+
+	m_music.play();*/
 }
 
 void GameStateGame::OnDestroy()
@@ -45,6 +54,10 @@ void GameStateGame::OnDestroy()
 
 void GameStateGame::Activate()
 {
+	if (m_gameMap->music.Paused)
+	{
+		m_gameMap->music.play();
+	}
 }
 
 void GameStateGame::Deactivate()
@@ -106,17 +119,18 @@ void GameStateGame::Update(const sf::Time& time)
 void GameStateGame::Draw()
 {
     m_gameMap->Draw();
-//	m_stateMgr->GetContext()->entityManager->Draw();
 }
 
 void GameStateGame::MainMenu(Kengine::EventDetails* details)
 {
     m_stateMgr->SwitchTo(StateType::MainMenu);
+	m_gameMap->music.pause();
 }
 
 void GameStateGame::Pause(Kengine::EventDetails* details)
 {
     m_stateMgr->SwitchTo(StateType::Paused);
+	m_gameMap->music.pause();
 }
 
 void GameStateGame::ToggleOverlay(Kengine::EventDetails* details)

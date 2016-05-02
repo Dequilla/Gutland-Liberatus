@@ -7,6 +7,7 @@
 
 /*
    ===========================================================
+   enum class EntityType
    Different types of entities.
    ===========================================================
  */
@@ -14,6 +15,7 @@ enum class EntityType { Base, Enemy, Player };
 
 /*
    ===========================================================
+   enum class EntityState
    Different kind of states an entity can be in.
    ===========================================================
  */
@@ -24,6 +26,12 @@ enum class EntityState
 
 struct TileInfo;
 
+
+/*
+   ===========================================================
+   struct CollisionElement
+   ===========================================================
+ */
 struct CollisionElement
 {
     CollisionElement(float area, TileInfo * info,
@@ -45,7 +53,7 @@ class EntityManager;
 
 /*
    ===========================================================
-
+   class EntityBase
    ===========================================================
  */
 class EntityBase

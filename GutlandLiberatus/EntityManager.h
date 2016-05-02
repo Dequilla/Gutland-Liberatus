@@ -13,6 +13,7 @@ struct SharedContext;
 
 /*
    ===========================================================
+   class EntityManager
    Handles all types of entities in the game.
    ===========================================================
  */

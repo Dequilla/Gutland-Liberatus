@@ -88,20 +88,28 @@ void EntityBase::Move(float x, float y)
     sf::Vector2u mapSize = m_entityManager->GetContext()->gameMap->GetMapSize();
     if (m_position.x < 0)
     {
-        m_position.x = 0;
+		m_position.x = 0;
+		m_velocity.x = 0;
+		m_collidingOnX = true;
     }
     else if (m_position.x > (mapSize.x) * Sheet::Tile_Size)
     {
         m_position.x = (mapSize.x) * Sheet::Tile_Size;
+		m_velocity.x = 0;
+		m_collidingOnX = true;
     }
 
     if (m_position.y < 26)
     {
-        m_position.y = 26;
+		m_position.y = 26;
+		m_velocity.y = 0;
+		m_collidingOnY = true;
     }
     else if (m_position.y > (mapSize.y) * Sheet::Tile_Size)
     {
         m_position.y = (mapSize.y) * Sheet::Tile_Size;
+		m_velocity.y = 0;
+		m_collidingOnY = true;
     }
 
     UpdateAABB();
