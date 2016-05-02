@@ -4,6 +4,11 @@
 #include <Kengine/EventManager.h>
 #include <SFML/Audio.hpp>
 
+/*
+   ===========================================================
+   class Player
+   ===========================================================
+ */
 class Player: public Character
 {
 public:

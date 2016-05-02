@@ -26,7 +26,7 @@ using TileID = unsigned int;
 struct TileInfo
 {
     TileInfo(SharedContext * context, const std::string& texture = "", TileID id = 0) :
-        m_context(context), m_id(0), m_deadly(false), m_friction(sf::Vector2f(0.8f, 0.8f))
+        m_context(context), m_id(0), m_deadly(false), m_friction(sf::Vector2f(0.9f, 0.9f))
     {
     }
 

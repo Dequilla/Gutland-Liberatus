@@ -6,6 +6,11 @@
 
 #include "Map.h"
 
+/*
+   ===========================================================
+   class GameStateGame: public Kengine::BaseState
+   ===========================================================
+ */
 class GameStateGame: public Kengine::BaseState
 {
 public:

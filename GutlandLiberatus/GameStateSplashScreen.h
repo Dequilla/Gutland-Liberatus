@@ -5,6 +5,13 @@
 #include <Kengine/TextureManager.h>
 #include <Kengine/SpriteSheet.h>
 
+/*
+   ===========================================================
+   class GameStateSplashScreen: public Kengine::BaseState
+   A Splash Screen displaying the Kengine logo aswell as
+   our Lonely Lamb Interactive logo/animation
+   ===========================================================
+ */
 class GameStateSplashScreen: public Kengine::BaseState
 {
 public:

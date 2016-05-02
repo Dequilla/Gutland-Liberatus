@@ -1,6 +1,13 @@
 #pragma once
 #include "Map.h"
 
+/*
+   ===========================================================
+   class Layer is going to hold all types of layers. at the
+   moment we only have tilelayers to work with, but hopefully
+   we'll be able to implement more layers soon.
+   ===========================================================
+ */
 class Layer
 {
 public:

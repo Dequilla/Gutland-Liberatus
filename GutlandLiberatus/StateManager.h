@@ -12,6 +12,11 @@
 #include "SharedContext.h"
 
 
+/*
+   ===========================================================
+   Different types of states the game can be in
+   ===========================================================
+ */
 enum class StateType
 {
     Intro = 1,
@@ -32,6 +37,13 @@ using TypeContainer  = std::vector < StateType >;
 // that will generate that type
 using StateFactory = std::unordered_map < StateType, std::function < Kengine::BaseState*(void) >>;
 
+
+/*
+   ===========================================================
+   class StateManager
+   Manages all our different types of gamestates.
+   ===========================================================
+ */
 class StateManager
 {
 public:
