@@ -7,7 +7,6 @@ m_stateManager(&m_context), m_entityManager(&m_context, 100), m_options("media/O
 
 	m_window.SetFullscreen(m_options.getBoolOptionAt("fullscreen"));
 	m_window.SetVerticalSync(m_options.getBoolOptionAt("verticalsync"));
-	m_window.SetWindowSize(sf::Vector2u(m_options.getIntOptionAt("width"), m_options.getIntOptionAt("height")));
 
 	m_window.RecreateWindow();
 

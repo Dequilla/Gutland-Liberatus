@@ -36,6 +36,8 @@ public:
 	void setWeapon(Weapon weapon) { m_weapon = weapon; }
 	Weapon getWeapon() { return m_weapon; }
 
+	void dealDamage(unsigned int damage);
+
 private:
 	unsigned int m_maxHealth = 100;
 	unsigned int m_maxHealthModifier = 0;

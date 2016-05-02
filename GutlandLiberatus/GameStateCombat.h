@@ -58,13 +58,21 @@ private:
 	sf::Text					m_meleeHitChanceText;
 	sf::Text					m_rangeHitChanceText;
 	sf::Text					m_evasionText;
+	sf::Clock					m_enemyTimer;
 
 	EnemyController				m_enemyController;
 	CharacterContext			m_characterContext;
 	AttackContainer				m_attacks;
 	WeaponController			m_weapons;
 
+	Weapon						m_weaponDetails;
+	Attack						m_attackDetails;
+	std::string					m_attack;
+
 	std::string					m_buttonMode = "";
 	bool						m_playersTurn = true;
 	bool						m_showExtraButtons = false;
+	bool						m_extraButtonsPressed = false;
+	bool						m_enemiesGoing = false;
+	int							m_enemiesHasAttacked = 0;
 };

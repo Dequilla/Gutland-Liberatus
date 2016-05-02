@@ -117,3 +117,29 @@ bool CombatEnemy::contains(sf::Vector2i point)
 	}
 	return false;
 }
+
+CharacterContext * CombatEnemy::getCharacterContext()
+{
+	return &m_details;
+}
+
+void CombatEnemy::updateColor()
+{
+	float modifier = (m_details.getCurrentHealth() * 0.01) * 255;
+	std::cout << "Modifier:"  << modifier;
+	m_bodySprite->setColor(sf::Color(255, modifier, modifier, 255));
+}
+
+void CombatEnemy::setDead(bool tof)
+{
+	m_dead = tof;
+	if (tof = true)
+	{
+		m_selected = false;
+	}
+}
+
+bool CombatEnemy::isDead()
+{
+	return m_dead;
+}

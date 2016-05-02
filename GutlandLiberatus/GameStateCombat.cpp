@@ -110,14 +110,13 @@ void GameStateCombat::OnCreate()
 		"Elbow", 
 		"Skull",
 		"Kick" };
-	m_weapons.addWeapon("Fist", 0, 0, 0, 10, 5, Weapon::Type::Melee, attacks);
+	m_weapons.addWeapon("Fist", 0, 0, 0, 10, 5, 10, Weapon::Type::Melee, attacks);
 
-	//std::string attacks[4] = { "Stab","Slash", "Hiltbash", "Kick" };
 	attacks[0] = "Stab";
 	attacks[1] = "Slash";
 	attacks[2] = "H.Bash";
 	attacks[3] = "Kick";
-	m_weapons.addWeapon("Broken Sword", 0, 10, 10, 20, 10, Weapon::Type::Melee, attacks);
+	m_weapons.addWeapon("Broken Sword", 0, 10, 10, 20, 10, 10, Weapon::Type::Melee, attacks);
 	
 	m_characterContext.setWeapon(m_weapons.getWeapon("Broken Sword"));
 }
@@ -160,6 +159,61 @@ void GameStateCombat::Update(const sf::Time& time)
 	
 	//m_frame.Update(time.asSeconds());
 	m_stateMgr->GetContext()->entityManager->Update(time.asSeconds());
+
+	if (m_playersTurn)
+	{
+		//	Players turn
+	}
+	else if (!m_playersTurn)
+	{
+		//	Enemies turn
+		
+		if (!m_enemiesGoing)
+		{
+			m_enemiesGoing = true;
+			m_enemyTimer.restart();
+		}
+
+		if (m_enemyTimer.getElapsedTime().asSeconds() >= 1)
+		{	
+			bool crit = false;
+			//Hardcoded 10% crit (DONT COMPLAIN)
+			if ((rand() % 10 + 1) == 1) crit = true;
+			int evasion = m_characterContext.getEvasion();
+			int dye = (rand() % 100 + 1);
+			bool evade = false;
+			if (dye <= evasion && dye >= 1)
+			{
+				evade = true;
+			}
+			int hitchance = 80;
+			int dyh = rand() % 100 + 1;
+			bool hit = false;
+			if (dyh <= hitchance && dyh >= 1)
+			{
+				hit = true;
+			}
+			unsigned int damage = rand() % 10 + 1;
+			if (crit)
+			{
+				damage = damage * 1.5f;
+			}
+		
+			if (hit && !evade)
+			{
+				m_characterContext.dealDamage(damage);
+			}
+			m_enemiesHasAttacked += 1;
+			std::cout << "TIMER AT: " << m_enemyTimer.getElapsedTime().asSeconds() << std::endl;
+			m_enemyTimer.restart();
+			if (m_enemiesHasAttacked == m_enemyController.getAmountOFEnemies())
+			{
+				m_playersTurn = true;
+				m_enemiesGoing = false;
+				m_enemiesHasAttacked = 0;
+			}
+		}
+	}
 }
 
 void GameStateCombat::Draw()
@@ -204,67 +258,199 @@ void GameStateCombat::ToggleOverlay(Kengine::EventDetails* details)
 
 void GameStateCombat::MouseClick(Kengine::EventDetails * details)
 {
-	m_showExtraButtons = false;
-
-	//Button logic
-	std::string active = m_buttons.getActiveButton();
-	if (active == "FIGHT")
+	//m_showExtraButtons = false;
+	//If it is the players turn buttons are available otherwise not
+	if(m_playersTurn)
 	{
-		m_showExtraButtons = true;
-
-		if (m_buttonMode != "FIGHT")
+		//Button logic
+		std::string active = m_buttons.getActiveButton();
+		if (active == "FIGHT")
 		{
-			m_buttonMode = "FIGHT";
-			m_extraButtons.getButton("EXBUTT1")->setString(sf::String(m_characterContext.getWeapon().attacks[0]));
-			m_extraButtons.getButton("EXBUTT1")->setVisible(true);
-			m_extraButtons.getButton("EXBUTT2")->setString(sf::String(m_characterContext.getWeapon().attacks[1]));
-			m_extraButtons.getButton("EXBUTT2")->setVisible(true);
-			m_extraButtons.getButton("EXBUTT3")->setString(sf::String(m_characterContext.getWeapon().attacks[2]));
-			m_extraButtons.getButton("EXBUTT3")->setVisible(true);
-			m_extraButtons.getButton("EXBUTT4")->setString(sf::String(m_characterContext.getWeapon().attacks[3]));
-			m_extraButtons.getButton("EXBUTT4")->setVisible(true);
+			m_showExtraButtons = true;
+
+			if (m_buttonMode != "FIGHT")
+			{
+				m_buttonMode = "FIGHT";
+				m_extraButtons.getButton("EXBUTT1")->setString(sf::String(m_characterContext.getWeapon().attacks[0]));
+				m_extraButtons.getButton("EXBUTT1")->setVisible(true);
+				m_extraButtons.getButton("EXBUTT2")->setString(sf::String(m_characterContext.getWeapon().attacks[1]));
+				m_extraButtons.getButton("EXBUTT2")->setVisible(true);
+				m_extraButtons.getButton("EXBUTT3")->setString(sf::String(m_characterContext.getWeapon().attacks[2]));
+				m_extraButtons.getButton("EXBUTT3")->setVisible(true);
+				m_extraButtons.getButton("EXBUTT4")->setString(sf::String(m_characterContext.getWeapon().attacks[3]));
+				m_extraButtons.getButton("EXBUTT4")->setVisible(true);
+			}
+
+		}else if (active == "ACTION")
+		{
+			m_showExtraButtons = true;
+
+			if(m_buttonMode != "ACTION")
+			{
+				m_buttonMode = "ACTION";
+				m_extraButtons.getButton("EXBUTT1")->setString(sf::String("Change Wep"));
+				m_extraButtons.getButton("EXBUTT1")->setVisible(true);
+				m_extraButtons.getButton("EXBUTT2")->setString(sf::String("Action2"));
+				m_extraButtons.getButton("EXBUTT2")->setVisible(false);
+				m_extraButtons.getButton("EXBUTT3")->setString(sf::String("Action3"));
+				m_extraButtons.getButton("EXBUTT3")->setVisible(false);
+				m_extraButtons.getButton("EXBUTT4")->setString(sf::String("Action4"));
+				m_extraButtons.getButton("EXBUTT4")->setVisible(false);
+
+			
+			}
+
+			m_enemyController.generateNewRandomEnemies();
+		}
+		else if (active == "ESCAPE")
+		{
+			m_showExtraButtons = true;
+
+			if (m_buttonMode != "ESCAPE")
+			{
+				m_buttonMode = "ESCAPE";
+				m_extraButtons.getButton("EXBUTT1")->setString(sf::String("Run"));
+				m_extraButtons.getButton("EXBUTT1")->setVisible(true);
+				m_extraButtons.getButton("EXBUTT2")->setString(sf::String("Distract"));
+				m_extraButtons.getButton("EXBUTT2")->setVisible(true);
+				m_extraButtons.getButton("EXBUTT3")->setString(sf::String("Nothing"));
+				m_extraButtons.getButton("EXBUTT3")->setVisible(false);
+				m_extraButtons.getButton("EXBUTT4")->setString(sf::String("Nothing"));
+				m_extraButtons.getButton("EXBUTT4")->setVisible(false);
+			}
+
+			m_enemyController.resetCombat();
 		}
 
-	}else if (active == "ACTION")
-	{
-		m_showExtraButtons = true;
+		//Enemy logic
+		m_enemyController.changeSelected();
 
-		if(m_buttonMode != "ACTION")
+
+		if (m_buttonMode == "FIGHT")
 		{
-			m_buttonMode = "ACTION";
-			m_extraButtons.getButton("EXBUTT1")->setString(sf::String("Change Wep"));
-			m_extraButtons.getButton("EXBUTT1")->setVisible(true);
-			m_extraButtons.getButton("EXBUTT2")->setString(sf::String("Action2"));
-			m_extraButtons.getButton("EXBUTT2")->setVisible(false);
-			m_extraButtons.getButton("EXBUTT3")->setString(sf::String("Action3"));
-			m_extraButtons.getButton("EXBUTT3")->setVisible(false);
-			m_extraButtons.getButton("EXBUTT4")->setString(sf::String("Action4"));
-			m_extraButtons.getButton("EXBUTT4")->setVisible(false);
-		}
 
-		m_enemyController.generateNewRandomEnemies();
+			if (m_extraButtons.getActiveButton() == "EXBUTT1")
+			{
+				m_attack = m_extraButtons.getButton("EXBUTT1")->getString();
+				m_extraButtonsPressed = true;
+			}
+			else if (m_extraButtons.getActiveButton() == "EXBUTT2")
+			{
+				m_attack = m_extraButtons.getButton("EXBUTT2")->getString();
+				m_extraButtonsPressed = true;
+			}
+			else if (m_extraButtons.getActiveButton() == "EXBUTT3")
+			{
+				m_attack = m_extraButtons.getButton("EXBUTT3")->getString();
+				m_extraButtonsPressed = true;
+			}
+			else if (m_extraButtons.getActiveButton() == "EXBUTT4")
+			{
+				m_attack = m_extraButtons.getButton("EXBUTT4")->getString();
+				m_extraButtonsPressed = true;
+			}
+
+			if(m_extraButtonsPressed && m_enemyController.getSelectedEnemy() != nullptr)
+			{
+				std::cout << m_attack << std::endl;
+
+				m_attackDetails = m_attacks.getAttack(m_attack);
+				m_weaponDetails = m_characterContext.getWeapon();
+				CombatEnemy* enemy = m_enemyController.getSelectedEnemy();
+			
+				//Damage Calculations begin
+				int damage = 0;
+				while(damage > m_weaponDetails.maxDamage || damage < m_weaponDetails.minimumDamage)
+				{
+					damage = rand() % m_weaponDetails.maxDamage;
+				
+				}
+				std::cout << "DAMAGE: " << damage << std::endl;
+				//Damage Calculations end
+
+				//Hit calculations begin
+				int hitChance = 0;
+				if(m_weaponDetails.weaponType == Weapon::Type::Melee)
+				{
+					hitChance = m_characterContext.getMeleeHitChance() - m_characterContext.getMeleeHitChanceModifier() - m_weaponDetails.meleeModifier - m_attackDetails.meleeHitModifier;
+				}
+				else if (m_weaponDetails.weaponType == Weapon::Type::Range)
+				{
+					hitChance = m_characterContext.getRangeHitChance() + m_characterContext.getRangeHitChanceModifier() + m_weaponDetails.rangeModifier + m_attackDetails.rangeHitModifier;
+				}
+				std::cout << "HITCHANCE: " << hitChance << std::endl;
+
+				int dyh = (rand() % 100 + 1);
+				bool didYouHit = false;
+				std::cout << "Hit number: " << dyh;
+
+				if (dyh <= hitChance && dyh >= 1)
+				{
+					didYouHit = true;
+					//std::cout << "You hit with a chance of: " << hitChance << ". You rolled: " << dyh << std::endl;
+				}
+				//Hit calculations end
+
+				//Crit calculations begin
+				int critChance = m_attackDetails.critchanceModifier + m_weaponDetails.critChance;
+				int dyc = (rand() % 100 + 1);
+				bool didYouCrit = false;
+				if (dyc <= critChance && dyc >= 1)
+				{
+					didYouCrit = true;
+					//std::cout << "You crit with a chance of: " << critChance << ". You rolled: " << dyc << std::endl;
+				}
+				//Crit calculations begin
+
+				//EvasionCalculation of enemies begin
+				int evasionChance = enemy->getCharacterContext()->getEvasion() + enemy->getCharacterContext()->getWeapon().evasionModifier;
+				int dye = (rand() % 100 + 1);
+				bool didYouEvade = false;
+				if (dye <= evasionChance && dye >= 1)
+				{
+					didYouEvade = true;
+					//std::cout << "You evaded with a chance of: " << evasionChance << ". You rolled: " << dye << std::endl;
+				}
+				//EvasionCalculation of enemies end
+
+				if (didYouHit && !didYouEvade)
+				{
+					//std::cout << ":..:\n";
+					if (didYouCrit) damage = damage *= 1.5; //Multiply damage by 150% if you crit
+					enemy->getCharacterContext()->dealDamage(damage);
+					enemy->updateColor();
+					if (enemy->getCharacterContext()->getCurrentHealth() == 0 || enemy->getCharacterContext()->getCurrentHealth() > enemy->getCharacterContext()->getMaxHealth())
+					{
+						enemy->getCharacterContext()->setCurrentHealth(0);
+						enemy->setDead(true);
+					}
+				}
+
+				//m_enemyController.getSelectedEnemy()->getCharacterContext()->
+			
+				//Makes sure we dont access attacks whilst empty creating bugs in the code
+				m_extraButtonsPressed = false;
+				m_playersTurn = false;
+				m_enemyController.checkCombat();
+			}
+		}
+		else if (m_buttonMode == "ACTION")
+		{
+			if (m_extraButtons.getActiveButton() == "EXBUTT1")
+			{
+				std::cout << "change wep\n";
+			}
+		}
+		else if (m_buttonMode == "ESCAPE")
+		{
+			if (m_extraButtons.getActiveButton() == "EXBUTT1")
+			{
+				std::cout << "ESCAPE SHIT";
+			}
+			else if (m_extraButtons.getActiveButton() == "EXBUTT2")
+			{
+				std::cout << "TRICK SHIT\n";
+			}
+		}
 	}
-	else if (active == "ESCAPE")
-	{
-		m_showExtraButtons = true;
-
-		if (m_buttonMode != "ESCAPE")
-		{
-			m_buttonMode = "ESCAPE";
-			m_extraButtons.getButton("EXBUTT1")->setString(sf::String("Run"));
-			m_extraButtons.getButton("EXBUTT1")->setVisible(true);
-			m_extraButtons.getButton("EXBUTT2")->setString(sf::String("Distract"));
-			m_extraButtons.getButton("EXBUTT2")->setVisible(true);
-			m_extraButtons.getButton("EXBUTT3")->setString(sf::String("Nothing"));
-			m_extraButtons.getButton("EXBUTT3")->setVisible(false);
-			m_extraButtons.getButton("EXBUTT4")->setString(sf::String("Nothing"));
-			m_extraButtons.getButton("EXBUTT4")->setVisible(false);
-		}
-
-		m_enemyController.resetCombat();
-	}
-
-	//Enemy logic
-	m_enemyController.changeSelected();
-
 }

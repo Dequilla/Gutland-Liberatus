@@ -15,6 +15,7 @@ struct Weapon {
 	unsigned int evasionModifier = 0;
 	unsigned int maxDamage = 0;
 	unsigned int minimumDamage = 0;
+	unsigned int critChance = 0;
 
 	std::string					name;
 	Type						weaponType;

@@ -21,6 +21,10 @@ public:
 	void setSelected(bool tof);
 	bool isSelected();
 	bool contains(sf::Vector2i point);
+	CharacterContext* getCharacterContext();
+	void updateColor();
+	void setDead(bool tof);
+	bool isDead();
 
 private:
 	sf::Texture*		m_bodyTexture = new sf::Texture;
@@ -37,4 +41,5 @@ private:
 
 	bool				m_active = false;
 	bool				m_selected = false;
+	bool				m_dead = false;
 };

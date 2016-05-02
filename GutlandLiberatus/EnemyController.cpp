@@ -14,7 +14,10 @@ void EnemyController::draw(sf::RenderWindow* window)
 {
 	for (auto &itr : m_enemyContainer) 
 	{
-		itr.second.draw(window);
+		if (!itr.second.isDead())
+		{
+			itr.second.draw(window);
+		}
 	}
 }
 
@@ -24,6 +27,9 @@ void EnemyController::generateNewRandomEnemies()
 	unsigned int enemyAmount = rand() % 3 + 1;
 
 	unsigned int amountOfAllowedEnemies = (sizeof(m_enemiesAllowedToBeGenerated) / sizeof(*m_enemiesAllowedToBeGenerated));
+
+	m_numberOfEnemies = enemyAmount;
+	m_numberOfEnemiesStatic = enemyAmount;
 
 	std::string enemies[3];
 	if (enemyAmount > 3)
@@ -47,6 +53,16 @@ void EnemyController::generateNewRandomEnemies()
 	createEnemies(enemies);
 }
 
+int EnemyController::getCurrentAmountOfEnemies()
+{
+	return m_numberOfEnemies;
+}
+
+int EnemyController::getAmountOFEnemies()
+{
+	return m_numberOfEnemiesStatic;
+}
+
 void EnemyController::update(sf::Vector2i mousePos, sf::RenderWindow * window)
 {
 	m_window = window;
@@ -55,10 +71,13 @@ void EnemyController::update(sf::Vector2i mousePos, sf::RenderWindow * window)
 	//Check buttons
 	for (auto &itr : m_enemyContainer)
 	{
-		if (itr.second.contains(m_mousePos)) itr.second.setActive(true);
-		else itr.second.setActive(false);
+		if(!itr.second.isDead())
+		{
+			if (itr.second.contains(m_mousePos)) itr.second.setActive(true);
+			else itr.second.setActive(false);
 
-		itr.second.update(60);
+			itr.second.update(60);
+		}
 	}
 }
 
@@ -97,6 +116,18 @@ void EnemyController::changeSelected()
 	}
 }
 
+CombatEnemy * EnemyController::getSelectedEnemy()
+{
+	for (auto &itr : m_enemyContainer)
+	{
+		if (itr.second.isSelected())
+		{
+			return &itr.second;
+		}
+	}
+	return nullptr;
+}
+
 void EnemyController::createEnemies(std::string enemies[3])
 {
 	for (unsigned int i = 0; i < 3; i++)
@@ -122,6 +153,24 @@ void EnemyController::createEnemies(std::string enemies[3])
 			temp.create("media/Textures/NPC/" + enemies[i] + ".png", "media/Textures/NPC/" + enemies[i] + "Highlight.png", 100, sf::Vector2f(position, 300), range);
 			m_enemyContainer.emplace(i, temp);
 		}
+	}
+}
+
+void EnemyController::checkCombat()
+{
+	int numberOfDeads = 0;
+	for (auto &itr : m_enemyContainer)
+	{
+		if (itr.second.isDead())
+		{
+			numberOfDeads++;
+			m_numberOfEnemies -= 1;
+		}
+	}
+	if (m_numberOfEnemies == 0)
+	{
+		resetCombat();
+		std::cout << "YOU WON" << std::endl;
 	}
 }
 

@@ -1,6 +1,6 @@
 #include "WeaponController.h"
 
-void WeaponController::addWeapon(std::string name, unsigned int rangeModifier, unsigned int meleeModifier, unsigned int evasionModifier, unsigned int maxDamage, unsigned int minimumDamage, Weapon::Type type, std::string attacks[4])
+void WeaponController::addWeapon(std::string name, unsigned int rangeModifier, unsigned int meleeModifier, unsigned int evasionModifier, unsigned int maxDamage, unsigned int minimumDamage, unsigned int critChance, Weapon::Type type, std::string attacks[4])
 {
 	Weapon temp;
 
@@ -11,6 +11,7 @@ void WeaponController::addWeapon(std::string name, unsigned int rangeModifier, u
 	temp.maxDamage = maxDamage;
 	temp.minimumDamage = minimumDamage;
 	temp.weaponType = type;
+	temp.critChance = critChance;
 	for (int i = 0; i < 4; i++)
 	{
 		temp.attacks[i] = attacks[i];

@@ -14,6 +14,7 @@ public:
 	void addWeapon(std::string name, unsigned int rangeModifier,
 					unsigned int meleeModifier, unsigned int evasionModifier,
 					unsigned int maxDamage, unsigned int minimumDamage,
+					unsigned int critChance,
 					Weapon::Type type, std::string attacks[4]);
 
 	Weapon getWeapon(std::string weaponName);

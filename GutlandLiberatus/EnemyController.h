@@ -14,11 +14,16 @@ class EnemyController {
 		void draw(sf::RenderWindow* window);
 
 		void generateNewRandomEnemies();
+		int getCurrentAmountOfEnemies();
+		int getAmountOFEnemies();
 		void update(sf::Vector2i mousePos, sf::RenderWindow* window);
 
 		void changeSelected();
+		CombatEnemy* getSelectedEnemy();
 
 		void createEnemies(std::string enemies[3]);
+
+		void checkCombat();
 
 		void resetCombat();
 
@@ -29,4 +34,7 @@ class EnemyController {
 
 		sf::RenderWindow*						m_window;
 		sf::Vector2i							m_mousePos;
+		
+		int										m_numberOfEnemies = 0;
+		int										m_numberOfEnemiesStatic = 0;
 };
