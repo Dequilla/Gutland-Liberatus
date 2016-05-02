@@ -27,10 +27,10 @@ namespace Kengine
 		void addButton(std::string name, sf::Vector2f position, sf::Vector2f size, sf::Color textColor, sf::Color backgroundColor, sf::Color hoverColor);
 
 	private:
-		std::unordered_map<std::string, Kengine::Button> m_buttons;
-		sf::Font m_font;
-		sf::RenderWindow* m_window;
-		sf::Vector2i m_mousePos;
+		std::unordered_map<std::string, Kengine::Button>	m_buttons;
+		sf::Font											m_font;
+		sf::RenderWindow*									m_window;
+		sf::Vector2i										m_mousePos;
 	};
 
 }
