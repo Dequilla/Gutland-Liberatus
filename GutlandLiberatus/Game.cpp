@@ -5,9 +5,9 @@ Game::Game() : m_window("Gutland Liberatus", sf::Vector2u(1280, 720)),
 {
     m_clock.restart();
 
-    m_window.SetFullscreen(m_options.getBoolOptionAt("fullscreen"));
-    m_window.SetVerticalSync(m_options.getBoolOptionAt("verticalsync"));
-    m_window.SetWindowSize(sf::Vector2u(m_options.getIntOptionAt("width"), m_options.getIntOptionAt("height")));
+
+	m_window.SetFullscreen(m_options.getBoolOptionAt("fullscreen"));
+	m_window.SetVerticalSync(m_options.getBoolOptionAt("verticalsync"));
 
     m_window.RecreateWindow();
 
