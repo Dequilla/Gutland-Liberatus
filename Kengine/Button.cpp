@@ -23,7 +23,6 @@ namespace Kengine
 	void Button::setString(const std::string string)
 	{
 		this->m_text.setString(string);
-		this->update();
 	}
 
 	void Button::setFont(sf::Font & font)
@@ -67,6 +66,11 @@ namespace Kengine
 			m_text.setOrigin(m_text.getLocalBounds().left + m_text.getLocalBounds().width / 2, m_text.getLocalBounds().top + m_text.getLocalBounds().height / 2);
 			m_text.setPosition(m_size.x / 2, m_size.y / 2);
 		}
+	}
+
+	void Button::setVisible(bool visible)
+	{
+		m_visible = visible;
 	}
 
 	void Button::events(sf::Event & event)
@@ -173,8 +177,11 @@ namespace Kengine
 
 	void Button::draw(sf::RenderTarget & target, sf::RenderStates states) const
 	{
-		states.transform *= getTransform();
-		target.draw(m_body, states);
-      		target.draw(m_text, states);
+		if(m_visible)
+		{
+			states.transform *= getTransform();
+			target.draw(m_body, states);
+			target.draw(m_text, states);
+		}
 	} 
 }    

@@ -16,6 +16,7 @@ namespace Kengine
 		void setFont(sf::Font &font);
 		void setTextSize(const int size);
 		void setOptimalTextSize();
+		void setVisible(bool visible);
 
 		bool clicked() { return this->m_clicked; };
 		void events(sf::Event &event);
@@ -48,6 +49,8 @@ namespace Kengine
 		bool						 m_clicked;
 
 		bool						m_active;
+		bool						m_visible = true;
+
 		std::string					m_name;
 		Kengine::SpriteSheet*		m_spriteSheetLeft;
 		Kengine::SpriteSheet*		m_spriteSheetMiddle;

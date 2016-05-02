@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  BaseAnimation.cpp
 BaseAnimation.cpp(133): warning C4018: '>=': signed/unsigned mismatch
 BaseAnimation.cpp(134): warning C4018: '<=': signed/unsigned mismatch
@@ -6,4 +7,41 @@ BaseAnimation.cpp(134): warning C4018: '<=': signed/unsigned mismatch
   DirectionalAnimation.cpp
   SpriteSheet.cpp
 SpriteSheet.cpp(38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+=======
+<<<<<<< HEAD
+﻿Build started 2016-04-26 14:39:31.
+     1>Project "E:\Gutland Liberatus\gutland-liberatus\Kengine\Kengine.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         D:\Microsoft Visual Studio\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _LIB /D SFML_STATIC /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\Kengine.pdb" /Gd /TP /analyze- /errorReport:prompt BaseAnimation.cpp Button.cpp ButtonContainer.cpp DirectionalAnimation.cpp Kopter.cpp SpriteSheet.cpp Textbox.cpp Window.cpp
+         BaseAnimation.cpp
+     1>BaseAnimation.cpp(133): warning C4018: '>=': signed/unsigned mismatch
+     1>BaseAnimation.cpp(134): warning C4018: '<=': signed/unsigned mismatch
+         Button.cpp
+         ButtonContainer.cpp
+         DirectionalAnimation.cpp
+         Kopter.cpp
+         SpriteSheet.cpp
+     1>SpriteSheet.cpp(38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+         Textbox.cpp
+         Window.cpp
+       Lib:
+         D:\Microsoft Visual Studio\VC\bin\Lib.exe /OUT:"E:\Gutland Liberatus\gutland-liberatus\Release\Kengine.lib" /NOLOGO /LTCG Release\BaseAnimation.obj
+         Release\Button.obj
+         Release\ButtonContainer.obj
+         Release\DirectionalAnimation.obj
+         Release\EventManager.obj
+         Release\Kopter.obj
+         Release\SpriteSheet.obj
+         Release\Textbox.obj
+         Release\Window.obj
+         Kengine.vcxproj -> E:\Gutland Liberatus\gutland-liberatus\Release\Kengine.lib
+     1>Done Building Project "E:\Gutland Liberatus\gutland-liberatus\Kengine\Kengine.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:06.06
+=======
+﻿  Window.cpp
+>>>>>>> 7726da9d339497c649a4247b24f35a48e3f77c5d
   Kengine.vcxproj -> W:\school\Gutland-Liberatus\Release\Kengine.lib
+>>>>>>> master
