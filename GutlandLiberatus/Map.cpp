@@ -3,325 +3,315 @@
 #include "TileLayer.h"
 
 Map::Map(SharedContext* context, Kengine::BaseState* currentState) :
-	m_context(context), m_defaultTile(context), m_maxMapSize(32, 32),
-	m_tileCount(0), m_tileSetCount(0), m_mapGravity(512.0f),
-	m_loadNextMap(false), m_currentState(currentState)
+    m_context(context), m_defaultTile(context), m_maxMapSize(32, 32),
+    m_tileCount(0), m_tileSetCount(0), m_mapGravity(0.0f),
+    m_loadNextMap(false), m_currentState(currentState)
 {
-	m_context->gameMap = this;
-//	LoadTiles("media/Tiles.cfg");
+    m_context->gameMap = this;
 }
 
 Map::~Map()
 {
-	PurgeMap();
-	PurgeTileSet();
-	m_context->gameMap = nullptr;
+    PurgeMap();
+    PurgeTileSet();
+    m_context->gameMap = nullptr;
 }
 
 Tile* Map::GetTile(unsigned int x, unsigned int y)
-{	
-	// Needs to search in the layer tilemap
-	auto itr = m_tileMap.find(ConvertCoords(x, y));
-	return(itr != m_tileMap.end() ? itr->second : nullptr);
+{
+    // Needs to search in the layer tilemap
+    auto itr = m_tileMap.find(ConvertCoords(x, y));
+    return(itr != m_tileMap.end() ? itr->second : nullptr);
 }
 
 TileInfo* Map::GetDefaultTile()
 {
-	return &m_defaultTile;
+    return &m_defaultTile;
 }
 
 float Map::GetGravity() const
 {
-	return m_mapGravity;
+    return m_mapGravity;
+}
+
+std::vector < Layer * >* Map::GetLayers()
+{
+    return &m_layers;
 }
 
 unsigned int Map::GetTileSize() const
 {
-	return Sheet::Tile_Size;
+    return m_tileSize;
 }
 
 const sf::Vector2u& Map::GetMapSize() const
 {
-	return m_maxMapSize;
+    return m_maxMapSize;
 }
 
 const sf::Vector2f& Map::GetPlayerStart() const
 {
-	return m_playerStart;
+    return m_playerStart;
 }
 
 void Map::LoadMap(const std::string& path)
 {
-	std::cout << "--- Loading a map: " << path << std::endl;
+    std::cout << "--- Loading a map: " << path << std::endl;
 
-	TiXmlDocument mapDocument;
-	mapDocument.LoadFile(path);
+    TiXmlDocument mapDocument;
+    mapDocument.LoadFile(path);
 
-	TiXmlElement* root = mapDocument.RootElement();
+    TiXmlElement* root = mapDocument.RootElement();
 
-	root->Attribute("tilewidth", &m_tileSize);
-	root->Attribute("width", &m_mapWidth);
-	root->Attribute("height", &m_mapHeight);
+    root->Attribute("tilewidth", &m_tileSize);
+    root->Attribute("width", &m_mapWidth);
+    root->Attribute("height", &m_mapHeight);
 
-	m_maxMapSize.x = m_mapWidth;
-	m_maxMapSize.y = m_mapHeight;
+    m_maxMapSize.x = m_mapWidth;
+    m_maxMapSize.y = m_mapHeight;
 
-	for (TiXmlElement* e = root->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
-	{
-		if (e->Value() == std::string("tileset"))
-		{
-			LoadTiles(e);
-		}
-	}
+    for (TiXmlElement* e = root->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
+    {
+        if (e->Value() == std::string("tileset"))
+        {
+            LoadTiles(e);
+        }
+    }
 
-	for (TiXmlElement* e = root->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
-	{
-		if (e->Value() == std::string("layer"))
-		{
-			m_layerName = e->Attribute("name");
-			ParseTileLayer(e);
-		}
-	}
-	std::cout << "--- Map Loaded! ---" << std::endl;
+    for (TiXmlElement* e = root->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
+    {
+        if (e->Value() == std::string("layer"))
+        {
+            m_layerName = e->Attribute("name");
+            ParseTileLayer(e);
+        }
+    }
+
+    for (TiXmlElement* e = root->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
+    {
+        if (e->Value() == std::string("objectgroup"))
+        {
+            ParseObjectLayer(e);
+        }
+    }
+
+    std::cout << "--- Map Loaded! ---" << std::endl;
+
+    root->Clear();
+    root = nullptr;
 }
 
-void Map::LoadNext()
+void Map::LoadNext(const std::string& nextMap)
 {
-	m_loadNextMap = true;
+    m_nextMap     = nextMap;
+    m_loadNextMap = true;
 }
 
 void Map::Update(float dt)
 {
-	if (m_loadNextMap)
-	{
-		PurgeMap();
-		m_loadNextMap = false;
-		if (m_nextMap != "")
-		{
-			LoadMap("media/Maps/" + m_nextMap);
-		}
-		else
-		{
-			m_currentState->GetStateManager()->SwitchTo(StateType::GameOver);
-		}
-		m_nextMap = "";
-	}
-	sf::FloatRect viewSpace = m_context->window->GetViewSpace();
-	m_background.setPosition(viewSpace.left, viewSpace.top);
+    if (m_loadNextMap)
+    {
+        PurgeMap();
+        PurgeTileSet();
+        m_loadNextMap = false;
+        if (m_nextMap != "")
+        {
+            LoadMap("media/Maps/" + m_nextMap + ".tmx");
+        }
+        else
+        {
+            m_currentState->GetStateManager()->SwitchTo(StateType::GameOver);
+        }
+        m_nextMap = "";
+    }
+    sf::FloatRect viewSpace = m_context->window->GetViewSpace();
+    m_background.setPosition(viewSpace.left, viewSpace.top);
 
-	for (int i = 0; i < m_layers.size(); ++i)
-	{
-		m_layers[i]->Update();
-	}
+    for (int i = 0; i < m_layers.size(); ++i)
+    {
+        m_layers[i]->Update();
+    }
 }
 
 void Map::Draw()
 {
-	for (int i = 0; i < m_layers.size(); ++i)
-	{
-		m_layers[i]->Draw();
-	}
+    for (int i = 0; i < m_layers.size(); ++i)
+    {
+        if (m_layers[i]->GetLayerName() != "collision")
+        {
+            m_layers[i]->Draw();
+        }
 
-/*	sf::RenderWindow* window = m_context->window->GetRenderWindow();
-	window->draw(m_background);
-
-	// These 3 lines of code makes sure that anything
-	// that is not currently within the viewspace of
-	// will not be drawn. Culling.
-	sf::FloatRect viewSpace = m_context->window->GetViewSpace();
-	sf::Vector2i tileBegin(floor(viewSpace.left / Sheet::Tile_Size), 
-						   floor(viewSpace.top / Sheet::Tile_Size));
-	sf::Vector2i tileEnd(ceil((viewSpace.left + viewSpace.width) / Sheet::Tile_Size),
-						 ceil((viewSpace.top + viewSpace.height) / Sheet::Tile_Size));
-
-	unsigned int count = 0;
-	for (int x = tileBegin.x; x <= tileEnd.x; ++x)
-	{
-		for (int y = tileBegin.y; y <= tileEnd.y; ++y)
-		{
-			if (x < 0 || y < 0) { continue; }
-			Tile* tile = GetTile(x, y);
-			if (!tile) { continue; }
-			sf::Sprite& sprite = tile->properties->m_sprite;
-			sprite.setPosition(x * Sheet::Tile_Size, y * Sheet::Tile_Size);
-			window->draw(sprite);
-			++count;
-
-			// Debug.
-			if (m_context->debugOverlay.Debug())
-			{
-				if (tile->properties->m_deadly || tile->warp)
-				{
-					sf::RectangleShape* tileMarker = new sf::RectangleShape(
-						sf::Vector2f(Sheet::Tile_Size, Sheet::Tile_Size));
-					tileMarker->setPosition(x * Sheet::Tile_Size, y * Sheet::Tile_Size);
-					if (tile->properties->m_deadly)
-					{
-						tileMarker->setFillColor(sf::Color(255, 0, 0, 100));
-					}
-					else if (tile->warp)
-					{
-						tileMarker->setFillColor(sf::Color(0, 255, 0, 150));
-					}
-					m_context->debugOverlay.Add(tileMarker);
-				}
-			}
-			// End debug.
-		}
-	}*/
+        if (i == 1)
+        {
+            m_context->entityManager->Draw();
+        }
+    }
 }
 
-unsigned int Map::ConvertCoords(unsigned int x, unsigned int y)
+unsigned int Map::ConvertCoords(const unsigned int &x, const unsigned int &y)
 {
-	return (x * m_maxMapSize.x) + y; // Row-major
-}
-
-void Map::LoadTiles(const std::string& path)
-{
-	std::ifstream file;
-	file.open(path);
-	if (!file.is_open())
-	{
-		std::cout << "Failed loading tileset file: " << path << std::endl;
-		return;
-	}
-	std::string line;
-	while (std::getline(file, line))
-	{
-		if (line[0] == '|') { continue; }
-		std::stringstream keystream(line);
-		int tileId;
-		keystream >> tileId;
-		if (tileId < 0) { continue; }
-		TileInfo* tile = new TileInfo(m_context);
-		tile->CreateTile("TileSheet", tileId);
-		keystream >> tile->name >> tile->m_friction.x >> tile->m_friction.y >> tile->m_deadly;
-
-		if (!m_tileSet.emplace(tileId, tile).second)
-		{
-			// Duplicate tile detected!
-			std::cout << "Duplicate tile type: " << tile->name << std::endl;
-			delete tile;
-		}
-	}
-	file.close();
+    return (x * m_maxMapSize.x) + y;     // Row-major
 }
 
 void Map::LoadTiles(TiXmlElement* tilesetRoot)
 {
-	std::cout << "Loading tiles" << std::endl;
+    std::cout << "Loading tiles" << std::endl;
 
-	TileInfo tile = TileInfo(m_context);
+    TileInfo tile = TileInfo(m_context);
 
-	tilesetRoot->Attribute("tilecount", &m_tileCount);
+    tilesetRoot->Attribute("tilecount", &m_tileCount);
 
-	for (int i = 0; i < m_tileCount; i++)
-	{
-		TileInfo* tileinfo = new TileInfo(m_context);
+    std::cout << m_tileCount << std::endl;
 
-		tilesetRoot->Attribute("firstgid", &tileinfo->firstGridID);
-		tilesetRoot->Attribute("tilewidth", &tileinfo->tileWidth);
-		tilesetRoot->Attribute("tileheight", &tileinfo->tileHeight);
-		tilesetRoot->Attribute("spacing", &tileinfo->spacing);
-		tilesetRoot->Attribute("margin", &tileinfo->margin);
-		tilesetRoot->Attribute("columns", &tileinfo->numColumns);
-		tilesetRoot->FirstChildElement()->Attribute("width", &tileinfo->sheetWidth);
-		tilesetRoot->FirstChildElement()->Attribute("height", &tileinfo->sheetHeight);
-		tileinfo->name = tilesetRoot->Attribute("name");
+    for (int i = 0; i < m_tileCount; i++)
+    {
+        TileInfo* tileinfo = new TileInfo(m_context);
 
-		if (tileinfo->margin < 0) { tileinfo->margin = 0; }
-		if (tileinfo->spacing < 0) { tileinfo->spacing = 0; }
+        tilesetRoot->Attribute("firstgid", &tileinfo->firstGridID);
+        tilesetRoot->Attribute("tilewidth", &tileinfo->tileWidth);
+        tilesetRoot->Attribute("tileheight", &tileinfo->tileHeight);
+        tilesetRoot->Attribute("spacing", &tileinfo->spacing);
+        tilesetRoot->Attribute("margin", &tileinfo->margin);
+        tilesetRoot->Attribute("columns", &tileinfo->numColumns);
+        tilesetRoot->FirstChildElement()->Attribute("width", &tileinfo->sheetWidth);
+        tilesetRoot->FirstChildElement()->Attribute("height", &tileinfo->sheetHeight);
+        tileinfo->name = tilesetRoot->Attribute("name");
 
-		tileinfo->CreateTile(tileinfo->name, i);
+        if (tileinfo->margin < 0)
+        {
+            tileinfo->margin = 0;
+        }
+        if (tileinfo->spacing < 0)
+        {
+            tileinfo->spacing = 0;
+        }
 
-		if (!m_tileSet.emplace(i, tileinfo).second)
-		{
-			std::cout << "Duplicate tile type: " << i << std::endl;
-		}
-	}
+        tileinfo->CreateTile(tileinfo->name, i);
+
+        if (!m_tileSet.emplace(i, tileinfo).second)
+        {
+            std::cout << "Duplicate tile type: " << i << std::endl;
+        }
+    }
+    int id = 0;
+    for (TiXmlElement* e = tilesetRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
+    {
+        if (e->Value() == std::string("tile"))
+        {
+            e->Attribute("id", &id);
+
+            auto itr = m_tileSet.find(id);
+
+            for (TiXmlElement* p = e->FirstChildElement(); p != NULL; p = p->NextSiblingElement())
+            {
+                if (p->Value() == std::string("properties"))
+                {
+                    itr->second->warpName  = p->FirstChildElement()->Attribute("name");
+                    itr->second->warpValue = p->FirstChildElement()->Attribute("value");
+                }
+            }
+        }
+    }
 }
 
 void Map::ParseTileLayer(TiXmlElement* tileElement)
 {
-	// TODO(Richard) - Extend this function in order for
-	// us to parse multiple tile layers
+    // TODO(Richard) - Extend this function in order for
+    // us to parse multiple tile layers
 
-	TileLayer* layer = new TileLayer(m_context, &m_tileSet, m_layerName);
+    TileLayer* layer = new TileLayer(m_context, &m_tileSet, m_layerName);
 
-	// Search for the node we need
-	for (TiXmlElement* e = tileElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
-	{
-		if (e->Value() == std::string("data"))
-		{
-//			ParseTilePositions(e);
-			layer->CreateLayer(e, m_mapWidth);
-		}
-	}
-	m_layers.push_back(layer);
+    // Search for the node we need
+    for (TiXmlElement* e = tileElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
+    {
+        if (e->Value() == std::string("data"))
+        {
+            layer->CreateLayer(e, m_mapWidth);
+        }
+    }
+    m_layers.push_back(layer);
 }
 
-void Map::ParseTilePositions(TiXmlElement* tileData)
+void Map::ParseObjectLayer(TiXmlElement* objectElement)
 {
-	int x = 0, y = 0;
+    EntityManager* entityMgr = m_context->entityManager;
 
-	for (TiXmlElement* e = tileData->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
-	{
-		if (x >= m_mapWidth)
-		{
-			x = 0;
-			++y;
-		}
-		if (e->Value() == std::string("tile"))
-		{
-
-			int tileID = 0;
-			e->Attribute("gid", &tileID);
-
-			tileID--;
-
-			if (tileID < 0) { ++x; continue; }
-
-			auto itr = m_tileSet.find(tileID);
-
-			Tile* tile = new Tile();
-
-			tile->properties = itr->second;
-
-			if (!m_tileMap.emplace(ConvertCoords(x, y), tile).second)
-			{
-				// Duplicate tile detected!
-				std::cout << "! Duplicate tile! : " << x
-					<< "" << y << std::endl;
-				delete tile;
-				tile = nullptr;
-				continue;
-			}
-			++x;
-		}
-	}
+    for (TiXmlElement* e = objectElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
+    {
+        if (e->Value() == std::string("object"))
+        {
+            if (e->Attribute("type") == std::string("Player"))
+            {
+                // Set up the player position here.
+                m_playerId = entityMgr->Add(EntityType::Player);
+                if (m_playerId < 0)
+                {
+                    continue;
+                }
+                int playerX      = 0;
+                int playerY      = 0;
+                int playerWidth  = 0;
+                int playerHeight = 0;
+                e->Attribute("x", &playerX);
+                e->Attribute("y", &playerY);
+                e->Attribute("width", &playerWidth);
+                e->Attribute("height", &playerHeight);
+                entityMgr->Find(m_playerId)->SetPosition(playerX + (playerWidth / 2), playerY + playerHeight);
+                m_playerStart = sf::Vector2f(playerX + (playerWidth / 2.0f), playerY + playerHeight);
+            }
+            else if (e->Attribute("type") == std::string("Enemy"))
+            {
+                std::string enemyName;
+                enemyName = e->Attribute("name");
+                int         enemyId = entityMgr->Add(EntityType::Enemy, enemyName);
+                if (enemyId < 0)
+                {
+                    continue;
+                }
+                int enemyX = 0;
+                int enemyY = 0;
+                e->Attribute("x", &enemyX);
+                e->Attribute("y", &enemyY);
+                entityMgr->Find(enemyId)->SetPosition(enemyX, enemyY);
+            }
+        }
+    }
 }
 
 void Map::PurgeMap()
 {
-	m_tileCount = 0;
-	for (auto &itr : m_tileMap)
-	{
-		delete itr.second;
-	}
-	m_tileMap.clear();
-	m_context->entityManager->Purge();
+    m_tileCount = 0;
+    for (auto &itr : m_tileMap)
+    {
+        delete itr.second;
+    }
 
-	if (m_backgroundTexture == "") { return; }
-	m_context->textureManager->ReleaseResource(m_backgroundTexture);
-	m_backgroundTexture = "";
+    for (int j = 0, i = m_layers.size(); j < i; j++)
+    {
+        Layer* pLayers = m_layers.at(j);
+        delete pLayers;
+    }
+
+    m_tileMap.clear();
+    m_layers.clear();
+
+    m_context->entityManager->Purge();
+
+    if (m_backgroundTexture == "")
+    {
+        return;
+    }
+    m_context->textureManager->ReleaseResource(m_backgroundTexture);
+    m_backgroundTexture = "";
 }
 
 void Map::PurgeTileSet()
 {
-	for (auto &itr : m_tileSet)
-	{
-		delete itr.second;
-	}
-	m_tileSet.clear();
-	m_tileSetCount = 0;
+    for (auto &itr : m_tileSet)
+    {
+        delete itr.second;
+    }
+    m_tileSet.clear();
+    m_tileSetCount = 0;
 }

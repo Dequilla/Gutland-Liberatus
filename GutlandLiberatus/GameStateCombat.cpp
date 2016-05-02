@@ -23,7 +23,7 @@ void GameStateCombat::OnCreate()
 		&GameStateCombat::ToggleOverlay, this);
 
 	sf::Vector2u size = m_stateMgr->GetContext()->window->GetWindowSize();
-	
+
 	//Selection and creation of fighting background
 	//For now a static background
 	m_backgroundTexture.loadFromFile("media/Textures/TempBackground.png");
@@ -33,9 +33,10 @@ void GameStateCombat::OnCreate()
 	//Portrait is static for now
 	m_portraitTexture.loadFromFile("media/Textures/placeholderport.png");
 	m_portrait.setTexture(m_portraitTexture);
+
 	m_portrait.setPosition(sf::Vector2f(520.f, 540.f));
 	m_portrait.setScale(sf::Vector2f(5.1f, 5.1f));   
-	
+
 	//Portraitframe is static dont move
 	m_portraitFrameTexture.loadFromFile("media/Textures/portraitFrame.png");
 	m_portraitFrame.setTexture(m_portraitFrameTexture);
@@ -141,6 +142,7 @@ void GameStateCombat::Deactivate()
 void GameStateCombat::Update(const sf::Time& time)
 {
 	SharedContext* context = m_stateMgr->GetContext();
+
 	//TODO Create a class to handle textobjects with addText() just like button
 	//ERRORINCUDE ++ dick #mature
 
@@ -156,7 +158,7 @@ void GameStateCombat::Update(const sf::Time& time)
 	
 	m_buttons.update(mousePos, window);
 	m_extraButtons.update(mousePos, window);
-	
+
 	//m_frame.Update(time.asSeconds());
 	m_stateMgr->GetContext()->entityManager->Update(time.asSeconds());
 

@@ -8,55 +8,64 @@
 
 namespace Kengine
 {
-class Window
-{
+    class Window
+    {
 public:
-	Window();
-	Window(const std::string& title, const sf::Vector2u& size);
-	~Window();
+        Window();
+        Window(const std::string & title, const sf::Vector2u & size);
+        ~Window();
 
-	void BeginDraw(); // Clear the window.
-	void EndDraw(); // Display the changes.
+        void BeginDraw(); // Clear the window.
+        void EndDraw();   // Display the changes.
 
-	void Update();
+        void Update();
 
-	bool IsDone();
-	bool IsFullscreen();
-	bool isFocused() { return m_isFocused; }
-    
-	EventManager* GetEventManager() { return &m_eventManager; }
-	sf::Vector2u GetWindowSize();
-	sf::RenderWindow* GetRenderWindow() { return &m_window; }
-	sf::FloatRect GetViewSpace();
-	bool GetVerticalSync();
+        bool IsDone();
+        bool IsFullscreen();
+        bool isFocused()
+        {
+            return m_isFocused;
+        }
 
-	void SetWindowSize(sf::Vector2u size);
-	void SetFullscreen(bool fullscreen);
-	void SetVerticalSync(bool verticalsync);
+        EventManager* GetEventManager()
+        {
+            return &m_eventManager;
+        }
+        sf::Vector2u GetWindowSize();
+        sf::RenderWindow* GetRenderWindow()
+        {
+            return &m_window;
+        }
+        sf::FloatRect GetViewSpace();
+        bool GetVerticalSync();
 
-    void ToggleFullscreen(EventDetails* details);
-    void Close(EventDetails* details = nullptr);
+        void SetWindowSize(sf::Vector2u size);
+        void SetFullscreen(bool fullscreen);
+        void SetVerticalSync(bool verticalsync);
 
-	void RecreateWindow();
+        void ToggleFullscreen(EventDetails* details);
+        void Close(EventDetails* details = nullptr);
 
-	void Draw(sf::Drawable& drawable);
+        void RecreateWindow();
+
+        void Draw(sf::Drawable& drawable);
 
 private:
-	sf::RenderWindow m_window;
-	sf::Vector2u m_windowSize;
-	std::string m_windowTitle;
-    
-    EventManager m_eventManager;
+        sf::RenderWindow m_window;
+        sf::Vector2u     m_windowSize;
+        std::string      m_windowTitle;
 
-	Kengine::Kopter m_options;
-    
-    bool m_isFocused;
-	bool m_isDone = false;
-	bool m_isFullscreen = false;
-	bool m_isVerticalSync = false;
+        EventManager     m_eventManager;
 
-	void Setup(const std::string& title, const sf::Vector2u& size);
-	void Destroy();
-	void Create();
-};
+        Kengine::Kopter  m_options;
+
+        bool             m_isFocused;
+        bool             m_isDone         = false;
+        bool             m_isFullscreen   = false;
+        bool             m_isVerticalSync = false;
+
+        void Setup(const std::string& title, const sf::Vector2u& size);
+        void Destroy();
+        void Create();
+    };
 }

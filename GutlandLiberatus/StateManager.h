@@ -14,51 +14,56 @@
 
 enum class StateType
 {
-    Intro = 1, MainMenu, Game, Paused, GameOver, Credits, SplashScreen, Options, Combat
+    Intro = 1,
+    MainMenu,
+    Game,
+    Paused,
+    GameOver,
+    Credits,
+    SplashScreen,
+    Options,
+    Combat
 };
 
-using StateContainer = std::vector<std::pair<StateType, Kengine::BaseState*>>;
-using TypeContainer = std::vector<StateType>;
+using StateContainer = std::vector < std::pair < StateType, Kengine::BaseState* >>;
+using TypeContainer  = std::vector < StateType >;
 
 // map a specific state type to a specific function
-    // that will generate that type
-using StateFactory = std::unordered_map<StateType, std::function<Kengine::BaseState*(void)>>;
+// that will generate that type
+using StateFactory = std::unordered_map < StateType, std::function < Kengine::BaseState*(void) >>;
 
 class StateManager
 {
 public:
-    StateManager(SharedContext* shared);
-    ~StateManager();
+                    StateManager(SharedContext * shared);
+                    ~StateManager();
 
-    void Update(const sf::Time& time);
-    void Draw();
+    void            Update(const sf::Time& time);
+    void            Draw();
+    void            ProcessRequests();
+    SharedContext*  GetContext();
+    bool            HasState(const StateType& type);
+    void            SwitchTo(const StateType& type);
+    void            Remove(const StateType& type);
 
-    void ProcessRequests();
-
-    SharedContext* GetContext() { return m_shared; }
-    bool HasState(const StateType& type);
-
-    void SwitchTo(const StateType& type);
-    void Remove(const StateType& type);
-
-    private:
+private:
     // Members
-    SharedContext* m_shared;
-    StateContainer m_states;
-    TypeContainer m_toRemove;
-    StateFactory m_stateFactory;
+    SharedContext   *m_shared;
+    StateContainer  m_states;
+    TypeContainer   m_toRemove;
+    StateFactory    m_stateFactory;
 
     // Functions
-    void CreateState(const StateType& type);
-    void RemoveState(const StateType& type);
+    void            CreateState(const StateType& type);
+    void            RemoveState(const StateType& type);
 
-    template<class T>
-        void RegisterState(const StateType& type)
+    template < class T >
+    void RegisterState(const StateType& type)
     {
         // maps type in the m_stateFactory map
-            // to a function that returns a pointer to newly allocated memory
-            // We use templates in order to reduce the amount of code
-        m_stateFactory[type] = [this]() -> Kengine::BaseState*
+        // to a function that returns a pointer to newly allocated memory
+        // We use templates in order to reduce the amount of code
+        m_stateFactory[type] = [this]()->Kengine::BaseState *
         {
             return new T(this);
         };

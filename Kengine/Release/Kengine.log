@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿Build started 2016-04-26 14:39:31.
      1>Project "E:\Gutland Liberatus\gutland-liberatus\Kengine\Kengine.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
@@ -29,3 +30,7 @@
 Build succeeded.
 
 Time Elapsed 00:00:06.06
+=======
+﻿  Window.cpp
+  Kengine.vcxproj -> W:\school\Gutland-Liberatus\Release\Kengine.lib
+>>>>>>> master

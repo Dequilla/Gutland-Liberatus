@@ -9,24 +9,29 @@
 
 class Map;
 
+/*
+   ===========================================================
+   SharedContext holds all types of context that can be shared
+   within the game.
+   ===========================================================
+ */
 struct SharedContext
 {
-	SharedContext() :
-		window(nullptr),
-		eventManager(nullptr),
-		textureManager(nullptr),
-		entityManager(nullptr),
-		gameMap(nullptr),
-		optionsManager(nullptr)
-	{
-	}
+    SharedContext() :
+        window(nullptr),
+        eventManager(nullptr),
+        textureManager(nullptr),
+        entityManager(nullptr),
+        gameMap(nullptr),
+        optionsManager(nullptr)
+    {
+    }
 
-	Kengine::Window* window;
-	Kengine::EventManager* eventManager;
-	Kengine::TextureManager* textureManager;
-	Kengine::DebugOverlay debugOverlay;
-	EntityManager* entityManager;
-	Map* gameMap;
-	Kengine::Kopter* optionsManager;
-
+    Kengine::Window         *window;
+    Kengine::EventManager   *eventManager;
+    Kengine::TextureManager *textureManager;
+    Kengine::DebugOverlay   debugOverlay;
+    EntityManager           *entityManager;
+    Map                     *gameMap;
+    Kengine::Kopter         *optionsManager;
 };
