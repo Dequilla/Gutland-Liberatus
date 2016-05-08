@@ -26,6 +26,7 @@ Player::Player(EntityManager* entityManager) :
 	}
 
 	m_stepSound.setBuffer(m_stepSoundBuffer);
+    m_stepSound.setVolume(25.0f);
 	m_stepSound.setLoop(false);
 }
 

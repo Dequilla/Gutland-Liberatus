@@ -1750,6 +1750,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="100"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1826,6 +1827,12 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="232"/>
+   <tile gid="233"/>
+   <tile gid="233"/>
+   <tile gid="233"/>
+   <tile gid="233"/>
+   <tile gid="232"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1902,14 +1909,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="232"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -2833,7 +2833,7 @@
    <tile gid="206"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="102"/>
    <tile gid="300"/>
    <tile gid="301"/>
    <tile gid="0"/>
@@ -4825,7 +4825,7 @@
   </data>
  </layer>
  <objectgroup name="Object Layer 1">
-  <object id="1" name="PlayerStart" type="Player" x="608" y="352" width="32" height="32"/>
+  <object id="1" name="PlayerStart" type="Player" x="356" y="640" width="32" height="32"/>
   <object id="5" name="Dram - Skebergslaten.ogg" type="Music" x="672" y="128">
    <polygon points="0,0 32,32 0,64 0,0"/>
   </object>

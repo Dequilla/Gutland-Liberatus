@@ -113,7 +113,6 @@ void Enemy::Update(float dt)
         m_destination.y = m_position.y - newPoint;
     }
 
-//    m_destination.x = m_position.x + newX;
     if (m_destination.x < 0)
     {
         m_destination.x = 0;
