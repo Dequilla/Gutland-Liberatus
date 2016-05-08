@@ -150,6 +150,7 @@ void Character::Load(const std::string& path)
         }
     }
     file.close();
+    Move(Kengine::Direction::Down);
 }
 
 void Character::Update(float dt)
