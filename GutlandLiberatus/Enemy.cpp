@@ -100,7 +100,7 @@ void Enemy::Update(float dt)
     {
         m_destination.x = m_position.x + newPoint;
     }
-    else if(dir == 2)
+    else if (dir == 2)
     {
         m_destination.x = m_position.x - newPoint;
     }

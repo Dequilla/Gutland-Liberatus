@@ -129,7 +129,7 @@ void Window::Setup(const std::string & title, const sf::Vector2u & size)
 
 void Window::Create()
 {
-    auto style = (m_isFullscreen ? sf::Style::Fullscreen : sf::Style::Default);
+    auto style = (m_isFullscreen ? sf::Style::Fullscreen : sf::Style::Close);
     m_window.create({ m_windowSize.x, m_windowSize.y, 32 }, m_windowTitle, style);
 
     m_options.readFile("media/Option.kopt");
