@@ -14,6 +14,16 @@ GameStateSplashScreen::~GameStateSplashScreen()
 
 void GameStateSplashScreen::OnCreate()
 {
+	m_lambBuffer.loadFromFile("media/Sound/Effects/Lamm.ogg");
+	m_lamb.setBuffer(m_lambBuffer);
+	m_lamb.setVolume(100); 
+	m_lamb.setLoop(false);
+
+	m_enkelBuffer.loadFromFile("media/Sound/Effects/Enkel.ogg");
+	m_enkel.setBuffer(m_enkelBuffer);
+	m_enkel.setVolume(50);
+	m_enkel.setLoop(false);
+
     m_elapsedTime    = 0.0f;
     m_opacity        = 0;
     m_opacityChecker = 0.05f;
@@ -80,6 +90,7 @@ void GameStateSplashScreen::Update(const sf::Time & time)
             else if (m_opacity == 255 && m_elapsedTime > 2.5f)
             {
                 m_fading = true;
+				m_enkel.play();
             }
         }
         else if (m_fading)
@@ -107,7 +118,7 @@ void GameStateSplashScreen::Update(const sf::Time & time)
 
         if (m_secondSplashCheck && m_elapsedTime > 7.0f)
         {
-            ///if it has run continue for 5 sec continue
+            //if it has run continue for 5 sec continue
             this->m_splashScreenIndex += 1;
             std::cout << "Changing index";
         }
@@ -122,11 +133,14 @@ void GameStateSplashScreen::Update(const sf::Time & time)
                 //If it hasent run yet run it
                 m_spriteSheet->SetAnimation("Walk", true, false);
                 m_secondSplashCheck = true;
+
+				m_lamb.play();
             }
         }
     }
     else
     {
+		
         m_finished = true;
     }
 

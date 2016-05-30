@@ -24,9 +24,21 @@ void GameStateCombat::OnCreate()
 
 	sf::Vector2u size = m_stateMgr->GetContext()->window->GetWindowSize();
 
+	//Load sound
+	//m_hitSoundBuffer.loadFromFile();
+	m_music.openFromFile("media/Sound/Music/Bensound - Epic.ogg");
+	m_music.setLoop(true);
+	m_music.setVolume(10);
+	m_music.play();
+
+	m_screamBuffer.loadFromFile("media/Sound/Effects/Scream.ogg");
+	m_scream.setBuffer(m_screamBuffer);
+	m_scream.setLoop(false);
+	m_scream.setVolume(100);
+
 	//Selection and creation of fighting background
 	//For now a static background
-	m_backgroundTexture.loadFromFile("media/Textures/TempBackground.png");
+	m_backgroundTexture.loadFromFile("media/Textures/CombatBackground.png");
 	m_background.setTexture(m_backgroundTexture);
 	m_background.setPosition(sf::Vector2f(0.f, 0.f));
 
@@ -133,10 +145,15 @@ void GameStateCombat::OnDestroy()
 
 void GameStateCombat::Activate()
 {
+	if (m_music.getStatus() == sf::Music::Paused)
+	{
+		m_music.play();
+	}
 }
 
 void GameStateCombat::Deactivate()
 {
+	m_music.pause();
 }
 
 void GameStateCombat::Update(const sf::Time& time)
@@ -144,7 +161,6 @@ void GameStateCombat::Update(const sf::Time& time)
 	SharedContext* context = m_stateMgr->GetContext();
 
 	//TODO Create a class to handle textobjects with addText() just like button
-	//ERRORINCUDE ++ dick #mature
 
 	m_healthText.setString("HEALTH:       " + sf::String(int2Str(m_characterContext.getCurrentHealth())));
 	m_meleeHitChanceText.setString(sf::String("M.HITCHANCE:  " + int2Str((m_characterContext.getMeleeHitChance() + m_characterContext.getRangeHitChanceModifier()))));
@@ -174,6 +190,7 @@ void GameStateCombat::Update(const sf::Time& time)
 		{
 			m_enemiesGoing = true;
 			m_enemyTimer.restart();
+			std::cout << "Enemies started attacking!" << std::endl;
 		}
 
 		if (m_enemyTimer.getElapsedTime().asSeconds() >= 1)
@@ -203,13 +220,36 @@ void GameStateCombat::Update(const sf::Time& time)
 		
 			if (hit && !evade)
 			{
+				int randomNumb = rand() % 3 + 1;
+				m_hitSoundBuffer.loadFromFile("media/Sound/Effects/Punch" + int2Str(randomNumb) + ".ogg");
+				m_hitSound.setBuffer(m_hitSoundBuffer);
+				m_hitSound.setLoop(false);
+				m_hitSound.setVolume(100);
+				m_hitSound.play();
+
 				m_characterContext.dealDamage(damage);
 			}
-			m_enemiesHasAttacked += 1;
-			std::cout << "TIMER AT: " << m_enemyTimer.getElapsedTime().asSeconds() << std::endl;
-			m_enemyTimer.restart();
-			if (m_enemiesHasAttacked == m_enemyController.getAmountOFEnemies())
+			else
 			{
+				int randomNumb = rand() % 1 + 1;
+				m_hitSoundBuffer.loadFromFile("media/Sound/Effects/Miss" + int2Str(randomNumb) + ".ogg");
+				m_hitSound.setBuffer(m_hitSoundBuffer);
+				m_hitSound.setLoop(false);
+				m_hitSound.setVolume(100);
+				m_hitSound.play();
+			}
+			m_enemiesHasAttacked += 1;
+			m_enemyTimer.restart();
+			if (m_enemiesHasAttacked == m_enemyController.getAmountOfEnemies() - m_enemyController.getCurrentAmountOfDeadEnemies())
+			{
+				m_playersTurn = true;
+				m_enemiesGoing = false;
+				m_enemiesHasAttacked = 0;
+				std::cout << "Enemies finnished attacking!" << std::endl;
+			}
+			else if (m_enemyController.getCurrentAmountOfEnemies() == 0)
+			{
+				std::cout << "All enemies are dead!" << std::endl;
 				m_playersTurn = true;
 				m_enemiesGoing = false;
 				m_enemiesHasAttacked = 0;
@@ -354,7 +394,9 @@ void GameStateCombat::MouseClick(Kengine::EventDetails * details)
 
 			if(m_extraButtonsPressed && m_enemyController.getSelectedEnemy() != nullptr)
 			{
-				std::cout << m_attack << std::endl;
+				std::cout << "\n********************************" << std::endl;
+				std::cout << " YOU ARE ATTACKING " << std::endl;
+				std::cout << "Attack type: " << m_attack << std::endl;
 
 				m_attackDetails = m_attacks.getAttack(m_attack);
 				m_weaponDetails = m_characterContext.getWeapon();
@@ -367,7 +409,7 @@ void GameStateCombat::MouseClick(Kengine::EventDetails * details)
 					damage = rand() % m_weaponDetails.maxDamage;
 				
 				}
-				std::cout << "DAMAGE: " << damage << std::endl;
+				std::cout << "Damage: " << damage << std::endl;
 				//Damage Calculations end
 
 				//Hit calculations begin
@@ -380,11 +422,11 @@ void GameStateCombat::MouseClick(Kengine::EventDetails * details)
 				{
 					hitChance = m_characterContext.getRangeHitChance() + m_characterContext.getRangeHitChanceModifier() + m_weaponDetails.rangeModifier + m_attackDetails.rangeHitModifier;
 				}
-				std::cout << "HITCHANCE: " << hitChance << std::endl;
+				std::cout << "Hitchance: " << hitChance << std::endl;
 
 				int dyh = (rand() % 100 + 1);
 				bool didYouHit = false;
-				std::cout << "Hit number: " << dyh;
+				std::cout << "Hit number: " << dyh << std::endl;
 
 				if (dyh <= hitChance && dyh >= 1)
 				{
@@ -400,7 +442,6 @@ void GameStateCombat::MouseClick(Kengine::EventDetails * details)
 				if (dyc <= critChance && dyc >= 1)
 				{
 					didYouCrit = true;
-					//std::cout << "You crit with a chance of: " << critChance << ". You rolled: " << dyc << std::endl;
 				}
 				//Crit calculations begin
 
@@ -411,13 +452,19 @@ void GameStateCombat::MouseClick(Kengine::EventDetails * details)
 				if (dye <= evasionChance && dye >= 1)
 				{
 					didYouEvade = true;
-					//std::cout << "You evaded with a chance of: " << evasionChance << ". You rolled: " << dye << std::endl;
 				}
 				//EvasionCalculation of enemies end
 
 				if (didYouHit && !didYouEvade)
 				{
-					//std::cout << ":..:\n";
+					//Select and play sound
+					int randomNumb = rand() % 3 + 1;
+					m_hitSoundBuffer.loadFromFile("media/Sound/Effects/Punch" + int2Str(randomNumb) + ".ogg");
+					m_hitSound.setBuffer(m_hitSoundBuffer);
+					m_hitSound.setLoop(false);
+					m_hitSound.setVolume(100);
+					m_hitSound.play();
+					
 					if (didYouCrit) damage = damage *= 1.5; //Multiply damage by 150% if you crit
 					enemy->getCharacterContext()->dealDamage(damage);
 					enemy->updateColor();
@@ -425,7 +472,17 @@ void GameStateCombat::MouseClick(Kengine::EventDetails * details)
 					{
 						enemy->getCharacterContext()->setCurrentHealth(0);
 						enemy->setDead(true);
+						m_scream.play();
 					}
+				}
+				else
+				{
+					int randomNumb = rand() % 1 + 1;
+					m_hitSoundBuffer.loadFromFile("media/Sound/Effects/Miss" + int2Str(randomNumb) + ".ogg");
+					m_hitSound.setBuffer(m_hitSoundBuffer);
+					m_hitSound.setLoop(false);
+					m_hitSound.setVolume(100);
+					m_hitSound.play();
 				}
 
 				//m_enemyController.getSelectedEnemy()->getCharacterContext()->
@@ -434,6 +491,7 @@ void GameStateCombat::MouseClick(Kengine::EventDetails * details)
 				m_extraButtonsPressed = false;
 				m_playersTurn = false;
 				m_enemyController.checkCombat();
+				std::cout << "********************************" << std::endl << std::endl;
 			}
 		}
 		else if (m_buttonMode == "ACTION")

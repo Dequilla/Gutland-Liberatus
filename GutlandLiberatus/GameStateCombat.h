@@ -60,6 +60,12 @@ private:
 	sf::Text					m_evasionText;
 	sf::Clock					m_enemyTimer;
 
+	sf::SoundBuffer				m_hitSoundBuffer;
+	sf::Sound					m_hitSound;
+	sf::SoundBuffer				m_screamBuffer;
+	sf::Sound					m_scream;
+	sf::Music					m_music;
+
 	EnemyController				m_enemyController;
 	CharacterContext			m_characterContext;
 	AttackContainer				m_attacks;

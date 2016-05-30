@@ -58,7 +58,12 @@ int EnemyController::getCurrentAmountOfEnemies()
 	return m_numberOfEnemies;
 }
 
-int EnemyController::getAmountOFEnemies()
+int EnemyController::getCurrentAmountOfDeadEnemies()
+{
+	return m_numberOfDeadsCurrently;
+}
+
+int EnemyController::getAmountOfEnemies()
 {
 	return m_numberOfEnemiesStatic;
 }
@@ -156,7 +161,7 @@ void EnemyController::createEnemies(std::string enemies[3])
 	}
 }
 
-void EnemyController::checkCombat()
+bool EnemyController::checkCombat()
 {
 	int numberOfDeads = 0;
 	for (auto &itr : m_enemyContainer)
@@ -164,14 +169,19 @@ void EnemyController::checkCombat()
 		if (itr.second.isDead())
 		{
 			numberOfDeads++;
-			m_numberOfEnemies -= 1;
+			std::cout << "Number if dead people is = " << numberOfDeads << std::endl;
 		}
 	}
-	if (m_numberOfEnemies == 0)
+	m_numberOfDeadsCurrently = numberOfDeads;
+	m_numberOfEnemies = m_numberOfEnemiesStatic - m_numberOfDeadsCurrently;
+	if (numberOfDeads == m_numberOfEnemiesStatic)
 	{
+		std::cout << "Resetting with m_numberOfEnemies = " << m_numberOfEnemies << std::endl;
 		resetCombat();
 		std::cout << "YOU WON" << std::endl;
+		return true;
 	}
+	return false;
 }
 
 void EnemyController::resetCombat()

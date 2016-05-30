@@ -126,7 +126,7 @@ CharacterContext * CombatEnemy::getCharacterContext()
 void CombatEnemy::updateColor()
 {
 	float modifier = (m_details.getCurrentHealth() * 0.01) * 255;
-	std::cout << "Modifier:"  << modifier;
+	std::cout << "Enemy color modifier:"  << modifier << std::endl;
 	m_bodySprite->setColor(sf::Color(255, modifier, modifier, 255));
 }
 

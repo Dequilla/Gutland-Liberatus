@@ -15,7 +15,8 @@ class EnemyController {
 
 		void generateNewRandomEnemies();
 		int getCurrentAmountOfEnemies();
-		int getAmountOFEnemies();
+		int getCurrentAmountOfDeadEnemies();
+		int getAmountOfEnemies();
 		void update(sf::Vector2i mousePos, sf::RenderWindow* window);
 
 		void changeSelected();
@@ -23,7 +24,7 @@ class EnemyController {
 
 		void createEnemies(std::string enemies[3]);
 
-		void checkCombat();
+		bool checkCombat();
 
 		void resetCombat();
 
@@ -37,4 +38,5 @@ class EnemyController {
 		
 		int										m_numberOfEnemies = 0;
 		int										m_numberOfEnemiesStatic = 0;
+		int										m_numberOfDeadsCurrently = 0;
 };

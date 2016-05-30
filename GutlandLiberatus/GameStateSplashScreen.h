@@ -4,6 +4,7 @@
 #include <Kengine/BaseState.h>
 #include <Kengine/TextureManager.h>
 #include <Kengine/SpriteSheet.h>
+#include <SFML/Audio.hpp>
 
 /*
    ===========================================================
@@ -30,6 +31,10 @@ public:
 private:
     sf::Texture          m_texture;
     sf::Sprite           m_sprite;
+	sf::SoundBuffer		 m_lambBuffer;
+	sf::Sound			 m_lamb;
+	sf::SoundBuffer		 m_enkelBuffer;
+	sf::Sound			 m_enkel;
 
     Kengine::SpriteSheet *m_spriteSheet;
 

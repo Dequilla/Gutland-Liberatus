@@ -4,4 +4,4 @@ Scale 1.0 1.0
 |Type|Name|StartFrame|EndFrame|Row|FrameTime|FrameActionStart|FrameActionEnd|
 AnimationType Directional
 Animation Idle 0 20 0 0.2 -1 -1
-Animation Walk 20 19 0 1.5 -1 -1
+Animation Walk 20 19 0 0.1 -1 -1
